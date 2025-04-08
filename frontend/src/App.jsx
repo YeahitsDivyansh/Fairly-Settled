@@ -1,13 +1,16 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Button } from "./components/ui/button";
+import Home from "./pages/Home";
 
-function App() {
+const App = () => {
   return (
-    <>
-      <h1 className="bg-red-200">Hello React</h1>
-      <Button variant="default">Button</Button>
-    </>
+    <div>
+      <Routes>
+        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </div>
   );
-}
+};
 
 export default App;
