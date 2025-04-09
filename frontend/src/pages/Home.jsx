@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+// Home.jsx
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+
 import {
   Search,
   MessageSquare,
@@ -8,10 +11,14 @@ import {
   Globe2,
   ChevronDown,
 } from "lucide-react";
+import AuroraBackground from "@/components/ui/aurora-background";
+
 
 const App = () => {
   const [language, setLanguage] = useState("en");
   const [searchQuery, setSearchQuery] = useState("");
+  const dropdownRef = useRef(null);
+const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const translations = {
     en: {
@@ -43,244 +50,269 @@ const App = () => {
   };
 
   const t = translations[language];
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen bg-white text-gray-900">
       {/* Navigation */}
-      <nav className="w-full z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
-            <div className="text-2xl font-bold flex flex-col items-center">
-              <img
-                src="https://assets.grok.com/users/7929acee-b58f-4690-9180-a01c0352a771/generated/TuJMLTd88NilIUgh/image.jpg"
-                alt="FairlySettled Logo"
-                className="w-32 h-25 mb-1 rounded-lg" // adjust size here (w = width, h = height)
-              />
-            </div>
+      <nav className="w-full shadow-[0_2px_4px_-1px_rgba(0,0,0,1)] bg-white sticky top-0 z-50 ">
+  <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+    {/* Logo */}
+    <div className="text-lg font-semibold tracking-wide flex items-center gap-2">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/9504/9504143.png"
+        alt="NyayaSahayak Logo"
+        className="w-6 h-6"
+      />
+      NyayaSahayak
+    </div>
 
-            <div className="flex items-center gap-4 ml-auto">
-              <button
-                onClick={() => setLanguage(language === "en" ? "hi" : "en")}
-                className="flex items-center gap-2 hover:text-gray-300"
-              >
-                <Globe2 size={20} />
-                <span>{language.toUpperCase()}</span>
-                <ChevronDown size={16} />
-              </button>
-            </div>
+    {/* Search Bar */}
+    <div className="flex-1 max-w-lg order-3 sm:order-2 sm:ml-[3rem]">
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full pl-4 pr-10 py-2  rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+      </div>
+    </div>
 
-            <div></div>
-          </div>
+    {/* Right-side buttons */}
+    <div className="flex items-center gap-4 order-2 sm:order-3 ml-auto">
+      <div className="flex items-center gap-4">
+        <button className="bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-700">
+          Sign up
+        </button>
+        <button 
+        
+        className="text-black-800 bg-gray-500 text-sm px-4 py-1.5 rounded-full hover:bg-gray-300">
+          Log in
+        </button>
+        {/* Language Dropdown */}
+        <div className="relative inline-block text-left" ref={dropdownRef}>
+          <button
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
+            type="button"
+            className="inline-flex justify-center items-center gap-1 text-sm text-gray-800 hover:bg-gray-100 px-3 py-1.5 rounded-full"
+          >
+            <Globe2 size={18} />
+            <span>{language === "en" ? "English" : "हिंदी"}</span>
+            <ChevronDown size={14} />
+          </button>
+
+          {isDropdownOpen && (
+            <div className="origin-top-right absolute right-0 mt-2 w-28 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+              <div className="py-1">
+                <button
+                  onClick={() => {
+                    setLanguage("en");
+                    setIsDropdownOpen(false);
+                  }}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                >
+                  English
+                </button>
+                <button
+                  onClick={() => {
+                    setLanguage("hi");
+                    setIsDropdownOpen(false);
+                  }}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                >
+                  हिंदी
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-      </nav>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl sm:text-7xl font-bold mb-8">
-            Your Legal Questions,
-            <br />
-            Answered Instantly
-          </h1>
-          <p className="text-xl mb-12 text-gray-300 max-w-3xl mx-auto">
-            {t.benefits}
-          </p>
+      <div 
+      style={{padding:"0rem 5rem"}}
+      >
+        <div
+        style={{padding:"5rem 5rem"}}
+        >
+          
+      {/* <AuroraBackground>
+      <motion.div
+        initial={{ opacity: 0.0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.3,
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        className="relative flex flex-col gap-4 items-center justify-center px-4"
+      > */}
+        <section className="py-20 text-center px-4 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('./img2.jpg')", borderRadius:"1rem" }}
+        >
+        
+        <h1 className="text-4xl text-white sm:text-6xl font-bold mb-6">
+          Your Legal Questions,
+          <br />
+          Answered Instantly
+        </h1>
+        <p className="text-white text-gray-600 mb-10 max-w-2xl mx-auto">{t.benefits}</p>
 
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder={t.search}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <Search className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            </div>
+        {/* Search */}
+        <div className="max-w-xl mx-auto mb-10">
+          <div className="relative">
+            <input
+            
+              type="text"
+              placeholder={t.search}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full text-white px-5 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500"
+            />
+            <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
+        </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="flex items-center gap-2 px-6 py-3 bg-blue-600 rounded-full hover:bg-blue-700 transition-colors">
-              <MessageSquare size={20} />
-              {t.talk}
-            </button>
-            <button className="flex items-center gap-2 px-6 py-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors">
-              <FileText size={20} />
-              {t.draft}
-            </button>
-            <button className="flex items-center gap-2 px-6 py-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors">
-              <Upload size={20} />
-              {t.upload}
-            </button>
-          </div>
+        {/* Buttons */}
+        <div className="flex flex-wrap justify-center gap-4">
+          <button className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700">
+            <MessageSquare size={20} />
+            {t.talk}
+          </button>
+          <button className="flex items-center gap-2 px-6 py-3 bg-gray-100 rounded-full hover:bg-gray-200">
+            <FileText size={20} />
+            {t.draft}
+          </button>
+          <button className="flex items-center gap-2 px-6 py-3 bg-gray-100 rounded-full hover:bg-gray-200">
+            <Upload size={20} />
+            {t.upload}
+          </button>
         </div>
       </section>
+      {/* </motion.div>
+    </AuroraBackground> */}
+    </div>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-black">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">{t.journey}</h2>
-          <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
-            {t.journeyDesc}
-          </p>
-        </div>
+      <section className="py-20 bg-gray-50 text-center px-4">
+        <h2 className="text-3xl font-semibold mb-4">{t.journey}</h2>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">{t.journeyDesc}</p>
       </section>
 
       {/* Testimonials Section */}
       <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-4 text-center">
-            {t.testimonials}
-          </h2>
-          <p className="text-xl text-gray-300 mb-12 text-center">
-            {t.testimonialsDesc}
-          </p>
+        <h2 className="text-3xl font-semibold text-center mb-4">{t.testimonials}</h2>
+        <p className="text-lg text-gray-600 text-center mb-10">{t.testimonialsDesc}</p>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Rajesh Kumar",
-                role: "Business Owner",
-                image:
-                  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces",
-                quote: "The AI Lawyer made my legal process so much easier!",
-              },
-              {
-                name: "Anjali Sharma",
-                role: "Legal Consultant",
-                image:
-                  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces",
-                quote: "I was able to draft my notice in minutes!",
-              },
-              {
-                name: "Vikram Singh",
-                role: "Startup Founder",
-                image:
-                  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces",
-                quote: "The Document Analysis feature saved me hours of work!",
-              },
-            ].map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white/5 rounded-2xl p-6 backdrop-blur-sm"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className="fill-yellow-500 text-yellow-500"
-                    />
-                  ))}
-                </div>
-                <p className="text-lg mb-6">"{testimonial.quote}"</p>
-                <div className="flex items-center gap-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full"
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[
+            {
+              name: "Rajesh Kumar",
+              role: "Business Owner",
+              image:
+                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces",
+              quote: "The AI Lawyer made my legal process so much easier!",
+            },
+            {
+              name: "Anjali Sharma",
+              role: "Legal Consultant",
+              image:
+                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces",
+              quote: "I was able to draft my notice in minutes!",
+            },
+            {
+              name: "Vikram Singh",
+              role: "Startup Founder",
+              image:
+                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces",
+              quote: "The Document Analysis feature saved me hours of work!",
+            },
+          ].map((testimonial, index) => (
+            <div key={index} className="bg-white border rounded-xl p-6 shadow-sm">
+              <div className="flex items-center gap-1 mb-3">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    size={16}
+                    className="fill-yellow-400 text-yellow-400"
                   />
-                  <div>
-                    <div className="font-semibold">{testimonial.name}</div>
-                    <div className="text-sm text-gray-400">
-                      {testimonial.role}
-                    </div>
-                  </div>
+                ))}
+              </div>
+              <p className="text-gray-800 mb-4">"{testimonial.quote}"</p>
+              <div className="flex items-center gap-4">
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-12 h-12 rounded-full"
+                />
+                <div>
+                  <div className="font-semibold">{testimonial.name}</div>
+                  <div className="text-sm text-gray-500">{testimonial.role}</div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
+      </div>
 
       {/* Footer */}
-      <footer className="bg-black/50 backdrop-blur-sm py-12 px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+      <footer   className="bg-gray-300 py-12 px-4 text-sm text-gray-700">
+        <div className="flex flex-wrap justify-center gap-6 mx-4 my-4 text-center">
           <div>
-            <h3 className="font-semibold mb-4">Company</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Careers
-                </a>
-              </li>
+            <h3 className="font-semibold mb-2">Company</h3>
+            <ul>
+              <li><a href="#" className="hover:text-blue-600">About Us</a></li>
+              <li><a href="#" className="hover:text-blue-600">Contact</a></li>
+              <li><a href="#" className="hover:text-blue-600">Careers</a></li>
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Help Center
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  User Guide
-                </a>
-              </li>
+            <h3 className="font-semibold mb-2">Resources</h3>
+            <ul>
+              <li><a href="#" className="hover:text-blue-600">Blog</a></li>
+              <li><a href="#" className="hover:text-blue-600">Help Center</a></li>
+              <li><a href="#" className="hover:text-blue-600">User Guide</a></li>
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Cookie Policy
-                </a>
-              </li>
+            <h3 className="font-semibold mb-2">Legal</h3>
+            <ul>
+              <li><a href="#" className="hover:text-blue-600">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-blue-600">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-blue-600">Cookie Policy</a></li>
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-4">Connect</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Twitter
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Facebook
-                </a>
-              </li>
+            <h3 className="font-semibold mb-2">Connect</h3>
+            <ul>
+              <li><a href="#" className="hover:text-blue-600">Twitter</a></li>
+              <li><a href="#" className="hover:text-blue-600">LinkedIn</a></li>
+              <li><a href="#" className="hover:text-blue-600">Facebook</a></li>
             </ul>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 text-center text-gray-400">
-          <p>&copy; 2024 FairlySettled. All rights reserved.</p>
+        <div className="text-center mt-10  pt-3 text-gray-500">
+          &copy; 2024 FairlySettled. All rights reserved.
         </div>
       </footer>
     </div>
