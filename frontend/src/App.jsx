@@ -3,14 +3,26 @@ import Home from "./pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
- import Chatbot from "./pages/Chatbot";
+import Chatbot from "./pages/Chatbot";
 import ProfilePage from "./pages/ProfilePage";
+import Layout from "./components/Layout";
+import UploadDoc from "./pages/UploadDoc";
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home/>
+      element: <Home />,
+    },
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/upload-doc",
+          element: <UploadDoc/>,
+        },
+      ],
     },
     { path: "/signup", element: <SignUp/> },
     { path: "/signin", element: <SignIn/> },
@@ -21,7 +33,6 @@ const App = () => {
 };
 
 export default App;
-
 
 
 
