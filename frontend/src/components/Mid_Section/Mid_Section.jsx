@@ -60,7 +60,7 @@ const MidSection = () => {
             <FileText size={20} />
             {t.draft}
           </button>
-          <button onClick={()=>navigate("//upload-doc")} className="flex items-center gap-2 px-6 py-3 bg-gray-100 rounded-full hover:bg-gray-200">
+          <button onClick={()=>navigate("/upload-doc")} className="flex items-center gap-2 px-6 py-3 bg-gray-100 rounded-full hover:bg-gray-200">
             <Upload size={20} />
             {t.upload}
           </button>
