@@ -7,6 +7,7 @@ import Chatbot from "./pages/Chatbot";
 import ProfilePage from "./pages/ProfilePage";
 import Layout from "./components/Layout";
 import UploadDoc from "./pages/UploadDoc";
+import DraftDocument from "./pages/DraftDocuments";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const App = () => {
           path: "/upload-doc",
           element: <UploadDoc/>,
         },
+        {
+          path:"/draft-doc",
+          element:< DraftDocument/>
+        }
       ],
     },
     { path: "/signup", element: <SignUp/> },
