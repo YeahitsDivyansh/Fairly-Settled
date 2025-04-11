@@ -1,7 +1,6 @@
-// Navbar.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { Search, Globe2, ChevronDown } from "lucide-react";
- import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
@@ -23,17 +22,20 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
   }, []);
 
   return (
-    <nav className="w-full shadow-[0_2px_4px_-1px_rgba(0,0,0,1)] bg-white sticky top-0 z-50">
+    <nav className="w-full bg-[#42536a] shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
-        <div className="text-lg font-semibold tracking-wide flex items-center gap-2">
+        
+        {/* Logo */}
+        <div className="text-lg font-semibold tracking-wide text-white flex items-center gap-2">
           <img
             src="https://cdn-icons-png.flaticon.com/512/9504/9504143.png"
             alt="NyayaSahayak Logo"
             className="w-6 h-6"
           />
-          NyayaSahayak
+          FairlySettled
         </div>
 
+        {/* Search */}
         <div className="flex-1 max-w-lg order-3 sm:order-2 sm:ml-[3rem]">
           <div className="relative">
             <input
@@ -41,42 +43,45 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-4 pr-10 py-2  rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-4 pr-10 py-2 rounded-full bg-[#415162] text-gray-100 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300" size={18} />
           </div>
         </div>
 
+        {/* Buttons & Language */}
         <div className="flex items-center gap-4 order-2 sm:order-3 ml-auto">
           <div className="flex items-center gap-4">
-          {user ? (
+            {user ? (
+              <button
+                onClick={() => navigate("/profile")}
+                className="text-gray-100 bg-[#4F6D8A] text-sm px-4 py-1.5 rounded-full hover:bg-blue-500 transition"
+              >
+                Profile
+              </button>
+            ) : (
+              <>
                 <button
-                  onClick={() => navigate("/profile")}
-                  className="text-black-800 bg-gray-500 text-sm px-4 py-1.5 rounded-full hover:bg-gray-300 hover:cursor-pointer"
+                  onClick={() => navigate("/signup")}
+                  className="bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-500 transition"
                 >
-                  Profile
+                  Sign up
                 </button>
-              ) : (
-                <>
-                  <button
-                    onClick={() => navigate("/signup")}
-                    className="bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-700 hover:cursor-pointer"
-                  >
-                    Sign up
-                  </button>
-                  <button
-                    onClick={() => navigate("/signin")}
-                    className="text-black-800 bg-gray-500 text-sm px-4 py-1.5 rounded-full hover:bg-gray-300 hover:cursor-pointer"
-                  >
-                    Log in
-                  </button>
-                </>
-              )}
+                <button
+                  onClick={() => navigate("/signin")}
+                  className="text-gray-100 bg-[#415162] border border-gray-500 hover:bg-white hover:text-black cursor-pointer text-sm px-4 py-1.5 rounded-full transition"
+                >
+                  Log in
+                </button>
+              </>
+            )}
+
+            {/* Language Dropdown */}
             <div className="relative inline-block text-left" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
                 type="button"
-                className="inline-flex justify-center items-center gap-1 text-sm text-gray-800 hover:bg-gray-100 px-3 py-1.5 rounded-full"
+                className="inline-flex justify-center items-center gap-1 text-sm text-gray-100 hover:bg-[#4b5d6c] px-3 py-1.5 rounded-full transition"
               >
                 <Globe2 size={18} />
                 <span>{language === "en" ? "English" : "हिंदी"}</span>
@@ -110,6 +115,7 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
             </div>
           </div>
         </div>
+
       </div>
     </nav>
   );
