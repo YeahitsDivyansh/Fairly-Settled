@@ -9,35 +9,34 @@ import Layout from "./components/Layout";
 import UploadDoc from "./pages/UploadDoc";
 import DraftDocument from "./pages/DraftDocuments";
 
+
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/",
-      element: <Layout />,
+      element: <Layout />, // Wrap everything in Layout for animation
       children: [
         {
-          path: "/upload-doc",
-          element: <UploadDoc/>,
+          index: true, // this means: path = "/"
+          element: <Home />,
         },
         {
-          path:"/draft-doc",
-          element:< DraftDocument/>
-        }
+          path: "upload-doc",
+          element: <UploadDoc />,
+        },
+        {
+          path: "draft-doc",
+          element: <DraftDocument />,
+        },
       ],
     },
-    { path: "/signup", element: <SignUp/> },
-    { path: "/signin", element: <SignIn/> },
-    { path: "/profile", element: <ProfilePage/> },
-    { path: "/chat", element: <Chatbot/> },
+    { path: "/signup", element: <SignUp /> },
+    { path: "/signin", element: <SignIn /> },
+    { path: "/profile", element: <ProfilePage /> },
+    { path: "/chat", element: <Chatbot /> },
   ]);
-  return <RouterProvider router={router}> </RouterProvider>;
+
+  return <RouterProvider router={router} />;
 };
 
 export default App;
-
-
-
