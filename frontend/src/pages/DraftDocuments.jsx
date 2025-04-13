@@ -44,7 +44,7 @@ const cardData = [
 
 const DraftDocument = () => {
   return (
-    <div className="min-h-screen px-10 py-10  bg-gray-300">
+    <div className="min-h-screen px-10 py-10  bg-[#F6F1DE]">
       <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-4 gap-6 place-items-center">
         {cardData.map((doc, index) => (
           <Card
@@ -52,7 +52,9 @@ const DraftDocument = () => {
             className="w-full max-w-[380px] p-4 bg-gray-200 mb-6 transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl cursor-pointer rounded-2xl"
           >
             <CardHeader>
-              <CardTitle className="text-xl font-semibold">{doc.title}</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                {doc.title}
+              </CardTitle>
               <CardDescription>{doc.desc}</CardDescription>
             </CardHeader>
             <CardContent>
@@ -65,16 +67,15 @@ const DraftDocument = () => {
               </div>
             </CardContent>
             <CardFooter className="flex justify-center">
-                <Button
-                   className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white 
+              <Button
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white 
                     hover:from-indigo-600 hover:to-blue-600 
                     hover:scale-105 transition-transform duration-300 
                     cursor-pointer shadow-md"
-                >
+              >
                 Generate
-                </Button>
+              </Button>
             </CardFooter>
-
           </Card>
         ))}
       </div>
