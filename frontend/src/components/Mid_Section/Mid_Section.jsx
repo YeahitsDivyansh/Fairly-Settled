@@ -2,7 +2,32 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "@/components/TranslationContext/TranslationContext";
 import { motion } from "framer-motion";
+// ✅ Sahi import (sab ikathha ek line me)
 import { Search, MessageSquare, FileText, Upload, Star } from "lucide-react";
+
+const features = [
+  {
+    title: "A Cost-Effective, Results-Driven Model",
+    brief:
+      "Unlike traditional legal solutions, Agility AI works on a percentage-based model, meaning we only take a small share of the legal costs.",
+    detail:
+      "This ensures that you only pay for the results we help deliver, making our services affordable for individuals and law firms alike. We are the first in the country to offer this type of pay-for-performance model, which sets us apart and ensures that justice remains within reach for all.",
+  },
+  {
+    title: "Revolutionizing Legal Services with Innovation",
+    brief:
+      "At Agility AI, we’re committed to making justice faster, smarter, and more affordable for everyone. ",
+    detail:
+      "By integrating cutting-edge AI technology into every step of the legal process — from case filing to document generation and real-time case tracking — we eliminate the inefficiencies that have long plagued the legal system. Our innovative platform streamlines workflows, helping legal professionals and consumers save both time and money.",
+  },
+  {
+    title: "Faster Justice, Lower Costs",
+    brief:
+      "Our AI-powered platform cuts down on the time it takes to file cases, generate documents, and track progress.",
+    detail:
+      " By automating routine tasks, we allow legal professionals to focus on what truly matters — strategy, client interaction, and case resolution. For consumers, this means faster access to justice at a fraction of the cost. Agility AI is your partner in legal innovation, delivering results that make a real difference, while keeping expenses low.",
+  },
+];
 
 const MidSection = () => {
   const navigate = useNavigate();
@@ -19,6 +44,8 @@ const MidSection = () => {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.6 } },
   };
+
+  const [expandedIndex, setExpandedIndex] = useState(null);
 
   return (
     <div className="px-4 bg-[#F6F1DE] pt-15 md:px-20">
@@ -105,21 +132,67 @@ const MidSection = () => {
           </motion.button>
         </motion.div>
       </motion.section>
-
       {/* Features Section */}
+      {/* Features Section - Updated Company Intro */}
+
       <motion.section
-        className="py-16 text-center bg-gray-50 px-4 mt-8 rounded-xl"
+        className="py-16 bg-white px-4 rounded-xl mt-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeUp}
       >
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">{t.journey}</h2>
-        <p className="text-md sm:text-lg text-gray-600 max-w-2xl mx-auto">
-          {t.journeyDesc}
-        </p>
-      </motion.section>
+        <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
+          Your legal ally, powered by AI
+        </h2>
 
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto text-left">
+          {features.map((item, idx) => (
+            <motion.div
+              key={idx}
+              className="relative bg-white/30 backdrop-blur-xl border border-white/40 shadow-2xl rounded-3xl overflow-hidden hover:shadow-[0_15px_50px_rgba(0,0,0,0.25)] transition-all duration-300 cursor-pointer group"
+              whileHover={{ scale: 1.05 }}
+              variants={fadeUp}
+              transition={{ delay: 0.2 * idx }}
+              onClick={() =>
+                setExpandedIndex(expandedIndex === idx ? null : idx)
+              }
+            >
+              {/* Glowing animated border */}
+              <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
+
+              {/* Card content */}
+              <div className="relative z-10 p-6">
+                <div className="flex items-center gap-3 mb-4 text-gray-800">
+                  {item.icon}
+                  <h3 className="text-xl font-semibold">{item.title}</h3>
+                </div>
+
+                <p className="text-gray-700 mb-2 text-sm sm:text-base">
+                  {item.brief}
+                </p>
+
+                {expandedIndex === idx && (
+                  <p className="text-gray-600 text-sm sm:text-base transition-all duration-300">
+                    {item.detail}
+                  </p>
+                )}
+                <motion.button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setExpandedIndex(expandedIndex === idx ? null : idx);
+                  }}
+                  className="bg-[#3E3F5B] text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-500 transition"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {expandedIndex === idx ? "Read Less" : "Read More"}
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
       {/* Testimonials Section */}
       <motion.section
         className="py-20 px-4"
