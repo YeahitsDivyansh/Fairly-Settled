@@ -4,6 +4,7 @@ import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Layout = () => {
   const [searchQuery, setSearchQuery] = useState("");
