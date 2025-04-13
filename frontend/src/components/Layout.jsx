@@ -3,9 +3,7 @@ import { useTranslation } from "@/components/TranslationContext/TranslationConte
 import Navbar from "./Navbar/Navbar";
 import Footer from "./footer/Footer";
 import { Outlet, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-
-
+import { AnimatePresence } from "framer-motion";
 
 const Layout = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,8 +11,7 @@ const Layout = () => {
   const location = useLocation();
 
   return (
-    <div >
-      
+    <div>
       <Navbar
         language={language}
         setLanguage={setLanguage}
@@ -35,7 +32,6 @@ const Layout = () => {
       </AnimatePresence>
 
       <Footer />
-    
     </div>
   );
 };
