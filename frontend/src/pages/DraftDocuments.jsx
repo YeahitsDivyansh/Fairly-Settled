@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 const cardData = [
   {
@@ -44,39 +45,63 @@ const cardData = [
 
 const DraftDocument = () => {
   return (
-    <div className="min-h-screen px-10 py-10  bg-[#F6F1DE]">
-      <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-4 gap-6 place-items-center">
+    <div className="min-h-screen px-10 py-10 bg-[#F6F1DE]">
+      <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 place-items-center">
         {cardData.map((doc, index) => (
-          <Card
+          <motion.div
             key={index}
-            className="w-full max-w-[380px] p-4 bg-gray-200 mb-6 transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl cursor-pointer rounded-2xl"
+            whileHover={{
+              scale: 1.04,
+              rotateX: 5,
+              rotateY: 3,
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            className="w-full max-w-[360px]"
           >
-            <CardHeader>
-              <CardTitle className="text-xl font-semibold">
-                {doc.title}
-              </CardTitle>
-              <CardDescription>{doc.desc}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="w-full h-[180px] overflow-hidden rounded-xl">
-                <img
-                  src={doc.img}
-                  alt={doc.title}
-                  className="w-full h-full object-cover"
-                />
+            <Card className="relative bg-white/30 backdrop-blur-xl border border-white/40 shadow-2xl rounded-3xl overflow-hidden hover:shadow-[0_15px_50px_rgba(0,0,0,0.25)] transition-all duration-300">
+              {/* glowing gradient border */}
+              <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-300 to-gray-500 opacity-30 blur-xl animate-pulse"></div>
+
+              {/* Card content */}
+              <div className="relative z-10 p-4">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xl font-bold text-gray-900">
+                    {doc.title}
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-800">
+                    {doc.desc}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="w-full h-[180px] rounded-xl overflow-hidden shadow-md perspective-[1000px]">
+                    <motion.img
+                      src={doc.img}
+                      alt={doc.title}
+                      className="w-full h-full object-cover rounded-xl"
+                      whileHover={{
+                        scale: 1.15,
+                        rotateX: -5,
+                        rotateY: 5,
+                        z: 60,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 18,
+                      }}
+                      style={{ transformStyle: "preserve-3d" }}
+                    />
+                  </div>
+                </CardContent>
+
+                <CardFooter className="pt-4 flex justify-center">
+                  <Button className="bg-gradient-to-r from-gray-800 to-gray-600 text-white shadow-lg px-6 rounded-full transition-transform transform hover:scale-110  hover:shadow-xl">
+                    Generate
+                  </Button>
+                </CardFooter>
               </div>
-            </CardContent>
-            <CardFooter className="flex justify-center">
-              <Button
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white 
-                    hover:from-indigo-600 hover:to-blue-600 
-                    hover:scale-105 transition-transform duration-300 
-                    cursor-pointer shadow-md"
-              >
-                Generate
-              </Button>
-            </CardFooter>
-          </Card>
+            </Card>
+          </motion.div>
         ))}
       </div>
     </div>
