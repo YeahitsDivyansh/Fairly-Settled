@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "@/components/TranslationContext/TranslationContext";
 import Navbar from "./Navbar/Navbar";
-import Footer from "./footer/Footer";
+import Footer from "./Footer/Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
