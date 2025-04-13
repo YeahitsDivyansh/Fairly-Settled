@@ -1,0 +1,24 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import {getAuth} from "firebase/auth";
+import {getFirestore} from "firebase/firestore";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBnMcdSC5sY54nrFwPMujR0r03afejUJCY",
+    authDomain: "fairly-settled.firebaseapp.com",
+    projectId: "fairly-settled",
+    storageBucket: "fairly-settled.firebasestorage.app",
+    messagingSenderId: "446688572277",
+    appId: "1:446688572277:web:20287fa776ac8de685993c",
+    measurementId: "G-YHC8QQMERS"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+export const auth=getAuth();
+export const db=getFirestore(app);
+export default app;

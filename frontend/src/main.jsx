@@ -1,17 +1,15 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom"; // 👈 import this
-import "./index.css";
-import App from "./App.jsx";
-import {TranslationProvider} from "@/components/TranslationContext/TranslationContext";
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+import { AuthProvider } from './context/AuthContext.jsx';
+import { TranslationProvider } from "@/components/TranslationContext/TranslationContext";
 
+ 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <BrowserRouter>
-    <TranslationProvider>
+
+  <TranslationProvider>
+    <AuthProvider>
       <App />
-      </TranslationProvider>
-    </BrowserRouter>
-    
-  </StrictMode>
+    </AuthProvider>
+  </TranslationProvider>
 );

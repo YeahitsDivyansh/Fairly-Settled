@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import { useTranslation } from "@/components/TranslationContext/TranslationContext";
 import Navbar from "./Navbar/Navbar";
-import Footer from "./footer/Footer"; // Import the Footer component
-import { Outlet } from "react-router-dom";
+import Footer from "./footer/Footer";
+import { Outlet, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+
+
 
 const Layout = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const { language, setLanguage } = useTranslation();
+  const location = useLocation();
+
   return (
-    <div>
-      <Navbar /> {/* Navbar remains persistent */}
-      <Outlet /> {/* Nested routes will be rendered here */}
-      <Footer /> {/* Footer remains persistent */}
+    <div >
+      
+      <Navbar
+        language={language}
+        setLanguage={setLanguage}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={location.pathname}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+        >
+          <Outlet />
+        </motion.div>
+      </AnimatePresence>
+
+      <Footer />
+    
     </div>
   );
 };

@@ -5,22 +5,23 @@ import { ChevronDown } from "lucide-react";
 
 const UploadDoc = () => {
   return (
+    <div className="bg-gray-300">
     <div className="p-6 max-w-5xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Document Analyzer</h1>
 
       {/* Upload Box */}
-      <div className="border-dashed border-2 border-gray-300 rounded-xl p-8 text-center bg-gray-50 mb-8">
-        <p className="mb-4 text-gray-600">
+      <div className="border-dashed border-2 border-black rounded-xl p-8 text-center bg-gray-50 mb-8">
+        <p className="mb-4 text-black">
           Drag and drop files here, or browse
         </p>
-        <p className="text-sm text-gray-400 mb-4">
+        <p className="text-sm text-black mb-4">
           Supported file types: PDF, DOCX, TXT. Maximum file size: 20MB
         </p>
         <Button className=" bg-gray-300">Browse Files</Button>
       </div>
 
       {/* Summary Section */}
-      <Card className="p-6">
+      <Card className=" bg-white p-6">
         <CardContent className="flex flex-col md:flex-row justify-between items-center">
           <div className="w-full md:w-2/3 mb-6 md:mb-0">
             <h2 className="text-xl font-semibold mb-2">Analysis Summary</h2>
@@ -41,7 +42,7 @@ const UploadDoc = () => {
       </Card>
 
       {/* Details Table */}
-      <div className="mt-8 border border-gray-200 rounded-lg overflow-hidden">
+      <div className="mt-8 bg-white border border-black rounded-lg overflow-hidden">
         <div className="grid grid-cols-2 gap-4 p-4 border-b bg-gray-100 font-medium">
           <div>Key Insights</div>
           <div>
@@ -73,7 +74,7 @@ const UploadDoc = () => {
 
         {/* Dropdown with Lucide icon */}
         <div className="relative w-full mb-6">
-          <select className="appearance-none w-full p-2 pr-10 border border-gray-300 rounded-lg focus:outline-none">
+          <select className="appearance-none w-full bg-white p-2 pr-10 border border-black rounded-lg focus:outline-none">
             <option>Select a clause</option>
             <option>Confidentiality Clause</option>
             <option>Liability Clause</option>
@@ -92,11 +93,12 @@ const UploadDoc = () => {
         </div>
 
         {/* Clause Description */}
-        <p className="mt-4 text-gray-700">
+        <p className="mt-4 text-black">
           Both parties agree to keep any sensitive information exchanged during
           this agreement confidential.
         </p>
       </div>
+    </div>
     </div>
   );
 };
