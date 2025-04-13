@@ -23,9 +23,8 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
   }, []);
 
   return (
-    <nav className="w-full bg-[#42536a] shadow-md sticky top-0 z-50">
+    <nav className="w-full bg-[#6F826A] shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
-        
         {/* Logo */}
         <div className="text-lg font-semibold tracking-wide text-white flex items-center gap-2">
           <img
@@ -33,7 +32,7 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
             alt="NyayaSahayak Logo"
             className="w-6 h-6"
           />
-          FairlySettled
+          <a href="/"> FairlySettled</a>
         </div>
 
         {/* Search */}
@@ -49,9 +48,12 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-4 pr-10 py-2 rounded-full bg-[#415162] text-gray-100 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full pl-4 pr-10 py-2 rounded-full bg-[#3E3F5B] text-gray-100 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300" size={18} />
+            <Search
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300"
+              size={18}
+            />
           </motion.div>
         </div>
 
@@ -71,7 +73,7 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
               <>
                 <motion.button
                   onClick={() => navigate("/signup")}
-                  className="bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-500 transition"
+                  className="bg-[#3E3F5B] text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-500 transition"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -79,7 +81,7 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
                 </motion.button>
                 <motion.button
                   onClick={() => navigate("/signin")}
-                  className="text-gray-100 bg-[#415162] border border-gray-500 hover:bg-white hover:text-black cursor-pointer text-sm px-4 py-1.5 rounded-full transition"
+                  className="text-gray-100 bg-[#3E3F5B] border border-gray-500 hover:bg-white hover:text-black cursor-pointer text-sm px-4 py-1.5 rounded-full transition"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -134,7 +136,6 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
             </div>
           </div>
         </div>
-
       </div>
     </nav>
   );

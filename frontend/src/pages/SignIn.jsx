@@ -13,7 +13,11 @@ const SignIn = () => {
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       console.log(user);
       console.log("User logged in Successfully");
       navigate("/");
@@ -25,12 +29,18 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-300">
+    <div
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+      }}
+      className="flex object-fit justify-center items-center min-h-screen bg-no-repeat bg-cover bg-center"
+    >
       <form
         onSubmit={handleSignIn}
-        className="bg-white p-6 rounded-lg shadow-md w-96"
+        className="bg-white/40 backdrop-blur-md p-6 rounded-lg shadow-md w-96"
       >
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+        <h2 className="text-2xl font-semibold text-white mb-4 text-center">
           Sign In
         </h2>
         <input
@@ -55,7 +65,10 @@ const SignIn = () => {
         </button>
         <p className="mt-1 text-md text-center text-gray-600">
           New user?{" "}
-          <Link to="/signup" className="text-blue-600 hover:underline font-medium">
+          <Link
+            to="/signup"
+            className="text-blue-600 hover:underline font-medium"
+          >
             Register Here
           </Link>
         </p>

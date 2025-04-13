@@ -21,7 +21,7 @@ const MidSection = () => {
   };
 
   return (
-    <div className="px-4 bg-gray-300 pt-15 md:px-20">
+    <div className="px-4 bg-[#F6F1DE] pt-15 md:px-20">
       {/* Hero Section */}
       <motion.section
         initial="hidden"
@@ -83,7 +83,10 @@ const MidSection = () => {
             className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
             onClick={() => navigate("/draft-doc")}
           >
-            <FileText size={20} className="text-gray-700 group-hover:text-white" />
+            <FileText
+              size={20}
+              className="text-gray-700 group-hover:text-white"
+            />
             {t.draft}
           </motion.button>
 
@@ -93,7 +96,10 @@ const MidSection = () => {
             onClick={() => navigate("/upload-doc")}
             className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
           >
-            <Upload size={20} className="text-gray-700 group-hover:text-white" />
+            <Upload
+              size={20}
+              className="text-gray-700 group-hover:text-white"
+            />
             {t.upload}
           </motion.button>
         </motion.div>
