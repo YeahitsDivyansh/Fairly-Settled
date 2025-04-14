@@ -190,7 +190,7 @@ const Chat = () => {
             placeholder="Type your message..."
             className="flex-1 p-2 bg-transparent border border-white text-white rounded-full focus:outline-none focus:ring focus:ring-white/50"
           />
-          <button className="w-11 h-11 flex items-center justify-center text-white bg-[#27391C] rounded-full hover:bg-blue-700 transition">
+          <button className="w-11 h-11 flex items-center justify-center text-white bg-[#67AE6E] rounded-full hover:bg-blue-700 transition">
             <span className="material-icons text-xl">gavel</span>
           </button>
         </div>

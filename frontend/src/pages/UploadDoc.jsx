@@ -1,13 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import axios from "axios";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+ 
 
 const UploadDoc = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [summary, setSummary] = useState("");
+  const [loading, setLoading] = useState(false);
+
+
+  const sendFile = async () => {
+    if (!selectedFile) {
+      alert("Please select a file !")
+      return;
+    }
+
+      
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://textsummarization-server-992692416004.us-central1.run.app/summarize/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Summary:", response.data.summary);
+      setSummary(response.data.summary);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    setLoading(false);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) setSelectedFile(file);
+  };
+
+
   return (
+
     <div className="bg-[#F6F1DE]">
+      <style>
+        {`
+      .blockquote-list li {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.25;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 0;
+        color: #1f2937;
+      }
+    `}
+      </style>
       <div className="p-6 max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Document Analyzer</h1>
+        <h1 className="text-3xl font-bold mb-3">Document Analyzer</h1>
 
         {/* Upload Box */}
         <div className="border-dashed border-2 border-black rounded-xl p-8 text-center bg-gray-50 mb-8">
@@ -15,10 +72,73 @@ const UploadDoc = () => {
           <p className="text-sm text-black mb-4">
             Supported file types: PDF, DOCX, TXT. Maximum file size: 20MB
           </p>
-          <Button className=" bg-gray-300">Browse Files</Button>
+
+          <label className="inline-block px-4 py-2 bg-gray-500 text-white font-semibold rounded cursor-pointer hover:bg-gray-700 mr-4">
+            Browse Files
+            <input type="file" className="hidden" onChange={handleFileChange} />
+          </label>
+
+          <button
+            onClick={sendFile}
+            disabled={loading}
+            className="inline-block mt-4 px-6 py-2 bg-yellow-600 text-white font-semibold rounded hover:bg-yellow-700 disabled:opacity-50 cursor-pointer"
+          >
+            {loading ? "Summarizing" : "Summarize"}
+          </button>
+
+          {selectedFile && (
+            <p className="text-black mt-2 font-medium">
+              Selected File: {selectedFile.name}
+            </p>
+          )}
         </div>
 
         {/* Summary Section */}
+        {summary ? (
+          <>
+            <h1 className="text-3xl font-bold ">Generated Summary</h1>
+
+            <div className="bg-white border border-black rounded-lg px-4 py-9 mt-3 mb-6 whitespace-pre-wrap">
+
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  p: ({ children }) => (
+                    <p className="text-base my-0 leading-tight text-gray-800">{children}</p>
+                  ),
+                  blockquote: ({ children }) => (
+                    <blockquote className="relative blockquote-list bg-gray-50 border-l-4 border-blue-500 pl-6 rounded-lg shadow-sm mb-8">
+                      <ul>
+                        {children}
+                      </ul>
+                    </blockquote>
+                  ),
+                  li: ({ children }) => (
+                    <li className="text-2xl font-semibold leading-0 m-0 p-0">{children}</li>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="m-0 p-0 pl-3 leading-1">{children}</ol>
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="m-0 p-0 pl-2 leading-1">{children}</ul>
+                  ),
+                }}
+              >
+                {summary}
+              </ReactMarkdown>
+
+            </div>
+          </>
+        ) :
+          <>
+            <h1 className="text-3xl font-bold ">Generated Summary</h1>
+
+            <div className="bg-white border border-black rounded-lg px-4 py-9 mt-3 mb-6 whitespace-pre-wrap">
+              <p className="text-base leading-tight text-center">{loading?"Summarizing.Please wait...":"Please select a file to generate summary."}</p>
+            </div>
+
+          </>}
+
         <Card className=" bg-white p-6">
           <CardContent className="flex flex-col md:flex-row justify-between items-center">
             <div className="w-full md:w-2/3 mb-6 md:mb-0">
