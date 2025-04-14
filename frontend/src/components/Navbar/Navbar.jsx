@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Search, Globe2, ChevronDown } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
+import { useUserAuth } from "@/context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // Import motion from Framer Motion
 
 const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { user } = useAuth();
+  const { userData } = useUserAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,22 +57,22 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
           </motion.div>
         </div>
 
-        {/* Buttons & Language */}
+        {/* Buttons & Language */} 
         <div className="flex items-center gap-4 order-2 sm:order-3 ml-auto">
           <div className="flex items-center gap-4">
-            {user ? (
+            {userData ? (
               <motion.button
                 onClick={() => navigate("/profile")}
                 className="text-gray-100 bg-[#4F6D8A] text-sm px-4 py-1.5 rounded-full hover:bg-blue-500 transition"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Profile
+                {userData.username}
               </motion.button>
             ) : (
               <>
                 <motion.button
-                  onClick={() => navigate("/signup")}
+                  onClick={() => navigate("/phonesignup")}
                   className="bg-[#3E3F5B] text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-500 transition"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -80,7 +80,7 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
                   Sign up
                 </motion.button>
                 <motion.button
-                  onClick={() => navigate("/signin")}
+                  onClick={() => navigate("/phonesignin")}
                   className="text-gray-100 bg-[#3E3F5B] border border-gray-500 hover:bg-white hover:text-black cursor-pointer text-sm px-4 py-1.5 rounded-full transition"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

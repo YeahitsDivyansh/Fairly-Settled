@@ -1,13 +1,13 @@
 import "./App.css";
 import Home from "./pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
 import Chatbot from "./pages/Chatbot";
 import ProfilePage from "./pages/ProfilePage";
 import Layout from "./components/Layout";
 import UploadDoc from "./pages/UploadDoc";
 import DraftDocument from "./pages/DraftDocuments";
+import PhoneSignUp from "./pages/PhoneSignup";
+import PhoneSignIn from "./pages/PhoneSignin";
 
 
 const App = () => {
@@ -30,8 +30,8 @@ const App = () => {
         },
       ],
     },
-    { path: "/signup", element: <SignUp /> },
-    { path: "/signin", element: <SignIn /> },
+    { path: "/phonesignup", element: <PhoneSignUp /> },
+    { path: "/phonesignin", element: <PhoneSignIn/> },
     { path: "/profile", element: <ProfilePage /> },
     { path: "/chat", element: <Chatbot /> },
   ]);

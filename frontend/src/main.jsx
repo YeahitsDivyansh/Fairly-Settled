@@ -1,15 +1,16 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { AuthProvider } from './context/AuthContext.jsx';
-import { TranslationProvider } from "@/components/TranslationContext/TranslationContext";
 
- 
+import { TranslationProvider } from "@/components/TranslationContext/TranslationContext";
+import { UserAuthContextProvider } from './context/UserAuthContext';
+
+
 createRoot(document.getElementById("root")).render(
 
   <TranslationProvider>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+      <UserAuthContextProvider>
+        <App />
+      </UserAuthContextProvider>
   </TranslationProvider>
 );
