@@ -4,8 +4,7 @@ import { ChevronDown } from "lucide-react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-// import "./docs.css"
-
+ 
 
 const UploadDoc = () => {
   const [selectedFile, setSelectedFile] = useState(null);
