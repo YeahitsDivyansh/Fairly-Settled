@@ -8,13 +8,7 @@ const Chat = () => {
   }, []);
 
   return (
-    <div
-      className="flex flex-col min-h-screen justify-center items-center relative bg-cover object-contain bg-center"
-      style={{
-        backgroundImage:
-          "url('https://img.freepik.com/free-photo/drawings-about-legal-profession_23-2151190600.jpg?t=st=1744541400~exp=1744545000~hmac=59179d9ba0f8de8e6013c150f0755309aadbe1079c7ce2254d4545b76b9ae3a0&w=1380')",
-      }}
-    >
+    <div className="bg-[#9ec6f3cf] flex flex-col min-h-screen justify-center items-center relative">
       {/* Overlay */}
       <div className="absolute inset-0 bg-opacity-30 z-0" />
 
@@ -22,7 +16,7 @@ const Chat = () => {
       <div className="relative z-10 w-full mx-auto pt-2 px-8 pb-28 flex flex-col flex-grow overflow-y-auto">
         <div className="w-full mx-auto space-y-4">
           {/* Receiver Message */}
-          <div className="flex items-start space-x-2">
+          <div className="flex items-start space-x-2 mt-3">
             <img
               src="./ai_lawyer.png"
               alt="AI"
@@ -60,7 +54,7 @@ const Chat = () => {
           {/* Sender Message */}
           <div className="flex items-start justify-end space-x-2">
             <div className="flex flex-col items-end">
-              <div className="bg-[#67AE6E] text-white rounded-lg rounded-tr-none p-3 shadow-md max-w-md">
+              <div className="bg-[#5C7285] text-white rounded-lg rounded-tr-none p-3 shadow-md max-w-md">
                 <p>
                   Amazing work! I'm impressed with your projects and technical
                   skills.
@@ -109,7 +103,7 @@ const Chat = () => {
           {/* Repeating Sender Message */}
           <div className="flex items-start justify-end space-x-2">
             <div className="flex flex-col items-end">
-              <div className="bg-[#67AE6E] text-white rounded-lg rounded-tr-none p-3 shadow-md max-w-md">
+              <div className="bg-[#5C7285] text-white rounded-lg rounded-tr-none p-3 shadow-md max-w-md">
                 <p>
                   Amazing work! I'm impressed with your projects and technical
                   skills.
@@ -148,7 +142,7 @@ const Chat = () => {
       </div>
 
       {/* Chat Input */}
-      <div className="fixed bottom-0 left-0 w-full z-20 bg-[#6F826A] border-t p-4">
+      <div className="fixed bottom-0 left-0 w-full z-20 bg-[#1F2937] border-t p-4">
         <div className="max-w-4xl mx-auto flex items-center space-x-4">
           <button className="p-2 text-white hover:text-gray-300 transition">
             <svg
@@ -190,7 +184,7 @@ const Chat = () => {
             placeholder="Type your message..."
             className="flex-1 p-2 bg-transparent border border-white text-white rounded-full focus:outline-none focus:ring focus:ring-white/50"
           />
-          <button className="w-11 h-11 flex items-center justify-center text-white bg-[#67AE6E] rounded-full hover:bg-blue-700 transition">
+          <button className="w-11 h-11 flex items-center justify-center text-white bg-[#5C7285] rounded-full hover:bg-blue-700 transition">
             <span className="material-icons text-xl">gavel</span>
           </button>
         </div>

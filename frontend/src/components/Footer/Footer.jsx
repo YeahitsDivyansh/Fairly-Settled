@@ -23,7 +23,7 @@ const fadeUp = {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#6F826A] text-gray-200 pt-16 pb-8 px-6">
+    <footer className="bg-[#1F2937] text-gray-200 pt-16 pb-8 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_1.5fr] gap-x-12 gap-y-10">
         {/* Company Info */}
         <motion.div
@@ -130,7 +130,7 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Your email address"
-              className="px-4 py-2 rounded-full border border-gray-600 bg-[#3E3F5B] text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm"
+              className="px-4 py-2 rounded-full border border-gray-600 bg-[#3E3F5B] text-white placeholder-white focus:outline-none focus:ring-2 w-full text-sm"
             />
             <button
               type="submit"
@@ -163,13 +163,13 @@ const Footer = () => {
           &copy; 2024 FairlySettled. All rights reserved.
         </p>
         <div className="flex gap-5 mt-4 md:mt-0">
-          <a href="#" className="hover:text-[#F0F1C5] text-white transition">
+          <a href="#" className="hover:text-[#8F87F1] text-white transition">
             <FaTwitter size={24} />
           </a>
-          <a href="#" className="hover:text-[#F0F1C5] text-white transition">
+          <a href="#" className="hover:text-[#8F87F1] text-white transition">
             <FaLinkedin size={24} />
           </a>
-          <a href="#" className="hover:text-[#F0F1C5] text-white transition">
+          <a href="#" className="hover:text-[#8F87F1] text-white transition">
             <FaFacebookF size={24} />
           </a>
         </div>

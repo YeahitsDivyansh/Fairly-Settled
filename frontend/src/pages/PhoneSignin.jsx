@@ -3,9 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useUserAuth } from "../context/UserAuthContext";
-import { collection, query, where, getDocs } from "firebase/firestore"; // Add these
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-
 
 const PhoneSignin = () => {
   const [error, setError] = useState("");
@@ -17,14 +16,12 @@ const PhoneSignin = () => {
   const { setUpRecaptha } = useUserAuth();
   const [loading, setLoading] = useState(false);
 
-
   const getOtp = async (e) => {
     e.preventDefault();
-    console.log(number);
     setLoading(true);
+    setError("");
     if (!number) return setError("Please enter a valid phone number!");
     try {
-      // Step 1: Check if phone number is registered
       const q = query(collection(db, "Users"), where("phone", "==", number));
       const querySnapshot = await getDocs(q);
 
@@ -33,14 +30,13 @@ const PhoneSignin = () => {
         return;
       }
 
-      // Step 2: Send OTP if registered
       const response = await setUpRecaptha(number);
       setResult(response);
       setFlag(true);
     } catch (err) {
       setError(err.message);
       console.error(err);
-    } 
+    }
     setLoading(false);
   };
 
@@ -51,40 +47,32 @@ const PhoneSignin = () => {
 
     if (!otp) return setError("Please enter the OTP!");
     try {
-      const res = await result.confirm(otp); // OTP verification
-      const user = res.user;
-
-
+      const res = await result.confirm(otp);
       navigate("/");
     } catch (err) {
       setError(err.message);
     }
     setLoading(false);
   };
+
   return (
-    <div
-      style={{
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-      }}
-      className="flex object-fit justify-center items-center min-h-screen bg-no-repeat bg-cover bg-center"
-    >
-      {
-        !flag && (
-          <form
-            onSubmit={getOtp}
-            className="bg-white/40 backdrop-blur-md p-6 rounded-lg shadow-md w-96"
-          >
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-              Sign In
-            </h2>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100">
+      <form
+        onSubmit={flag ? verifyOtp : getOtp}
+        className="bg-blue-50  backdrop-blur-md border border-white/50 p-8 rounded-xl shadow-xl w-96"
+      >
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+          {flag ? "Verify OTP" : "Sign In"}
+        </h2>
 
-            {error && (
-              <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded">
-                {error}
-              </div>
-            )}
+        {error && (
+          <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded">
+            {error}
+          </div>
+        )}
 
+        {!flag ? (
+          <>
             <PhoneInput
               defaultCountry="IN"
               value={number}
@@ -96,19 +84,18 @@ const PhoneSignin = () => {
             <div className="mt-3 flex justify-center">
               <div id="recaptcha-container"></div>
             </div>
-
-
-
-
             <button
               type="submit"
               disabled={loading}
-              className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer 
-    ${loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
+              className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                loading
+                  ? "bg-blue-300 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
+              }`}
             >
               {loading ? "Loading..." : "Send OTP"}
             </button>
-            <p className="mt-1 text-md text-center text-gray-600">
+            <p className="mt-2 text-md text-center text-gray-700">
               New User?{" "}
               <Link
                 to="/phonesignup"
@@ -125,28 +112,9 @@ const PhoneSignin = () => {
                 Back to Home Page
               </Link>
             </p>
-          </form>
-        )
-      }
-
-      {
-        flag && (
-          <form
-            onSubmit={verifyOtp}
-            className="bg-white/40 backdrop-blur-md p-6 rounded-lg shadow-md w-96"
-          >
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-              Sign In
-            </h2>
-
-            {error && (
-              <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded">
-                {error}
-              </div>
-            )}
-
-
-
+          </>
+        ) : (
+          <>
             <input
               type="text"
               placeholder="Enter OTP"
@@ -156,16 +124,18 @@ const PhoneSignin = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer 
-    ${loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
+              className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                loading
+                  ? "bg-blue-300 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
+              }`}
             >
               {loading ? "Loading..." : "Verify"}
             </button>
-          </form>
-        )
-      }
-
-    </div >
+          </>
+        )}
+      </form>
+    </div>
   );
 };
 

@@ -45,7 +45,7 @@ const cardData = [
 
 const DraftDocument = () => {
   return (
-    <div className="min-h-screen px-10 py-10 bg-[#F6F1DE]">
+    <div className="min-h-screen px-10 py-10 bg-[#9ec6f3cf]">
       <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 place-items-center">
         {cardData.map((doc, index) => (
           <motion.div

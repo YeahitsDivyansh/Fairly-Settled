@@ -6,7 +6,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="w-full bg-[#6F826A] shadow-md sticky top-0 z-50">
+    <nav className="w-full bg-[#1F2937] shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
         {/* Logo */}
         <Link
@@ -16,7 +16,7 @@ export default function Navbar() {
           <img
             src="https://cdn-icons-png.flaticon.com/512/9504/9504143.png"
             alt="NyayaSahayak Logo"
-            className="w-6 h-6"
+            className="w-6 h-6 bg-white rounded-full p-0.5"
           />
           FairlySettled
         </Link>
