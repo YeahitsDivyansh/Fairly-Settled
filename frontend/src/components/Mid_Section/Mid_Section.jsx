@@ -48,7 +48,7 @@ const MidSection = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   return (
-    <div className="px-4 bg-[#F6F1DE] pt-15 md:px-20">
+    <div className="px-4 bg-[#9ec6f3cf] pt-15 md:px-20">
       {/* Hero Section */}
       <motion.section
         initial="hidden"
@@ -98,7 +98,7 @@ const MidSection = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 cursor-pointer transition duration-200"
+            className="flex items-center gap-2 px-6 py-3 bg-[#2563EB] text-white rounded-full hover:bg-blue-700 cursor-pointer transition duration-200"
             onClick={() => navigate("chat")}
           >
             <MessageSquare size={20} />

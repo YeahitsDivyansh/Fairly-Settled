@@ -23,14 +23,14 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
   }, []);
 
   return (
-    <nav className="w-full bg-[#6F826A] shadow-md sticky top-0 z-50">
+    <nav className="w-full bg-gray-800 shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
         {/* Logo */}
         <div className="text-lg font-semibold tracking-wide text-white flex items-center gap-2">
           <img
             src="https://cdn-icons-png.flaticon.com/512/9504/9504143.png"
             alt="NyayaSahayak Logo"
-            className="w-6 h-6"
+            className="w-6 h-6 bg-white rounded-full p-0.5"
           />
           <a href="/"> FairlySettled</a>
         </div>
@@ -48,22 +48,22 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-4 pr-10 py-2 rounded-full bg-[#3E3F5B] text-gray-100 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full pl-4 pr-10 py-2 rounded-full bg-gray-700 text-gray-100 placeholder-gray-300 focus:outline-none focus:ring-2"
             />
             <Search
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
               size={18}
             />
           </motion.div>
         </div>
 
-        {/* Buttons & Language */} 
+        {/* Buttons & Language */}
         <div className="flex items-center gap-4 order-2 sm:order-3 ml-auto">
           <div className="flex items-center gap-4">
             {userData ? (
               <motion.button
                 onClick={() => navigate("/profile")}
-                className="text-gray-100 bg-[#4F6D8A] text-sm px-4 py-1.5 rounded-full hover:bg-blue-500 transition"
+                className="text-white bg-blue-600 text-sm px-4 py-1.5 rounded-full hover:bg-blue-700 transition"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -73,7 +73,7 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
               <>
                 <motion.button
                   onClick={() => navigate("/phonesignup")}
-                  className="bg-[#3E3F5B] text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-500 transition"
+                  className="bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-700 transition"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -81,7 +81,7 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
                 </motion.button>
                 <motion.button
                   onClick={() => navigate("/phonesignin")}
-                  className="text-gray-100 bg-[#3E3F5B] border border-gray-500 hover:bg-white hover:text-black cursor-pointer text-sm px-4 py-1.5 rounded-full transition"
+                  className="text-white bg-gray-700 border border-gray-500 hover:bg-white hover:text-gray-900 cursor-pointer text-sm px-4 py-1.5 rounded-full transition"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -95,7 +95,7 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
               <motion.button
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
                 type="button"
-                className="inline-flex justify-center items-center gap-1 text-sm text-gray-100 hover:bg-[#4b5d6c] px-3 py-1.5 rounded-full transition"
+                className="inline-flex justify-center items-center gap-1 text-sm text-white hover:bg-gray-700 px-3 py-1.5 rounded-full transition"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

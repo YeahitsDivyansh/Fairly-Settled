@@ -4,21 +4,17 @@ import { ChevronDown } from "lucide-react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
- 
 
 const UploadDoc = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   const sendFile = async () => {
     if (!selectedFile) {
-      alert("Please select a file !")
+      alert("Please select a file !");
       return;
     }
-
-      
 
     const formData = new FormData();
     formData.append("file", selectedFile);
@@ -46,10 +42,8 @@ const UploadDoc = () => {
     if (file) setSelectedFile(file);
   };
 
-
   return (
-
-    <div className="bg-[#F6F1DE]">
+    <div className="bg-[#9ec6f3cf]">
       <style>
         {`
       .blockquote-list li {
@@ -99,22 +93,23 @@ const UploadDoc = () => {
             <h1 className="text-3xl font-bold ">Generated Summary</h1>
 
             <div className="bg-white border border-black rounded-lg px-4 py-9 mt-3 mb-6 whitespace-pre-wrap">
-
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
                   p: ({ children }) => (
-                    <p className="text-base my-0 leading-tight text-gray-800">{children}</p>
+                    <p className="text-base my-0 leading-tight text-gray-800">
+                      {children}
+                    </p>
                   ),
                   blockquote: ({ children }) => (
                     <blockquote className="relative blockquote-list bg-gray-50 border-l-4 border-blue-500 pl-6 rounded-lg shadow-sm mb-8">
-                      <ul>
-                        {children}
-                      </ul>
+                      <ul>{children}</ul>
                     </blockquote>
                   ),
                   li: ({ children }) => (
-                    <li className="text-2xl font-semibold leading-0 m-0 p-0">{children}</li>
+                    <li className="text-2xl font-semibold leading-0 m-0 p-0">
+                      {children}
+                    </li>
                   ),
                   ol: ({ children }) => (
                     <ol className="m-0 p-0 pl-3 leading-1">{children}</ol>
@@ -126,18 +121,21 @@ const UploadDoc = () => {
               >
                 {summary}
               </ReactMarkdown>
-
             </div>
           </>
-        ) :
+        ) : (
           <>
             <h1 className="text-3xl font-bold ">Generated Summary</h1>
 
             <div className="bg-white border border-black rounded-lg px-4 py-9 mt-3 mb-6 whitespace-pre-wrap">
-              <p className="text-base leading-tight text-center">{loading?"Summarizing.Please wait...":"Please select a file to generate summary."}</p>
+              <p className="text-base leading-tight text-center">
+                {loading
+                  ? "Summarizing.Please wait..."
+                  : "Please select a file to generate summary."}
+              </p>
             </div>
-
-          </>}
+          </>
+        )}
 
         <Card className=" bg-white p-6">
           <CardContent className="flex flex-col md:flex-row justify-between items-center">

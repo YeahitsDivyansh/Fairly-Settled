@@ -3,10 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useUserAuth } from "../context/UserAuthContext";
-import { db } from "../firebase"; // import your db
-import { doc, setDoc } from "firebase/firestore"; // import setDoc and doc
-import { collection, query, where, getDocs } from "firebase/firestore"; // Add these
-
+import { db } from "../firebase";
+import {
+  doc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
 const PhoneSignup = () => {
   const [error, setError] = useState("");
@@ -24,28 +29,22 @@ const PhoneSignup = () => {
     setError("");
     setLoading(true);
 
-    // Validate fields
-    if (!username) {
-      return setError("Please enter a username");
-    }
+    if (!username) return setError("Please enter a username");
     if (!number) return setError("Please enter a valid phone number!");
 
     try {
-      // Check if phone already registered
       const q = query(collection(db, "Users"), where("phone", "==", number));
       const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
+      if (!querySnapshot.empty)
         return setError("Phone number already registered!");
-      }
+
       const response = await setUpRecaptha(number);
-      // console.log(response);
       setResult(response);
       setFlag(true);
     } catch (err) {
       setError(err.message);
-      // console.log(err);
     }
-    setLoading(true);
+    setLoading(false);
   };
 
   const verifyOtp = async (e) => {
@@ -55,14 +54,13 @@ const PhoneSignup = () => {
 
     if (!otp) return setError("Please enter the OTP!");
     try {
-      const res = await result.confirm(otp); // OTP verification
+      const res = await result.confirm(otp);
       const user = res.user;
 
-      // Save username in Firestore
       await setDoc(doc(db, "Users", user.uid), {
         phone: user.phoneNumber,
         username: username,
-        id: user.uid
+        id: user.uid,
       });
 
       navigate("/");
@@ -73,29 +71,23 @@ const PhoneSignup = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-      }}
-      className="flex object-fit justify-center items-center min-h-screen bg-no-repeat bg-cover bg-center"
-    >
-      {
-        !flag && (
-          <form
-            onSubmit={getOtp}
-            className="bg-white/40 backdrop-blur-md p-6 rounded-lg shadow-md w-96"
-          >
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-              Sign Up
-            </h2>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100">
+      <form
+        onSubmit={flag ? verifyOtp : getOtp}
+        className="bg-white/30 backdrop-blur-md border border-white/50 p-8 rounded-xl shadow-xl w-96"
+      >
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+          {flag ? "Verify OTP" : "Sign Up"}
+        </h2>
 
-            {error && (
-              <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded">
-                {error}
-              </div>
-            )}
+        {error && (
+          <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded">
+            {error}
+          </div>
+        )}
 
+        {!flag ? (
+          <>
             <input
               type="text"
               placeholder="Enter Username"
@@ -116,16 +108,19 @@ const PhoneSignup = () => {
               <div id="recaptcha-container"></div>
             </div>
 
-
             <button
               type="submit"
               disabled={loading}
-              className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer 
-    ${loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
+              className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                loading
+                  ? "bg-blue-300 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
+              }`}
             >
               {loading ? "Loading..." : "Send OTP"}
             </button>
-            <p className="mt-1 text-md text-center text-gray-600">
+
+            <p className="mt-2 text-md text-center text-gray-700">
               Already registered?{" "}
               <Link
                 to="/phonesignin"
@@ -142,28 +137,9 @@ const PhoneSignup = () => {
                 Back to Home Page
               </Link>
             </p>
-          </form>
-        )
-      }
-
-      {
-        flag && (
-          <form
-            onSubmit={verifyOtp}
-            className="bg-white/40 backdrop-blur-md p-6 rounded-lg shadow-md w-96"
-          >
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-              Sign Up
-            </h2>
-
-            {error && (
-              <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded">
-                {error}
-              </div>
-            )}
-
-
-
+          </>
+        ) : (
+          <>
             <input
               type="text"
               placeholder="Enter OTP"
@@ -173,16 +149,18 @@ const PhoneSignup = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer 
-    ${loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
+              className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                loading
+                  ? "bg-blue-300 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
+              }`}
             >
               {loading ? "Loading..." : "Verify"}
             </button>
-          </form>
-        )
-      }
-
-    </div >
+          </>
+        )}
+      </form>
+    </div>
   );
 };
 

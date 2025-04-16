@@ -6,6 +6,7 @@ import ProfilePage from "./pages/ProfilePage";
 import Layout from "./components/Layout";
 import UploadDoc from "./pages/UploadDoc";
 import DraftDocument from "./pages/DraftDocuments";
+import Draft_form from "./pages/Draft_form";
 import PhoneSignUp from "./pages/PhoneSignup";
 import PhoneSignIn from "./pages/PhoneSignin";
 
@@ -28,6 +29,11 @@ const App = () => {
           path: "draft-doc",
           element: <DraftDocument />,
         },
+        {
+          path: "draft-form",
+          element: <Draft_form />,
+        }
+
       ],
     },
     { path: "/phonesignup", element: <PhoneSignUp /> },
