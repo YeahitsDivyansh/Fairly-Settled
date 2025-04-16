@@ -13,34 +13,40 @@ import { motion } from "framer-motion";
 
 const cardData = [
   {
-    title: "Rent Agreement",
+    title: "Business Agreements",
     desc: "A legally binding contract between landlord and tenant. Generate it in seconds.",
     img: "/rent-agreement.jpeg",
+    route: "/business-agreements",
   },
   {
-    title: "Employment Contract",
+    title: "Employment Agreements",
     desc: "A formal agreement between employer and employee outlining responsibilities.",
     img: "/employment_agreement_img.jpg",
+    route: "/employment-agreements",
   },
   {
-    title: "NDA (Non-Disclosure)",
+    title: "Real Estate Agreements",
     desc: "Protect your confidential info with an NDA in a few clicks.",
     img: "/NDA_img.jpg",
+    route: "/real-estate-agreements",
   },
   {
-    title: "Partnership Deed",
+    title: "Financial Agreements",
     desc: "Create an agreement to start your business partnership easily.",
     img: "/Partnership_deed_img.jpg",
+    route: "/financial-agreements",
   },
   {
-    title: "Freelancer Contract",
+    title: "Intellectual Property Agreement",
     desc: "Set clear expectations and payments with clients securely.",
     img: "/Freelancer_img.avif",
+    route: "/intellectual-property-agreements",
   },
   {
-    title: "Sales Agreement",
+    title: "Personal Legal Agreements",
     desc: "Document your sale/purchase deal with a professional template.",
     img: "/sales_agreement_img.jpg",
+    route: "/personal-legal-agreements",
   },
 ];
 
@@ -48,7 +54,7 @@ const DraftDocument = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen px-10 py-10 bg-[#9db6d9bd]">
+    <div className="min-h-screen px-10 py-10 bg-[#F6F1DE]">
       <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 place-items-center">
         {cardData.map((doc, index) => (
           <motion.div
@@ -98,9 +104,8 @@ const DraftDocument = () => {
                 </CardContent>
 
                 <CardFooter className="pt-4 flex justify-center">
-                  <Button
-                    className="bg-gradient-to-r from-gray-800 to-gray-600 text-white shadow-lg px-6 rounded-full transition-transform transform hover:scale-110  hover:shadow-xl"
-                    onClick={() => navigate("/draft-form")}
+                  <Button className="bg-gradient-to-r from-gray-800 to-gray-600 text-white shadow-lg px-6 rounded-full transition-transform transform hover:scale-110  hover:shadow-xl"
+                  onClick={() => navigate(doc.route)}
                   >
                     Generate
                   </Button>
