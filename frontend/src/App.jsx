@@ -9,7 +9,7 @@ import DraftDocument from "./pages/DraftDocuments";
 import Draft_form from "./pages/Draft_form";
 import PhoneSignUp from "./pages/PhoneSignup";
 import PhoneSignIn from "./pages/PhoneSignin";
-
+import About from "./routes/About";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -32,12 +32,15 @@ const App = () => {
         {
           path: "draft-form",
           element: <Draft_form />,
-        }
-
+        },
+        {
+          path: "/about us",
+          element: <About />,
+        },
       ],
     },
     { path: "/phonesignup", element: <PhoneSignUp /> },
-    { path: "/phonesignin", element: <PhoneSignIn/> },
+    { path: "/phonesignin", element: <PhoneSignIn /> },
     { path: "/profile", element: <ProfilePage /> },
     { path: "/chat", element: <Chatbot /> },
   ]);
