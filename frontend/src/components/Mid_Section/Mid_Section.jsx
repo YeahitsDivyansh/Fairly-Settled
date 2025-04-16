@@ -48,7 +48,7 @@ const MidSection = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   return (
-    <div className="px-4 bg-[#9ec6f3cf] pt-15 md:px-20">
+    <div className="px-4 bg-[#9db6d9bd] pt-15 md:px-20">
       {/* Hero Section */}
       <motion.section
         initial="hidden"

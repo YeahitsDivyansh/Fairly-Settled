@@ -8,7 +8,7 @@ const Chat = () => {
   }, []);
 
   return (
-    <div className="bg-[#9ec6f3cf] flex flex-col min-h-screen justify-center items-center relative">
+    <div className="bg-[#9db6d9bd] flex flex-col min-h-screen justify-center items-center relative">
       {/* Overlay */}
       <div className="absolute inset-0 bg-opacity-30 z-0" />
 

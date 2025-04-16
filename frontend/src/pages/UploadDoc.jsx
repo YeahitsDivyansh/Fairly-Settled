@@ -43,7 +43,7 @@ const UploadDoc = () => {
   };
 
   return (
-    <div className="bg-[#9ec6f3cf]">
+    <div className="bg-[#9db6d9bd]">
       <style>
         {`
       .blockquote-list li {
