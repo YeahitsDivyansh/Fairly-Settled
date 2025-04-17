@@ -64,18 +64,13 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-blue-400 transition">
+              <a href="/faq" className="hover:text-blue-400 transition">
                 FAQs
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-blue-400 transition">
+              <a href="/careers" className="hover:text-blue-400 transition">
                 Careers
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-blue-400 transition">
-                Press Kit
               </a>
             </li>
           </ul>
@@ -160,7 +155,7 @@ const Footer = () => {
         viewport={{ once: true }}
       >
         <p className="text-white text-sm font-semibold">
-          &copy; 2024 FairlySettled. All rights reserved.
+          &copy; 2025 FairlySettled. All rights reserved.
         </p>
         <div className="flex gap-5 mt-4 md:mt-0">
           <a href="#" className="hover:text-[#8F87F1] text-white transition">
