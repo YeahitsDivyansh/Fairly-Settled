@@ -54,7 +54,7 @@ const DraftDocument = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen px-10 py-10 bg-[#F6F1DE]">
+    <div className="min-h-screen px-10 py-10 bg-[#9db6d9bd]">
       <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 place-items-center">
         {cardData.map((doc, index) => (
           <motion.div
@@ -104,8 +104,9 @@ const DraftDocument = () => {
                 </CardContent>
 
                 <CardFooter className="pt-4 flex justify-center">
-                  <Button className="bg-gradient-to-r from-gray-800 to-gray-600 text-white shadow-lg px-6 rounded-full transition-transform transform hover:scale-110  hover:shadow-xl"
-                  onClick={() => navigate(doc.route)}
+                  <Button
+                    className="bg-gradient-to-r from-gray-800 to-gray-600 text-white shadow-lg px-6 rounded-full transition-transform transform hover:scale-110  hover:shadow-xl"
+                    onClick={() => navigate(doc.route)}
                   >
                     Generate
                   </Button>
