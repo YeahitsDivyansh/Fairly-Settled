@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Search, Globe2, ChevronDown } from "lucide-react";
 import { useUserAuth } from "@/context/UserAuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // Import motion from Framer Motion
 
 const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
@@ -27,12 +27,13 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
         {/* Logo */}
         <div className="text-lg font-semibold tracking-wide text-white flex items-center gap-2">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/9504/9504143.png"
-            alt="NyayaSahayak Logo"
-            className="w-6 h-6 bg-white rounded-full p-0.5"
-          />
-          <a href="/"> FairlySettled</a>
+          <Link to="/">
+            <img
+              src="./fairlySettledLogo.jpg"
+              alt="FairlySettled Logo"
+              className="w-18 h-18 rounded-lg"
+            />
+          </Link>
         </div>
 
         {/* Search */}
