@@ -6,7 +6,12 @@ import ProfilePage from "./pages/ProfilePage";
 import Layout from "./components/Layout";
 import UploadDoc from "./pages/UploadDoc";
 import DraftDocument from "./pages/DraftDocuments";
-import Draft_form from "./pages/Draft_form";
+import RealEstateAgreements from "./pages/Drafts/RealEstateAgreements";
+import BusinessAgreements from "./pages/Drafts/BusinessAgreements";
+import EmploymentAgreements from "./pages/Drafts/EmploymentAgreements";
+import FinancialAgreements from "./pages/Drafts/FinancialAgreements";
+import IntellectualPropertyAgreement from "./pages/Drafts/IntellectualPropertyAgreement";
+import PersonalLegalAgreements from "./pages/Drafts/PersonalLegalAgreements";
 import PhoneSignUp from "./pages/PhoneSignup";
 import PhoneSignIn from "./pages/PhoneSignin";
 import About from "./routes/About";
@@ -30,8 +35,28 @@ const App = () => {
           element: <DraftDocument />,
         },
         {
-          path: "draft-form",
-          element: <Draft_form />,
+          path: "business-agreements",
+          element: <BusinessAgreements />,
+        },
+        {
+          path: "employment-agreements",
+          element: <EmploymentAgreements />,
+        },
+        {
+          path: "real-estate-agreements",
+          element: <RealEstateAgreements />,
+        },
+        {
+          path: "financial-agreements",
+          element: <FinancialAgreements />,
+        },
+        {
+          path: "intellectual-property-agreements",
+          element: <IntellectualPropertyAgreement />,
+        },
+        {
+          path: "personal-legal-agreements",
+          element: <PersonalLegalAgreements />,
         },
         {
           path: "/about us",
