@@ -74,23 +74,6 @@ export default function Navbar() {
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden px-4 pb-4">
-          <div className="space-y-2">
-            {["Home", "Features", "About", "Contact"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="block text-sm text-white hover:text-blue-200 transition"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
     </nav>
   );
 }
