@@ -15,7 +15,7 @@ const About = () => {
         <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
 
         <CardContent className="relative z-10">
-          <h2 className="text-2xl font-bold mb-4 text-blue-900">
+          <h2 className="text-2xl font-bold mb-4 text-blue-900 text-center">
             Introduction
           </h2>
           <p className="text-gray-600 leading-relaxed">
@@ -44,7 +44,7 @@ const About = () => {
       <Card className="mb-6 relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1">
         <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
         <CardContent className="relative z-10">
-          <h2 className="text-2xl font-bold mb-4 text-blue-900">
+          <h2 className="text-center text-2xl font-bold mb-4 text-blue-900">
             Meet the Minds Behind Agility AI
           </h2>
           <p className="text-gray-600 leading-relaxed">
@@ -76,6 +76,50 @@ const About = () => {
             At Agility AI, we’re more than just a team — we’re a mission in
             motion, building a smarter, faster, and fairer legal future for all.
           </p>
+        </CardContent>
+      </Card>
+
+      {/* Advisory Board */}
+      <Card className="mb-6 relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1">
+        <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
+        <CardContent className="relative z-10">
+          <h2 className="text-2xl font-bold mb-6 text-blue-900 text-center">
+            Our Advisory Board
+          </h2>
+
+          {/* Prof. Nakul */}
+          <div className="flex items-start gap-8 mb-6">
+            <img
+              src="https://lh4.googleusercontent.com/LHyq6CaFpiP-ebyefGX9g6U8EHmO-wVc2sn0Z7tltCcjS2abvn-5JosmfNxGa7wneOAV1yLAvix4A_2sCsWCgdcmXRXRM5WTjyGGv_ojHmBWRPWLeLJ6DJcvb-ohqXuU=w1280"
+              alt="Prof. Nakul Parameswar"
+              className="w-24 h-24 rounded-full object-cover shadow-md"
+            />
+            <p className="text-gray-600 leading-relaxed">
+              <strong>Prof. Nakul Parameswar</strong>, Chair of the Department
+              of Entrepreneurship & Management at <strong>IIT Hyderabad</strong>
+              , holds a <strong>PhD in Strategic Management</strong> from{" "}
+              <strong>IIT Delhi</strong>. He has previously contributed his
+              expertise to <strong>IIM Jammu, IRMA, VIT Business School</strong>
+              , and <strong>Bennett University</strong>.
+            </p>
+          </div>
+
+          {/* Prof. Aashish */}
+          <div className="flex items-start gap-8">
+            <img
+              src="https://media.licdn.com/dms/image/v2/C5103AQH7a5vSO4NSCA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1558456805291?e=1750291200&v=beta&t=pSxnk2UfZ-5F2wuspnT2yS7W5qU26ahwC5Cs1txEaCA"
+              alt="Prof. Aashish Argade"
+              className="w-24 h-24 rounded-full object-cover shadow-md"
+            />
+            <p className="text-gray-600 leading-relaxed">
+              <strong>Prof. Aashish Argade</strong> is a <strong>PhD</strong>{" "}
+              from <strong>IIM Ahmedabad</strong> and an{" "}
+              <strong>ex-Deputy Dean</strong> at <strong>IRMA</strong> (an
+              Institute of National Importance declared by the Parliament of
+              India). He has been actively involved as a consultant with various
+              government departments for over a decade.
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>
