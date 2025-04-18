@@ -1,0 +1,23 @@
+@keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .marquee {
+    display: flex;
+    flex-wrap: nowrap;
+    animation: marquee 25s linear infinite;
+    width: fit-content;
+    will-change: transform;
+  }
+  
+  /* 👇 Yeh stop kar dega animation ko hover pe */
+  .marquee.hovered {
+    animation-play-state: paused;
+    transition: all 0.5s ease-in-out; /* Smooth stop */
+  }
+  
