@@ -15,6 +15,8 @@ import PersonalLegalAgreements from "./pages/Drafts/PersonalLegalAgreements";
 import PhoneSignUp from "./pages/PhoneSignup";
 import PhoneSignIn from "./pages/PhoneSignin";
 import About from "./routes/About";
+import FAQ from "./routes/FAQ";
+import Careers from "./routes/Careers";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -61,6 +63,14 @@ const App = () => {
         {
           path: "/about us",
           element: <About />,
+        },
+        {
+          path: "/faq",
+          element: <FAQ />,
+        },
+        {
+          path: "/careers",
+          element: <Careers />,
         },
       ],
     },
