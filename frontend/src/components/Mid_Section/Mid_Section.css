@@ -1,23 +1,28 @@
+.marquee {
+  display: flex;
+  flex-wrap: nowrap;
+  animation: marquee 25s linear infinite;
+  width: fit-content;
+  will-change: transform;
+}
+
+.marquee.hovered {
+  animation-play-state: paused;
+  transition: all 0.5s ease-in-out;
+}
+
+
 @keyframes marquee {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
+  0% {
+    transform: translateX(0%);
   }
-  
-  .marquee {
-    display: flex;
-    flex-wrap: nowrap;
-    animation: marquee 25s linear infinite;
-    width: fit-content;
-    will-change: transform;
+  100% {
+    transform: translateX(-50%);
   }
-  
-  /* 👇 Yeh stop kar dega animation ko hover pe */
-  .marquee.hovered {
-    animation-play-state: paused;
-    transition: all 0.5s ease-in-out; /* Smooth stop */
-  }
-  
+}
+
+/* Optional: Smooth inner shadow for visual polish */
+.shadow-inner {
+  box-shadow: inset 15px 0 20px -15px rgba(0, 0, 0, 0.2),
+              inset -15px 0 20px -15px rgba(0, 0, 0, 0.2);
+}

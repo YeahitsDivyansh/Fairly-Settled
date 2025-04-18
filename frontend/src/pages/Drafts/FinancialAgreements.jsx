@@ -1,4 +1,4 @@
-// 🚀 Full Employment Agreements Form (100% Word-by-Word Templates from Original Docs)
+
 import { useState } from "react";
 import jsPDF from "jspdf";
 
@@ -32,7 +32,7 @@ const templates = {
       "date",
     ],
     generateText: (data) => [
-      // Form 1
+      
       `FORM No.1
 
 PROMISSORY NOTE UNDER SEC.4, NEGOTIABLE INSTRUMENTS ACT, 1881 IN WHICH NO INTEREST IS CONTEMPLATED AND NO TIME FOR PAYMENT IS MENTIONED
@@ -45,7 +45,7 @@ Place: ${data.place}
 Date: ${data.date}
 Signature.`,
 
-      // Form 2
+      
       `FORM No.2
 
 PROMISSORY NOTE UNDER SEC.4, NEGOTIABLE INSTRUMENTS ACT, 1881 MADE BY JOINT PROMISORS
@@ -59,7 +59,7 @@ Place: ${data.place}
 Date: ${data.date}
 [Signed]        [Signed]`,
 
-      // Form 3
+      
       `FORM No.3
 
 JOINT PROMISSORY NOTE
@@ -73,7 +73,7 @@ Place: ${data.place}
 Date: ${data.date}
 [Signed]        [Signed]`,
 
-      // Form 4
+      
       `FORM No.4
 
 PROMISSORY NOTE PROVIDING FOR INTEREST
@@ -88,7 +88,7 @@ Place: ${data.place}
 Date: ${data.date}
 Signature.`,
 
-      // Form 5
+      
       `FORM No.5
 
 PROMISSORY NOTE PAYABLE BY INSTALMENT
