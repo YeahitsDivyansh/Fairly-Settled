@@ -17,6 +17,10 @@ import PhoneSignIn from "./pages/PhoneSignin";
 import About from "./routes/About";
 import FAQ from "./routes/FAQ";
 import Careers from "./routes/Careers";
+import PrivacyPolicy from "./legal_routes/PrivacyPolicy";
+import TermsAndConditions from "./legal_routes/TermsAndConditions";
+import DataProtection from "./legal_routes/DataProtection";
+import Disclaimer from "./legal_routes/Disclaimer";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -71,6 +75,22 @@ const App = () => {
         {
           path: "/careers",
           element: <Careers />,
+        },
+        {
+          path: "/privacy-policy",
+          element: <PrivacyPolicy />,
+        },
+        {
+          path: "/terms-and-conditions",
+          element: <TermsAndConditions />,
+        },
+        {
+          path: "/data-protection",
+          element: <DataProtection />,
+        },
+        {
+          path: "/disclaimer",
+          element: <Disclaimer />,
         },
       ],
     },
