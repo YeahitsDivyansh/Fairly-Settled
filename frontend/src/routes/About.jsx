@@ -88,7 +88,7 @@ const About = () => {
           </h2>
 
           {/* Prof. Nakul */}
-          <div className="flex items-start gap-8 mb-6">
+          {/* <div className="flex items-start gap-8 mb-6">
             <img
               src="https://lh4.googleusercontent.com/LHyq6CaFpiP-ebyefGX9g6U8EHmO-wVc2sn0Z7tltCcjS2abvn-5JosmfNxGa7wneOAV1yLAvix4A_2sCsWCgdcmXRXRM5WTjyGGv_ojHmBWRPWLeLJ6DJcvb-ohqXuU=w1280"
               alt="Prof. Nakul Parameswar"
@@ -102,12 +102,12 @@ const About = () => {
               expertise to <strong>IIM Jammu, IRMA, VIT Business School</strong>
               , and <strong>Bennett University</strong>.
             </p>
-          </div>
+          </div> */}
 
           {/* Prof. Aashish */}
           <div className="flex items-start gap-8">
             <img
-              src="https://media.licdn.com/dms/image/v2/C5103AQH7a5vSO4NSCA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1558456805291?e=1750291200&v=beta&t=pSxnk2UfZ-5F2wuspnT2yS7W5qU26ahwC5Cs1txEaCA"
+              src="./aashish-argade.jpeg"
               alt="Prof. Aashish Argade"
               className="w-24 h-24 rounded-full object-cover shadow-md"
             />
