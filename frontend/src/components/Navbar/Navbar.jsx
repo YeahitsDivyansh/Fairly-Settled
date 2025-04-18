@@ -31,7 +31,7 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
             <img
               src="./fairlySettledLogo.jpg"
               alt="FairlySettled Logo"
-              className="w-18 h-18 rounded-lg"
+              className="w-19 h-19 rounded-full"
             />
           </Link>
         </div>
