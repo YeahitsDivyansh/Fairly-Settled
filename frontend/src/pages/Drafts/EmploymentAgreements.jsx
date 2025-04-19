@@ -1,4 +1,4 @@
-// 🚀 Full Employment Agreements Form (100% Word-by-Word Templates from Original Docs)
+
 import { useState } from "react";
 import jsPDF from "jspdf";
 

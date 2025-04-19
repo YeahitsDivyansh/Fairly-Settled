@@ -1,4 +1,3 @@
-// 🚀 Full dynamic form for Real Estate Agreements (All templates from PDFs, wrapped PDF formatting)
 import { useState } from "react";
 import jsPDF from "jspdf";
 
