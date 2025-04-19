@@ -3,17 +3,18 @@ import {
   onAuthStateChanged,
   signOut,
   RecaptchaVerifier,
-  signInWithPhoneNumber
+  signInWithPhoneNumber,
 } from "firebase/auth";
-import { auth, db } from "../firebase"; // import db
-import { doc, getDoc } from "firebase/firestore"; // Firestore utils
+import { auth, db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState(null); // for username and other info
-   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   function logOut() {
     setUser(null);
     setUserData(null);
@@ -37,34 +38,35 @@ export function UserAuthContextProvider({ children }) {
   }
 
   useEffect(() => {
-    setLoading(true); 
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (currentuser) => {
       setUser(currentuser);
-       
+
       if (currentuser) {
         const userRef = doc(db, "Users", currentuser.uid);
         const userSnap = await getDoc(userRef);
 
         if (userSnap.exists()) {
-          setUserData(userSnap.data()); // includes username
+          setUserData(userSnap.data());
         }
       } else {
         setUserData(null);
       }
+
       setLoading(false);
     });
-    
+
     return () => {
       unsubscribe();
     };
   }, []);
 
-  
   return (
     <userAuthContext.Provider
       value={{
+        user,         
+        userData,
         loading,
-        userData, 
         logOut,
         setUpRecaptha,
       }}

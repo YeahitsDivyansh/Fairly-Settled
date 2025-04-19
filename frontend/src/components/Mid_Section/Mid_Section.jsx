@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "@/components/TranslationContext/TranslationContext";
 import { motion } from "framer-motion";
 import { Search, MessageSquare, FileText, Upload, Star } from "lucide-react";
+import { useUserAuth } from "@/context/UserAuthContext";
 import "./Mid_Section.css";
 
 const features = [
@@ -49,6 +50,7 @@ const MidSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const { user,loading } = useUserAuth();
 
   return (
     <div className="px-4 bg-[#9db6d9bd] pt-15 md:px-20 overflow-hidden">
@@ -92,19 +94,43 @@ const MidSection = () => {
 
           <button
             className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
-            onClick={() => navigate("/draft-doc")}
+            onClick={() => {
+              if (loading){
+                alert("Checking authentication status");
+                return;
+              }
+              if (user) {
+                navigate("/draft-doc");
+              } else {
+                alert("Please login first to generate a draft.");
+                navigate("/phonesignin");
+              }
+            }}
           >
             <FileText size={20} className="group-hover:text-white" />
             {t.draft}
           </button>
 
           <button
-            onClick={() => navigate("/upload-doc")}
             className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
+            onClick={() => {
+              if (loading){
+                alert("Checking authentication status");
+                return;
+              }
+              if (user) {
+                navigate("/upload-doc");
+              } else {
+                alert("Please login first to generate a draft.");
+                navigate("/phonesignin");
+              }
+            }}
           >
-            <Upload size={20} className="group-hover:text-white" />
+            <FileText size={20} className="group-hover:text-white" />
             {t.upload}
           </button>
+
+          
         </div>
       </motion.section>
 
@@ -120,7 +146,6 @@ const MidSection = () => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            
             {[...features, ...features].map((item, idx) => {
               const isExpanded = expandedIndex === idx;
               return (
@@ -144,17 +169,16 @@ const MidSection = () => {
                       <p className="text-gray-600 text-sm">{item.detail}</p>
                     )}
 
-                    <div 
-                    className="mt-auto">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setExpandedIndex(isExpanded ? null : idx);
-                      }}
-                      className="bg-[#3E3F5B] w-[100px] text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-500 transition mt-3 hover:scale-110"
-                    >
-                      {isExpanded ? "Read Less" : "Read More"}
-                    </button>
+                    <div className="mt-auto">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setExpandedIndex(isExpanded ? null : idx);
+                        }}
+                        className="bg-[#3E3F5B] w-[100px] text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-500 transition mt-3 hover:scale-110"
+                      >
+                        {isExpanded ? "Read Less" : "Read More"}
+                      </button>
                     </div>
                   </div>
                 </motion.div>
