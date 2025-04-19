@@ -145,6 +145,20 @@ const About = () => {
               government departments for over a decade.
             </p>
           </div>
+
+          <div className="flex items-start gap-8 mt-5">
+            <img
+              src="./Sumit Kumar Yadav.jpeg"
+              alt="Prof. Aashish Argade"
+              className="w-24 h-24 rounded-full object-cover shadow-md"
+            />
+            <p className="text-gray-600 leading-relaxed">
+              <strong>Prof. Sumit Kumar Yadav</strong> is a Professor at{" "}
+              <strong>IIT Roorkee</strong>. He completed his{" "}
+              <strong>PhD from IIM Ahmedabad</strong> &{" "}
+              <strong>BTech from IIT Bombay</strong>.
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>
