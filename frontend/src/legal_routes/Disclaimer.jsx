@@ -8,33 +8,29 @@ const Disclaimer = () => {
       </h1>
 
       <p className="text-gray-700 mt-6">
-        The information provided on this platform is intended for general
-        informational purposes only. While we strive to ensure the accuracy and
-        reliability of the content, FairlySettled makes no warranties or
-        representations of any kind, express or implied, about the completeness,
-        accuracy, reliability, suitability, or availability of the information,
-        services, or related content contained on this site.
+        Agility AI is a technology enabler—not a substitute for legal advice.
       </p>
 
-      <p className="text-gray-700 mt-6">
-        Any reliance you place on such information is strictly at your own risk.
-        We are not liable for any losses or damages, including without
-        limitation, indirect or consequential loss or damage arising from the
-        use of, or reliance on, the content or services offered through this
-        platform.
+      <h2 className="text-xl font-semibold mt-6 mb-2">General Use</h2>
+      <p className="text-gray-700">
+        The content, templates, and AI recommendations provided on our platform
+        are for informational and facilitative purposes only. They are not
+        intended to replace qualified legal consultation.
       </p>
 
-      <p className="text-gray-700 mt-6">
-        This platform may contain links to external websites that are not
-        provided or maintained by FairlySettled. Please note that we do not
-        guarantee the accuracy, relevance, timeliness, or completeness of any
-        information on these external websites.
+      <h2 className="text-xl font-semibold mt-6 mb-2">User Responsibility</h2>
+      <p className="text-gray-700">
+        You are responsible for the decisions you make using our tools. Any
+        legal filings or actions should be reviewed by a certified legal
+        professional.
       </p>
 
-      <p className="text-gray-700 mt-6">
-        Legal content and insights shared here do not constitute legal advice or
-        establish an attorney-client relationship. For specific legal concerns,
-        we encourage you to consult with a qualified legal professional.
+      <h2 className="text-xl font-semibold mt-6 mb-2">
+        Third-Party Links and Tools
+      </h2>
+      <p className="text-gray-700">
+        We may include or integrate third-party APIs, links, or content. Agility
+        AI is not responsible for their reliability or accuracy.
       </p>
 
       <p className="text-gray-600 text-sm mt-6">Last updated: April 17, 2025</p>
