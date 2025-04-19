@@ -8,39 +8,58 @@ import "./Mid_Section.css";
 
 const features = [
   {
-    title: "A Cost-Effective, Results-Driven Model",
+    title: "Legal Chatbot",
     brief:
-      "Unlike traditional legal solutions, Agility AI works on a percentage-based model, meaning we only take a small share of the legal costs.",
+      "Instant answers to legal questions with our smart, user-friendly chatbot — no legal knowledge needed.",
     detail:
-      "This ensures that you only pay for the results we help deliver, making our services affordable for individuals and law firms alike. We are the first in the country to offer this type of pay-for-performance model, which sets us apart and ensures that justice remains within reach for all.",
+      "Agility AI offers a conversational legal assistant that helps users ask any legal question in plain English. Whether you're confused about a document or need step-by-step legal help, our chatbot gives instant, accurate, and easy-to-understand guidance — anytime, anywhere.",
   },
   {
-    title: "Revolutionizing Legal Services with Innovation",
+    title: "Smart Drafting",
     brief:
-      "At Agility AI, we’re committed to making justice faster, smarter, and more affordable for everyone. ",
+      "Generate personalized legal documents from smart templates — ready in seconds.",
     detail:
-      "By integrating cutting-edge AI technology into every step of the legal process — from case filing to document generation and real-time case tracking — we eliminate the inefficiencies that have long plagued the legal system.",
+      "From rent agreements to business contracts, our AI drafts legally sound documents based on your inputs. You just fill out a simple form and we generate a clean, downloadable file instantly — saving you hours and lawyer fees.",
   },
   {
-    title: "Faster Justice, Lower Costs",
+    title: "Doc Summarizer",
     brief:
-      "Our AI-powered platform cuts down on the time it takes to file cases, generate documents, and track progress.",
+      "Upload legal files and get simplified summaries — understand what really matters.",
     detail:
-      "By automating routine tasks, we allow legal professionals to focus on what truly matters — strategy, client interaction, and case resolution.",
+      "Our AI reads through lengthy legal documents and highlights key points, clauses, and obligations in plain language. This helps users make informed decisions without needing to hire a lawyer for basic understanding.",
   },
   {
-    title: "Secure, Scalable & Built for Trust",
-    brief:
-      "In the legal world, data is everything and at Agility AI, we treat it with the utmost care.",
+    title: "Case Tracker",
+    brief: "Know where your case stands — from filing to final resolution.",
     detail:
-      " Our platform is built on secure, scalable infrastructure that ensures confidentiality, compliance, and peace of mind. With end-to-end encryption, role-based access, and rigorous data protocols, we safeguard every document, every case, and every user interaction. Whether you're a law firm handling sensitive matters or an individual seeking support, you can trust Agility AI to protect your legal journey..",
+      "We provide a clear timeline and live updates about your legal matters so you never stay in the dark. Whether you're filing a case or resolving a dispute, our tracker shows every milestone, saving both time and anxiety.",
   },
   {
-    title: "Bridging the Gap Between People and the Law",
+    title: "Pay on Results",
     brief:
-      "Agility AI isn’t just a tool — it’s a bridge. We empower individuals who may not have legal knowledge or access to expensive counsel by guiding them through legal procedures with user-friendly AI tools and smart chatbots.",
+      "We follow a pay-for-performance model — justice first, payment later.",
     detail:
-      "Whether you're a first-time filer or a seasoned professional, our platform ensures clarity, support, and direction at every step. We simplify the complex, demystify the legal maze, and put justice within everyone’s reach one click at a time.",
+      "Unlike traditional legal services that charge heavy upfront fees, Agility AI takes only a small percentage based on the outcome. This makes legal help more affordable, especially for people who can't afford high legal retainers.",
+  },
+  {
+    title: "Faster Justice",
+    brief: "Automation cuts delays — lawyers focus on strategy, not paperwork.",
+    detail:
+      "By automating tasks like case filing, document drafting, and progress tracking, we reduce manual errors and save precious hours. Lawyers can concentrate on winning cases while clients get quicker resolutions at lower costs.",
+  },
+  {
+    title: "Ironclad Security",
+    brief:
+      "Your legal data is fully protected with encrypted storage and role-based access.",
+    detail:
+      "We use top-tier security protocols including end-to-end encryption, two-factor authentication, and strict data compliance to ensure confidentiality. Whether you're an individual or a law firm, your trust and privacy are our top priority.",
+  },
+  {
+    title: "Access for All",
+    brief:
+      "Democratizing law with tools anyone can use — no legal background needed.",
+    detail:
+      "Agility AI bridges the gap between people and the legal system. With intuitive design, language support, and guided workflows, even first-time users can confidently handle legal procedures without needing to rely on expensive counsel.",
   },
 ];
 
@@ -50,7 +69,7 @@ const MidSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
-  const { user,loading } = useUserAuth();
+  const { user, loading } = useUserAuth();
 
   return (
     <div className="px-4 bg-[#9db6d9bd] pt-15 md:px-20 overflow-hidden">
@@ -95,7 +114,7 @@ const MidSection = () => {
           <button
             className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
             onClick={() => {
-              if (loading){
+              if (loading) {
                 alert("Checking authentication status");
                 return;
               }
@@ -114,7 +133,7 @@ const MidSection = () => {
           <button
             className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
             onClick={() => {
-              if (loading){
+              if (loading) {
                 alert("Checking authentication status");
                 return;
               }
@@ -129,34 +148,33 @@ const MidSection = () => {
             <FileText size={20} className="group-hover:text-white" />
             {t.upload}
           </button>
-
-          
         </div>
       </motion.section>
 
-      <motion.section className="py-16 bg-[#9db6d9bd] px-4 rounded-xl mt-10 overflow-hidden">
+      <motion.section className="py-16 bg-[#9db6d9bd] px-4 rounded-xl mt-10 mb-10 overflow-hidden">
         <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
           Your legal ally, powered by AI
         </h2>
 
         {/* Motion div for infinite scrolling */}
-        <motion.div className="overflow-hidden  w-full">
+        <motion.div className="w-full overflow-x-visible px-6  relative">
           <motion.div
-            className={`flex  marquee ${isHovered ? "hovered" : ""}`}
+            className={`marquee gap-6 ${isHovered ? "hovered" : ""}`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            style={{ paddingBottom: "2rem" }}
           >
             {[...features, ...features].map((item, idx) => {
               const isExpanded = expandedIndex === idx;
               return (
                 <motion.div
                   key={idx}
-                  className="relative w-[300px] shrink-0 rounded-3xl overflow-hidden bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner transition-all duration-300 cursor-pointer mx-2 perspective-[1000px]"
+                  className="relative w-[300px] shrink-0 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner mx-2 transition-all duration-300 hover:z-50"
                   onClick={() => setExpandedIndex(isExpanded ? null : idx)}
                   whileHover={{ scale: 1.05 }}
                   style={{ willChange: "transform" }}
                 >
-                  {/* Glowing gradient border */}
+                  {/* Gradient border */}
                   <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white/60 via-black/30 to-gray-400 opacity-30 blur-xl animate-pulse"></div>
 
                   {/* Card content */}
@@ -168,7 +186,6 @@ const MidSection = () => {
                     {isExpanded && (
                       <p className="text-gray-600 text-sm">{item.detail}</p>
                     )}
-
                     <div className="mt-auto">
                       <button
                         onClick={(e) => {
@@ -186,76 +203,6 @@ const MidSection = () => {
             })}
           </motion.div>
         </motion.div>
-      </motion.section>
-
-      {/* Testimonials */}
-      <motion.section className="py-20 px-4">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-4">
-          {t.testimonials}
-        </h2>
-        <p className="text-lg text-gray-600 text-center mb-10">
-          {t.testimonialsDesc}
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {[
-            {
-              name: "Rajesh Kumar",
-              role: "Business Owner",
-              image:
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces",
-              quote: "The AI Lawyer made my legal process so much easier!",
-            },
-            {
-              name: "Anjali Sharma",
-              role: "Legal Consultant",
-              image:
-                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces",
-              quote: "I was able to draft my notice in minutes!",
-            },
-            {
-              name: "Vikram Singh",
-              role: "Startup Founder",
-              image:
-                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces",
-              quote: "The Document Analysis feature saved me hours of work!",
-            },
-          ].map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow"
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="flex items-center gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={16}
-                    className="fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-              <p className="text-gray-800 mb-4 text-sm sm:text-base">
-                "{testimonial.quote}"
-              </p>
-              <div className="flex items-center gap-4">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <div className="font-semibold text-sm sm:text-base">
-                    {testimonial.name}
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    {testimonial.role}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </motion.section>
     </div>
   );

@@ -34,9 +34,12 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
           className="w-10 h-10 rounded-full"
         />
       </Link>
+      <Link to="/">
       <span className="text-lg font-semibold tracking-wide hidden sm:inline">
         FairlySettled
       </span>
+      </Link>
+      
     </div>
 
     {/* Search */}

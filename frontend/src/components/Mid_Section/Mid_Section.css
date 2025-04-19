@@ -11,6 +11,14 @@
   transition: all 0.5s ease-in-out;
 }
 
+.feature-carousel-wrapper {
+  overflow-x: visible;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  position: relative;
+}
+
+
 
 @keyframes marquee {
   0% {
