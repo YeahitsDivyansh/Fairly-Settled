@@ -1,7 +1,42 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    cardRefs.current.forEach((card, index) => {
+      gsap.fromTo(
+        card,
+        {
+          autoAlpha: 0,
+          x: index % 2 === 0 ? -100 : 100,
+          y: 30,
+          scale: 0.97,
+        },
+        {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          scale: 0.95,
+          duration: 1.3,
+          delay: index * 0.2,
+          ease: "power4.out", // Cinematic ease
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+  }, []);
+
   return (
     <div className="bg-[#9db6d9bd] gap-10 flex flex-col justify-center items-center min-h-[80vh] px-4">
       {/* Heading */}
@@ -10,8 +45,10 @@ const About = () => {
       </h1>
 
       {/* Introduction Card */}
-      <Card className="mt-6 relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1">
-        {/* Softer glowing background inside the Card */}
+      <Card
+        ref={(el) => (cardRefs.current[0] = el)}
+        className="mt-6 relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
+      >
         <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
 
         <CardContent className="relative z-10">
@@ -41,7 +78,10 @@ const About = () => {
       </Card>
 
       {/* Meet the Minds Behind Card */}
-      <Card className="mb-6 relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1">
+      <Card
+        ref={(el) => (cardRefs.current[1] = el)}
+        className="relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
+      >
         <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
         <CardContent className="relative z-10">
           <h2 className="text-center text-2xl font-bold mb-4 text-blue-900">
@@ -57,7 +97,8 @@ const About = () => {
             <strong>
               Campus Law Centre, Faculty of Law, University of Delhi
             </strong>
-            .<br />
+            .
+            <br />
             <br />
             This powerful fusion of technological excellence and legal expertise
             enables us to build AI-driven solutions that are not only
@@ -79,32 +120,16 @@ const About = () => {
         </CardContent>
       </Card>
 
-      {/* Advisory Board */}
-      <Card className="mb-6 relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1">
+      {/* Advisory Board Card */}
+      <Card
+        ref={(el) => (cardRefs.current[2] = el)}
+        className="mb-6 relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
+      >
         <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
         <CardContent className="relative z-10">
           <h2 className="text-2xl font-bold mb-6 text-blue-900 text-center">
             Our Advisory Board
           </h2>
-
-          {/* Prof. Nakul */}
-          {/* <div className="flex items-start gap-8 mb-6">
-            <img
-              src="https://lh4.googleusercontent.com/LHyq6CaFpiP-ebyefGX9g6U8EHmO-wVc2sn0Z7tltCcjS2abvn-5JosmfNxGa7wneOAV1yLAvix4A_2sCsWCgdcmXRXRM5WTjyGGv_ojHmBWRPWLeLJ6DJcvb-ohqXuU=w1280"
-              alt="Prof. Nakul Parameswar"
-              className="w-24 h-24 rounded-full object-cover shadow-md"
-            />
-            <p className="text-gray-600 leading-relaxed">
-              <strong>Prof. Nakul Parameswar</strong>, Chair of the Department
-              of Entrepreneurship & Management at <strong>IIT Hyderabad</strong>
-              , holds a <strong>PhD in Strategic Management</strong> from{" "}
-              <strong>IIT Delhi</strong>. He has previously contributed his
-              expertise to <strong>IIM Jammu, IRMA, VIT Business School</strong>
-              , and <strong>Bennett University</strong>.
-            </p>
-          </div> */}
-
-          {/* Prof. Aashish */}
           <div className="flex items-start gap-8">
             <img
               src="./aashish-argade.jpeg"

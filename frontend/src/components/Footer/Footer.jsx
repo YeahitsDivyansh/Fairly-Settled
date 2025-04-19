@@ -1,12 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  FaTwitter,
   FaLinkedin,
-  FaFacebookF,
   FaEnvelope,
   FaPhoneAlt,
+  FaInstagram,
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -167,14 +167,23 @@ const Footer = () => {
           &copy; 2025 FairlySettled. All rights reserved.
         </p>
         <div className="flex gap-5 mt-4 md:mt-0">
-          <a href="#" className="hover:text-[#8F87F1] text-white transition">
-            <FaTwitter size={24} />
+          <a
+            href="https://x.com/agilityai564"
+            className="hover:text-[#8F87F1] text-white transition"
+          >
+            <FaXTwitter size={24} />
           </a>
-          <a href="#" className="hover:text-[#8F87F1] text-white transition">
+          <a
+            href="https://www.linkedin.com/posts/agility-ai-pvt-ltd_ai-aiprototyping-businesssolutions-activity-7315728608163942402-_1ZY?utm_source=share&utm_medium=member_ios&rcm=ACoAAETUSCkBKkCGeBpPsq4_7VnwIuHEjfgHTYk"
+            className="hover:text-[#8F87F1] text-white transition"
+          >
             <FaLinkedin size={24} />
           </a>
-          <a href="#" className="hover:text-[#8F87F1] text-white transition">
-            <FaFacebookF size={24} />
+          <a
+            href="https://www.instagram.com/reel/DH8s_34S_gD/?igsh=MWM4ajRucTkzdnF6cQ=="
+            className="hover:text-[#8F87F1] text-white transition"
+          >
+            <FaInstagram size={24} />
           </a>
         </div>
       </motion.div>
