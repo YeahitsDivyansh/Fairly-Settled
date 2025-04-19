@@ -8,60 +8,50 @@ const TermsAndConditions = () => {
       </h1>
 
       <p className="text-gray-700 mt-8 font-simple mb-4">
-        By accessing or using our application, you agree to be bound by these
-        Terms and Conditions. Please read them carefully before using the app.
+        Welcome to Agility AI Pvt. Ltd. These terms define our mutual
+        commitments—clarity over complexity, trust over tricks.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">
-        1. Acceptance of Terms
+        1. Your Agreement with Us
       </h2>
       <p className="text-gray-700 mb-4">
-        Your access to and use of the app is conditioned upon your acceptance of
-        and compliance with these terms. If you disagree with any part, you may
-        not use our service.
+        By using our services, you accept these terms in full. If you disagree
+        with any part, we kindly ask you not to use the platform.
       </p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">2. Use of the Service</h2>
+      <h2 className="text-xl font-semibold mt-6 mb-2">
+        2. Eligibility and Access
+      </h2>
       <p className="text-gray-700 mb-4">
-        You agree to use the app only for lawful purposes. You must not misuse
-        the service, interfere with its functionality, or attempt unauthorized
-        access to our systems.
+        You must be of legal age and capable of forming binding contracts to use
+        Agility AI. For minors or institutional users, consent and supervision
+        requirements may apply.
       </p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">3. User Accounts</h2>
+      <h2 className="text-xl font-semibold mt-6 mb-2">3. Service Integrity</h2>
       <p className="text-gray-700 mb-4">
-        If the app requires account registration, you must provide accurate and
-        complete information. You are responsible for maintaining the
-        confidentiality of your credentials.
+        You agree not to misuse the platform—no reverse engineering, no data
+        scraping, no false filings, no infringement of rights. We’re here to
+        make legal access equitable, not exploitative.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">
         4. Intellectual Property
       </h2>
       <p className="text-gray-700 mb-4">
-        All content and features in the app are the intellectual property of
-        FairlySettled and its licensors. You may not copy, reproduce, or
-        distribute any part without permission.
-      </p>
-
-      <h2 className="text-xl font-semibold mt-6 mb-2">5. Termination</h2>
-      <p className="text-gray-700 mb-4">
-        We reserve the right to suspend or terminate access to the app if you
-        violate these terms, with or without notice.
+        Agility AI owns all intellectual property related to the platform’s AI
+        models, legal templates, user interface, and branding. You may use
+        them—but not copy, replicate, or modify them.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">
-        6. Limitation of Liability
+        5. Limitation of Liability
       </h2>
       <p className="text-gray-700 mb-4">
-        We are not liable for any direct, indirect, incidental, or consequential
-        damages resulting from your use of the app.
-      </p>
-
-      <h2 className="text-xl font-semibold mt-6 mb-2">7. Changes to Terms</h2>
-      <p className="text-gray-700 mb-4">
-        We may update these Terms & Conditions at any time. Continued use of the
-        app after changes means you accept the revised terms.
+        We are a facilitative platform, not a law firm. While we aim for
+        accuracy and efficiency, we are not liable for any legal consequences
+        from user-generated content or external legal interpretation.
       </p>
 
       <p className="text-gray-600 text-sm mt-6">Last updated: April 17, 2025</p>
