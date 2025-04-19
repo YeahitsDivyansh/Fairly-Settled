@@ -23,21 +23,24 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
   }, []);
 
   return (
-    <nav className="w-full bg-gray-800 shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
-        {/* Logo */}
-        <div className="flex items-center gap-2 text-white flex-shrink-0">
-          <Link to="/">
-            <img
-              src="./fairlySettledLogo.jpg"
-              alt="FairlySettled Logo"
-              className="w-15 h-15 rounded-full"
-            />
-          </Link>
-          <span className="text-lg font-semibold tracking-wide hidden sm:inline">
-            FairlySettled
-          </span>
-        </div>
+<nav className="w-full bg-gray-800 shadow-md sticky top-0 z-50">
+  <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+    {/* Logo */}
+    <div className="flex items-center gap-2 text-white flex-shrink-0">
+      <Link to="/">
+        <img
+          src="./fairlySettledLogo.jpg"
+          alt="FairlySettled Logo"
+          className="w-10 h-10 rounded-full"
+        />
+      </Link>
+      <Link to="/">
+      <span className="text-lg font-semibold tracking-wide hidden sm:inline">
+        FairlySettled
+      </span>
+      </Link>
+      
+    </div>
 
         {/* Search */}
         <div className="w-full sm:max-w-lg sm:order-2 order-3">
