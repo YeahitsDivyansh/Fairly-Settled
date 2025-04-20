@@ -21,8 +21,6 @@ import PrivacyPolicy from "./legal_routes/PrivacyPolicy";
 import TermsAndConditions from "./legal_routes/TermsAndConditions";
 import DataProtection from "./legal_routes/DataProtection";
 import Disclaimer from "./legal_routes/Disclaimer";
-import Resources from "./chat_routes/Resources";
-import UseCases from "./chat_routes/UseCases";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -93,14 +91,6 @@ const App = () => {
         {
           path: "/disclaimer",
           element: <Disclaimer />,
-        },
-        {
-          path: "/resources",
-          element: <Resources />,
-        },
-        {
-          path: "/use-cases",
-          element: <UseCases />,
         },
       ],
     },

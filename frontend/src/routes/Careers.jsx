@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
@@ -26,6 +26,24 @@ const roles = [
 ];
 
 const Careers = () => {
+  const [hireVisible, setHireVisible] = useState(false);
+  const hireRef = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setHireVisible(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+
+    const current = hireRef.current;
+    if (current) observer.observe(current);
+
+    return () => {
+      if (current) observer.unobserve(current);
+    };
+  }, []);
+
   const [expanded, setExpanded] = useState(null);
 
   const toggleExpand = (category) => {
@@ -34,6 +52,33 @@ const Careers = () => {
 
   return (
     <section className="bg-[#9db6d9bd] px-4 py-16 md:py-24 mx-auto text-center">
+      {/* Blob Background */}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        <svg
+          className="w-full h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <defs>
+            <linearGradient
+              id="bg-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#a2c4f8" />
+              <stop offset="100%" stopColor="#f0e4ff" />
+            </linearGradient>
+          </defs>
+          <g>
+            <circle r="200" cx="20%" cy="30%" fill="url(#bg-gradient)" />
+            <circle r="250" cx="80%" cy="60%" fill="url(#bg-gradient)" />
+            <circle r="180" cx="50%" cy="80%" fill="url(#bg-gradient)" />
+          </g>
+        </svg>
+      </div>
+
       <h4 className="text-sm font-semibold text-gray-500 tracking-wide uppercase mb-4">
         Careers at FairlySettled
       </h4>
@@ -66,6 +111,39 @@ const Careers = () => {
       >
         Have a look at our Open Roles
       </Button>
+
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <img
+          src="https://images.unsplash.com/photo-1600695268275-1a6468700bd5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHdlYiUyMGRldmVsb3BlcnxlbnwwfHwwfHx8MA%3D%3D"
+          alt="Decorative"
+          className="rounded-xl shadow-md object-cover w-full h-64 transition-transform duration-300 ease-in-out hover:scale-95"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1576153192396-180ecef2a715?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dWklMkZ1eHxlbnwwfHwwfHx8MA%3D%3D"
+          alt="Decorative"
+          className="rounded-xl shadow-md object-cover w-full h-64 transition-transform duration-300 ease-in-out hover:scale-95"
+        />
+        <img
+          src="https://media.istockphoto.com/id/2012393906/photo/big-data-analysis-with-ai-technology-person-using-machine-learning-and-deep-learning-neural.webp?a=1&b=1&s=612x612&w=0&k=20&c=EOjmnc2Jp-_U3gJrOUNgJR8vXnwma39V58CEwewLsL8="
+          alt="Decorative"
+          className="rounded-xl shadow-md object-cover w-full h-64 transition-transform duration-300 ease-in-out hover:scale-95"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aHJ8ZW58MHx8MHx8fDA%3D"
+          alt="Decorative"
+          className="rounded-xl shadow-md object-cover w-full h-64 transition-transform duration-300 ease-in-out hover:scale-95"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Decorative"
+          className="rounded-xl shadow-md object-cover w-full h-64 transition-transform duration-300 ease-in-out hover:scale-95"
+        />
+        <img
+          src="https://media.istockphoto.com/id/1499401564/photo/two-lawyers-are-discussing-about-contract-paper-law-matters-determination-pointing-law-and.webp?a=1&b=1&s=612x612&w=0&k=20&c=aSz-uGSpVfQgA4vpiMQRIxLsdIrqIfbwFufQlA07dIA="
+          alt="Decorative"
+          className="rounded-xl shadow-md object-cover w-full h-64 transition-transform duration-300 ease-in-out hover:scale-95"
+        />
+      </div>
 
       {/* Role Section */}
       <div className="max-w-3xl mx-auto mt-12 space-y-8 text-left relative">
@@ -122,7 +200,12 @@ const Careers = () => {
       </div>
 
       {/* How we hire / What we offer */}
-      <div className="max-w-3xl mx-auto mt-20 text-left">
+      <div
+        ref={hireRef}
+        className={`max-w-3xl mx-auto mt-20 text-left transition-all duration-1000 ease-out transform ${
+          hireVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
           How We Hire / What We Offer
         </h2>

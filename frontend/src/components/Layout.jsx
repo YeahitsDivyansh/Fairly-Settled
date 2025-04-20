@@ -5,6 +5,7 @@ import Footer from "./Footer/Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
+import ScrollToTop from "@/context/ScrollToTop";
 
 const Layout = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,6 +14,7 @@ const Layout = () => {
 
   return (
     <div>
+      <ScrollToTop />
       <Navbar
         language={language}
         setLanguage={setLanguage}

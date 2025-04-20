@@ -1,14 +1,14 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
+import { useNavigate } from "react-router-dom";
 
 const agreementTypes = [
-    "Partnership Agreement",
-    "Non-Disclosure Agreement",
-    "Franchise Agreement",
-    "Service Agreement",
-    "Distribution Agreement",
-    "Agency Contract",
+  "Partnership Agreement",
+  "Non-Disclosure Agreement",
+  "Franchise Agreement",
+  "Service Agreement",
+  "Distribution Agreement",
+  "Agency Contract",
 ];
 
 const templates = {
@@ -353,11 +353,21 @@ Agent: ${data.agentName}`,
   },
 };
 
-export default function BusinessAgreementsForm() {
+export default function BusinessAgreementsForm({}) {
   const [type, setType] = useState("Partnership Agreement");
   const [formData, setFormData] = useState({});
   const [generatedText, setGeneratedText] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const navigate = useNavigate();
+
+  
+  useEffect(() => {
+    if (showSuccessMessage) {
+      const timeout = setTimeout(() => setShowSuccessMessage(false), 5000);
+      return () => clearTimeout(timeout);
+    }
+  }, [showSuccessMessage]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -368,6 +378,8 @@ export default function BusinessAgreementsForm() {
     const text = templates[type].generateText(formData);
     setGeneratedText(text);
     setSubmitted(true);
+    setShowSuccessMessage(true);
+    window.scrollTo({ top: 0, behavior: "smooth" }); 
   };
 
   const handleDownload = () => {
@@ -392,52 +404,92 @@ export default function BusinessAgreementsForm() {
     });
 
     doc.save(`${type.replace(/\s+/g, "_")}_Agreement.pdf`);
+    window.alert("Document downloaded successfully!");
+    navigate("/draft-doc");
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-blue-100 to-purple-200 flex flex-col items-center">
-      <div className="bg-white p-4 rounded-xl shadow mb-4 w-full max-w-3xl">
+    <div className="min-h-screen p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex flex-col items-center">
+
+     
+      {showSuccessMessage && (
+        <div className="w-full max-w-3xl mb-4 relative bg-green-500 text-white p-4 rounded-lg shadow-md text-center animate-fadeIn transition-all">
+          <span>Agreement draft has been successfully generated!</span>
+          <button
+            onClick={() => setShowSuccessMessage(false)}
+            className="absolute top-2 right-3 text-white text-xl font-bold hover:text-red-200 transition"
+            aria-label="Close"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+
+      <div className="w-full max-w-3xl mb-6 bg-white/50 backdrop-blur-xl shadow-xl rounded-2xl p-4 animate-fadeIn transition-all">
         <select
           value={type}
-          onChange={(e) => { setType(e.target.value); setFormData({}); setSubmitted(false); }}
-          className="w-full p-2 border border-gray-300 rounded"
+          onChange={(e) => {
+            setType(e.target.value);
+            setFormData({});
+            setSubmitted(false);
+            setShowSuccessMessage(false);
+            window.scrollTo({ top: 0, behavior: "smooth" }); 
+          }}
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm text-lg font-medium focus:outline-none focus-visible:ring-4 focus-visible:ring-purple-400 transition duration-300 bg-white"
         >
           {agreementTypes.map((t) => (
-            <option key={t} value={t}>{t}</option>
+            <option key={t} value={t}>
+              {t}
+            </option>
           ))}
         </select>
       </div>
 
       {!submitted ? (
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-3xl space-y-4">
-          <h2 className="text-xl font-bold text-purple-700 text-center">{type}</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-3xl bg-white/60 backdrop-blur-md p-8 rounded-3xl shadow-2xl space-y-6 animate-fadeIn transition-all"
+        >
+          <h2 className="text-3xl font-bold text-purple-700 text-center mb-4 drop-shadow">
+            {type}
+          </h2>
           {templates[type].fields.map((field) => (
-            <div key={field}>
-              <label className="block text-gray-600 capitalize text-sm mb-1">{field.replace(/([A-Z])/g, ' $1')}</label>
+            <div key={field} className="flex flex-col">
+              <label className="text-gray-700 font-medium capitalize text-sm mb-2">
+                {field.replace(/([A-Z])/g, " $1")}
+              </label>
               <input
                 type="text"
                 name={field}
                 value={formData[field] || ""}
                 onChange={handleChange}
-                className="w-full border border-gray-300 p-2 rounded"
+                className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm transition duration-200"
                 required
               />
             </div>
           ))}
-          <button type="submit" className="w-full bg-purple-600 text-white p-3 rounded-xl hover:bg-purple-700">
+          <button
+            type="submit"
+            className="w-full bg-purple-600 text-white font-semibold p-3 rounded-xl shadow-md hover:bg-purple-700 hover:scale-[1.03] transition-transform duration-300"
+          >
             Generate Agreement
           </button>
         </form>
       ) : (
-        <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-3xl space-y-4">
-          <h2 className="text-xl font-bold text-purple-700 text-center">Preview & Download</h2>
+        <div className="w-full max-w-3xl bg-white/60 backdrop-blur-md p-6 rounded-3xl shadow-2xl space-y-4 animate-fadeIn transition-all">
+          <h2 className="text-2xl font-bold text-purple-700 text-center mb-2">
+            Preview & Download
+          </h2>
           <textarea
             value={generatedText}
-            rows="30"
+            rows="25"
             onChange={(e) => setGeneratedText(e.target.value)}
-            className="w-full border border-gray-400 p-4 rounded"
+            className="w-full border border-gray-300 p-4 rounded-lg shadow-inner font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 transition"
           />
-          <button onClick={handleDownload} className="w-full bg-green-600 text-white p-3 rounded-xl hover:bg-green-700">
+          <button
+            onClick={handleDownload}
+            className="w-full bg-green-600 text-white font-semibold p-3 rounded-xl shadow-md hover:bg-green-700 hover:scale-[1.03] transition-transform duration-300"
+          >
             Download PDF
           </button>
         </div>
