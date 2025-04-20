@@ -1,13 +1,54 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const About = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const meetRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.4 }
+    );
+
+    const current = meetRef.current;
+    if (current) observer.observe(current);
+
+    return () => {
+      if (current) observer.unobserve(current);
+    };
+  }, []);
+
   return (
-    <div className="bg-[#9db6d9bd] gap-10 flex flex-col justify-center items-center min-h-[80vh] px-4">
-      {/* Heading */}
-      <h1 className="mt-4 text-6xl text-[#1F2937] font-extrabold text-center">
-        Your legal ally, powered by AI
-      </h1>
+    <div className="bg-[#9db6d9bd] relative overflow-hidden min-h-[80vh] px-4 py-10">
+      {/* Blob Background */}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        <svg
+          className="w-full h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <defs>
+            <linearGradient
+              id="bg-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#a2c4f8" />
+              <stop offset="100%" stopColor="#f0e4ff" />
+            </linearGradient>
+          </defs>
+          <g>
+            <circle r="200" cx="20%" cy="30%" fill="url(#bg-gradient)" />
+            <circle r="250" cx="80%" cy="60%" fill="url(#bg-gradient)" />
+            <circle r="180" cx="50%" cy="80%" fill="url(#bg-gradient)" />
+          </g>
+        </svg>
+      </div>
 
       {/* Introduction Section */}
       <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 bg-white rounded-xl shadow-md p-8 my-6 transition-transform duration-300 ease-in-out hover:scale-95">
@@ -39,8 +80,8 @@ const About = () => {
 
       {/* Core Features Section */}
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
-        <div className="bg-[#9db6d9bd] p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-transform duration-300 ease-in-out hover:scale-95">
-          <h3 className="text-2xl font-semibold text-[#1F2937] mb-2">
+        <div className="p-6 rounded-lg bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
+          <h3 className="text-2xl font-bold text-[#1F2937] mb-2">
             Collaborative Expertise
           </h3>
           <p className="text-gray-700">
@@ -50,8 +91,8 @@ const About = () => {
             control.
           </p>
         </div>
-        <div className="bg-[#9db6d9bd] p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-transform duration-300 ease-in-out hover:scale-95">
-          <h3 className="text-2xl font-semibold text-[#1F2937] mb-2">
+        <div className="p-6 rounded-lg bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
+          <h3 className="text-2xl font-bold text-[#1F2937] mb-2">
             AI-Powered Resolution
           </h3>
           <p className="text-gray-700">
@@ -61,8 +102,8 @@ const About = () => {
             every step.
           </p>
         </div>
-        <div className="bg-[#9db6d9bd] p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-transform duration-300 ease-in-out hover:scale-95">
-          <h3 className="text-2xl font-semibold text-[#1F2937] mb-2">
+        <div className="p-6 rounded-lg bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
+          <h3 className="text-2xl font-bold text-[#1F2937] mb-2">
             Seamless Experience
           </h3>
           <p className="text-gray-700">
@@ -75,7 +116,18 @@ const About = () => {
       </div>
 
       {/* Meet the Minds Section */}
-      <div className="max-w-5xl w-full mx-auto px-4 py-8">
+      <div
+        ref={meetRef}
+        className={`rounded-xl max-w-5xl mx-auto px-4 py-8 transform transition-all duration-1000 ease-out ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        <img
+          src="https://agilityai.co.in/new_logo.jpg"
+          alt="Agility AI Logo"
+          className="mx-auto mb-6 h-20 object-contain rounded-full"
+        />
+
         <h2 className="text-center text-3xl font-extrabold text-[#1F2937] mb-6">
           Meet the Minds Behind Agility AI
         </h2>
