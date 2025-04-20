@@ -1,42 +1,7 @@
 "use client";
-import React, { useEffect, useRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import React from "react";
 
 const About = () => {
-  const cardRefs = useRef([]);
-
-  useEffect(() => {
-    cardRefs.current.forEach((card, index) => {
-      gsap.fromTo(
-        card,
-        {
-          autoAlpha: 0,
-          x: index % 2 === 0 ? -100 : 100,
-          y: 30,
-          scale: 0.97,
-        },
-        {
-          autoAlpha: 1,
-          x: 0,
-          y: 0,
-          scale: 0.95,
-          duration: 1.3,
-          delay: index * 0.2,
-          ease: "power4.out", // Cinematic ease
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    });
-  }, []);
-
   return (
     <div className="bg-[#9db6d9bd] gap-10 flex flex-col justify-center items-center min-h-[80vh] px-4">
       {/* Heading */}
@@ -44,123 +9,305 @@ const About = () => {
         Your legal ally, powered by AI
       </h1>
 
-      {/* Introduction Card */}
-      <Card
-        ref={(el) => (cardRefs.current[0] = el)}
-        className="mt-6 relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
-      >
-        <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
-
-        <CardContent className="relative z-10">
-          <h2 className="text-2xl font-bold mb-4 text-blue-900 text-center">
-            Introduction
+      {/* Introduction Section */}
+      <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 bg-white rounded-xl shadow-md p-8 my-6 transition-transform duration-300 ease-in-out hover:scale-95">
+        {/* Text Content */}
+        <div className="md:w-1/2">
+          <h2 className="text-4xl font-extrabold text-[#1F2937] mb-4">
+            We're with you <br /> in every case
           </h2>
-          <p className="text-gray-600 leading-relaxed">
-            At <strong>Agility AI</strong>, we're changing the game in the legal
-            world by slashing both time and costs, making justice faster and
-            more affordable. Our AI-driven automation handles everything from
-            case filing and document generation to real-time tracking,
-            eliminating the delays and inefficiencies that have long held back
-            the legal process.
+          <p className="text-gray-700 text-lg leading-relaxed">
+            Agility AI is revolutionizing the legal industry with a blend of
+            cutting-edge technology and deep legal expertise. Our intelligent
+            tools automate and simplify everything from document filing to case
+            tracking — saving both time and money.
             <br />
             <br />
-            What truly sets us apart is our{" "}
-            <strong>pay-for-performance model</strong> — you only pay a small
-            percentage of the legal fees, ensuring justice is within reach for
-            all. This first-of-its-kind approach in the country means both legal
-            professionals and consumers can enjoy a streamlined experience,
-            achieving faster results without the heavy costs.
-            <br />
-            <br />
-            <em>Justice, simplified and made affordable.</em>
+            Since our founding, we've empowered legal professionals and
+            individuals alike to navigate complex legal matters with confidence,
+            clarity, and efficiency.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+        {/* Image Section */}
+        <div className="md:w-1/2">
+          <img
+            src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            className="w-full h-64 md:h-full object-cover rounded-lg shadow-lg"
+          />
+        </div>
+      </div>
 
-      {/* Meet the Minds Behind Card */}
-      <Card
-        ref={(el) => (cardRefs.current[1] = el)}
-        className="relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
-      >
-        <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
-        <CardContent className="relative z-10">
-          <h2 className="text-center text-2xl font-bold mb-4 text-blue-900">
-            Meet the Minds Behind Agility AI
-          </h2>
-          <p className="text-gray-600 leading-relaxed">
-            At <strong>Agility AI</strong>, we’re driven by a dynamic team of
-            innovators, engineers, and legal professionals dedicated to
-            reshaping the legal ecosystem in India. Our core team hails from
-            some of the country’s most prestigious institutions — including{" "}
-            <strong>IITs, IIIT, NSUT, NITs, DTU</strong>, and top law schools
-            like{" "}
-            <strong>
-              Campus Law Centre, Faculty of Law, University of Delhi
-            </strong>
-            .
-            <br />
-            <br />
-            This powerful fusion of technological excellence and legal expertise
-            enables us to build AI-driven solutions that are not only
-            cutting-edge but also grounded in real-world legal practice. Our
-            engineers bring deep technical skill, while our legal experts ensure
-            every tool we create serves the needs of both professionals and
-            individuals with precision and empathy.
-            <br />
-            <br />
-            Backing us is a distinguished Advisory Board comprising professors,
-            industry veterans, and thought leaders from the fields of law,
-            engineering, and management. Their insights help us stay
-            future-ready, ethically grounded, and relentlessly innovative.
-            <br />
-            <br />
-            At Agility AI, we’re more than just a team — we’re a mission in
-            motion, building a smarter, faster, and fairer legal future for all.
+      {/* Core Features Section */}
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
+        <div className="bg-[#9db6d9bd] p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-transform duration-300 ease-in-out hover:scale-95">
+          <h3 className="text-2xl font-semibold text-[#1F2937] mb-2">
+            Collaborative Expertise
+          </h3>
+          <p className="text-gray-700">
+            At Agility AI, we work as an extension of your legal team. Combining
+            advanced AI tools with domain expertise, we help resolve legal
+            complexities faster while maintaining complete transparency and
+            control.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+        <div className="bg-[#9db6d9bd] p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-transform duration-300 ease-in-out hover:scale-95">
+          <h3 className="text-2xl font-semibold text-[#1F2937] mb-2">
+            AI-Powered Resolution
+          </h3>
+          <p className="text-gray-700">
+            FairlySettled leverages intelligent automation and purposeful
+            innovation to drive quicker, data-backed outcomes for legal
+            disputes, saving both time and resources while ensuring fairness at
+            every step.
+          </p>
+        </div>
+        <div className="bg-[#9db6d9bd] p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-transform duration-300 ease-in-out hover:scale-95">
+          <h3 className="text-2xl font-semibold text-[#1F2937] mb-2">
+            Seamless Experience
+          </h3>
+          <p className="text-gray-700">
+            Our user-first design ensures anyone can navigate the legal process
+            — no jargon, no guesswork. Whether you're a law firm or an
+            individual, our tools are intuitive, efficient, and ready to scale
+            with your needs.
+          </p>
+        </div>
+      </div>
 
-      {/* Advisory Board Card */}
-      <Card
-        ref={(el) => (cardRefs.current[2] = el)}
-        className="mb-6 relative max-w-3xl w-full shadow-xl p-6 bg-white overflow-hidden transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
-      >
-        <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
-        <CardContent className="relative z-10">
-          <h2 className="text-2xl font-bold mb-6 text-blue-900 text-center">
-            Our Advisory Board
-          </h2>
-          <div className="flex items-start gap-8">
+      {/* Meet the Minds Section */}
+      <div className="max-w-5xl w-full mx-auto px-4 py-8">
+        <h2 className="text-center text-3xl font-extrabold text-[#1F2937] mb-6">
+          Meet the Minds Behind Agility AI
+        </h2>
+        <p className="text-lg leading-relaxed text-gray-800">
+          At <strong>Agility AI</strong>, we’re powered by a passionate and
+          visionary team of engineers, legal professionals, and innovators who
+          are united by a bold mission — to revolutionize the legal ecosystem in
+          India. Our founding members come from India’s top institutions
+          including <strong>IITs, IIIT, NSUT, NITs, DTU</strong>, and elite law
+          schools such as the{" "}
+          <strong>
+            Campus Law Centre, Faculty of Law, University of Delhi
+          </strong>
+          .
+          <br />
+          <br />
+          This unique blend of deep technical expertise and real-world legal
+          experience allows us to design AI-driven tools that are not only
+          state-of-the-art, but also highly attuned to the complexities of the
+          Indian legal landscape. Our engineers focus on creating powerful,
+          scalable systems, while our legal experts ensure these tools are
+          meaningful, practical, and accessible.
+          <br />
+          <br />
+          We are further guided by a distinguished Advisory Board composed of
+          professors, domain veterans, and cross-disciplinary thought leaders in
+          law, engineering, and management. Their wisdom helps us stay ahead of
+          the curve — ethically grounded and future-ready.
+          <br />
+          <br />
+          At Agility AI, this is more than just work — it’s a movement to create
+          a smarter, faster, and more just legal future for all.
+        </p>
+      </div>
+
+      {/* Advisory Board Section */}
+      <div className="max-w-6xl w-full mx-auto px-4 py-10">
+        <h2 className="text-3xl font-extrabold text-[#1F2937] text-center mb-10">
+          Our Advisory Board
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-[#f4f5f1] rounded-xl shadow-md p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
             <img
               src="./aashish-argade.jpeg"
               alt="Prof. Aashish Argade"
-              className="w-24 h-24 rounded-full object-cover shadow-md"
+              className="w-28 h-28 rounded-full object-cover shadow-lg mb-4"
             />
-            <p className="text-gray-600 leading-relaxed">
-              <strong>Prof. Aashish Argade</strong> is a <strong>PhD</strong>{" "}
-              from <strong>IIM Ahmedabad</strong> and an{" "}
-              <strong>ex-Deputy Dean</strong> at <strong>IRMA</strong> (an
-              Institute of National Importance declared by the Parliament of
-              India). He has been actively involved as a consultant with various
-              government departments for over a decade.
+            <h3 className="text-xl font-semibold text-blue-800 mb-1">
+              Prof. Aashish Argade
+            </h3>
+            <p className="text-sm text-gray-600">
+              <strong>PhD</strong> from <strong>IIM Ahmedabad</strong>
+              <br />
+              <strong>Ex-Deputy Dean</strong> at <strong>IRMA</strong>
+              <br />
+              Consultant to various government departments for over a decade
+            </p>
+          </div>
+          <div className="bg-[#f4f5f1] rounded-xl shadow-md p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
+            <img
+              src="./Sumit Kumar Yadav.jpeg"
+              alt="Prof. Sumit Kumar Yadav"
+              className="w-28 h-28 rounded-full object-cover shadow-lg mb-4"
+            />
+            <h3 className="text-xl font-semibold text-blue-800 mb-1">
+              Prof. Sumit Kumar Yadav
+            </h3>
+            <p className="text-sm text-gray-600">
+              Professor at <strong>IIT Roorkee</strong>
+              <br />
+              <strong>PhD</strong> from <strong>IIM Ahmedabad</strong>
+              <br />
+              <strong>BTech</strong> from <strong>IIT Bombay</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Our Core Values */}
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <h2 className="text-3xl font-extrabold text-center text-[#1F2937] mb-4">
+          Our Core Values
+        </h2>
+        <p className="text-center text-xl text-gray-600 max-w-2xl mx-auto mb-10">
+          Our values are the foundation of everything we build, believe in, and
+          strive to deliver — for our clients, our team, and society at large.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-blue-900 text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
+            <img
+              src="https://cdn.prod.website-files.com/6716c4cb5dee34138060e719/67d994caf5a1624e9c88303b_noun-think-5247342%202.svg"
+              alt="Innovation icon"
+              className="w-20 h-auto mb-4"
+              loading="lazy"
+            />
+            <h3 className="text-lg font-semibold mb-2">Innovation-First</h3>
+            <p className="text-sm">
+              We challenge the status quo, leveraging AI to make legal services
+              faster, fairer, and more accessible.
+            </p>
+          </div>
+          <div className="bg-blue-900 text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
+            <img
+              src="https://cdn.prod.website-files.com/6716c4cb5dee34138060e719/67d9962bcddbaa38d72afedd_noun-engineer-1204424%202.svg"
+              alt="Integrity icon"
+              className="w-20 h-auto mb-4"
+              loading="lazy"
+            />
+            <h3 className="text-lg font-semibold mb-2">Integrity Always</h3>
+            <p className="text-sm">
+              We act with unwavering ethics, transparency, and respect — always
+              keeping justice and accountability at our core.
+            </p>
+          </div>
+          <div className="bg-blue-900 text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
+            <img
+              src="https://cdn.prod.website-files.com/6716c4cb5dee34138060e719/67d9a95e2aada0c14b379720_noun-handshake-680244%202%20(1).svg"
+              alt="Empathy icon"
+              className="w-20 h-auto mb-4"
+              loading="lazy"
+            />
+            <h3 className="text-lg font-semibold mb-2">Empathy-Led</h3>
+            <p className="text-sm">
+              We listen deeply, support inclusively, and design with empathy —
+              because legal help should feel human.
+            </p>
+          </div>
+          <div className="bg-blue-900 text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
+            <img
+              src="https://cdn.prod.website-files.com/6716c4cb5dee34138060e719/67d9aa1d3abe65c79ad483a3_noun-trophy-6915046%202.svg"
+              alt="Impact icon"
+              className="w-20 h-auto mb-4"
+              loading="lazy"
+            />
+            <h3 className="text-lg font-semibold mb-2">Driven by Impact</h3>
+            <p className="text-sm">
+              Every line of code, every case handled — it’s all in service of
+              building a more equitable and efficient legal future.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Diversity, Equity, and Inclusion Section */}
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <h2 className="text-3xl font-extrabold text-[#1F2937] text-center mb-8">
+          Diversity, Equity, and Inclusion
+        </h2>
+        <p className="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+          At Agility AI, we are dedicated to creating an inclusive environment
+          where all voices are heard, respected, and empowered. Our commitment
+          to diversity, equity, and inclusion drives our culture and innovation,
+          enabling us to build products that reflect the diverse world we serve.
+        </p>
+        <div className="flex flex-wrap justify-center gap-8">
+          {/** Principle 1 **/}
+          <div className="bg-[#e0f7fa] p-6 rounded-xl shadow-lg w-60 text-center transition-transform duration-300 ease-in-out hover:scale-95">
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4">
+              <img
+                src="https://images.unsplash.com/photo-1716840646010-e5622fd6683d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fFRhbGVudCUyMHN0cmF0ZWd5JTIwJTI2JTIwdGFsZW50JTIwbWFuYWdlbWVudHxlbnwwfHwwfHx8MA%3D%3D"
+                alt="Talent strategy & management"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <h3 className="text-xl font-semibold text-[#00796b] mb-2">
+              Talent Strategy & Management
+            </h3>
+            <p className="text-sm text-gray-700">
+              We prioritize diverse talent by fostering an environment where
+              every individual can thrive and grow.
             </p>
           </div>
 
-          <div className="flex items-start gap-8 mt-5">
-            <img
-              src="./Sumit Kumar Yadav.jpeg"
-              alt="Prof. Aashish Argade"
-              className="w-24 h-24 rounded-full object-cover shadow-md"
-            />
-            <p className="text-gray-600 leading-relaxed">
-              <strong>Prof. Sumit Kumar Yadav</strong> is a Professor at{" "}
-              <strong>IIT Roorkee</strong>. He completed his{" "}
-              <strong>PhD from IIM Ahmedabad</strong> &{" "}
-              <strong>BTech from IIT Bombay</strong>.
+          {/** Principle 2 **/}
+          <div className="bg-[#f1f8e9] p-6 rounded-xl shadow-lg w-60 text-center transition-transform duration-300 ease-in-out hover:scale-95">
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4">
+              <img
+                src="https://images.unsplash.com/photo-1695548303391-21a21138f642?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8RWR1Y2F0aW9uJTIwYW5kJTIwQXdhcmVuZXNzfGVufDB8fDB8fHww"
+                alt="Education and awareness"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <h3 className="text-xl font-semibold text-[#33691e] mb-2">
+              Education and Awareness
+            </h3>
+            <p className="text-sm text-gray-700">
+              We foster an inclusive culture through continuous learning, making
+              equity a priority at every level.
             </p>
           </div>
-        </CardContent>
-      </Card>
+
+          {/** Principle 3 **/}
+          <div className="bg-[#fff3e0] p-6 rounded-xl shadow-lg w-60 text-center transition-transform duration-300 ease-in-out hover:scale-95">
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4">
+              <img
+                src="https://images.unsplash.com/photo-1556484687-30636164638b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Social responsibility"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <h3 className="text-xl font-semibold text-[#d84315] mb-2">
+              Social Responsibility
+            </h3>
+            <p className="text-sm text-gray-700">
+              We engage in initiatives that promote fairness, justice, and
+              sustainable impact within our communities.
+            </p>
+          </div>
+
+          {/** Principle 4 **/}
+          <div className="bg-[#f3e5f5] p-6 rounded-xl shadow-lg w-60 text-center transition-transform duration-300 ease-in-out hover:scale-95">
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4">
+              <img
+                src="https://media.istockphoto.com/id/1423702093/photo/assimilation-or-multiculturalism.webp?a=1&b=1&s=612x612&w=0&k=20&c=Ju8ikWUWT-1OJxv0KtooMOC6hRXLoaCilbY1_sEFYS8="
+                alt="Inclusive culture"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <h3 className="text-xl font-semibold text-[#6a1b9a] mb-2">
+              Inclusive Culture
+            </h3>
+            <p className="text-sm text-gray-700">
+              We create an environment that celebrates diverse perspectives and
+              ensures everyone feels valued.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
