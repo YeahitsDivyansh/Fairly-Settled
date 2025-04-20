@@ -76,8 +76,7 @@ export const ChatProvider = ({ children }) => {
                 updatedAt: serverTimestamp(),
             });
 
-            fetchMessages(); // Refresh UI
-
+            // fetchMessages(); // Refresh UI
         } catch (error) {
             console.error("API error:", error);
             alert("Something went wrong");
