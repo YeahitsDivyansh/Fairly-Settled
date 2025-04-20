@@ -4,10 +4,11 @@ import { Sidebar } from "@/components/Sidebar";
 import { useUserAuth } from "@/context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import ProfileLoading from "@/components/ProfileLoading";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { userData } = useUserAuth();
+  const { loading , userData } = useUserAuth();
   const navigate = useNavigate();
 
   return (
@@ -37,12 +38,15 @@ export default function Navbar() {
         {/* Buttons on the right */}
         <div className="flex items-center gap-4 order-2 sm:order-3">
           <div className="hidden md:flex items-center space-x-6 text-sm text-white">
+            {loading ? 
+            <ProfileLoading/>:
+            <>
             {userData ? (
               <motion.button
-                onClick={() => navigate("/profile")}
-                className="text-white bg-blue-600 text-sm px-4 py-1.5 rounded-full hover:bg-blue-700 transition"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/profile")}
+              className="text-white bg-blue-600 text-sm px-4 py-1.5 rounded-full hover:bg-blue-700 transition"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               >
                 {userData.username}
               </motion.button>
@@ -53,7 +57,7 @@ export default function Navbar() {
                   className="bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-700 transition"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                >
+                  >
                   Sign up
                 </motion.button>
                 <motion.button
@@ -61,15 +65,14 @@ export default function Navbar() {
                   className="text-white bg-gray-700 border border-gray-500 hover:bg-white hover:text-gray-900 cursor-pointer text-sm px-4 py-1.5 rounded-full transition"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                >
+                  >
                   Log in
                 </motion.button>
               </>
             )}
+            </>
+            }
           </div>
-
-
-
           <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white">
             {isOpen ? (
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

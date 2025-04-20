@@ -3,11 +3,12 @@ import { Search, Globe2, ChevronDown } from "lucide-react";
 import { useUserAuth } from "@/context/UserAuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // Import motion from Framer Motion
+import ProfileLoading from "../ProfileLoading";
 
 const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { userData } = useUserAuth();
+  const { loading, userData } = useUserAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,24 +24,24 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
   }, []);
 
   return (
-<nav className="w-full bg-gray-800 shadow-md sticky top-0 z-50">
-  <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
-    {/* Logo */}
-    <div className="flex items-center gap-2 text-white flex-shrink-0">
-      <Link to="/">
-        <img
-          src="./fairlySettledLogo.jpg"
-          alt="FairlySettled Logo"
-          className="w-10 h-10 rounded-full"
-        />
-      </Link>
-      <Link to="/">
-      <span className="text-lg font-semibold tracking-wide hidden sm:inline">
-        FairlySettled
-      </span>
-      </Link>
-      
-    </div>
+    <nav className="w-full bg-gray-800 shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+        {/* Logo */}
+        <div className="flex items-center gap-2 text-white flex-shrink-0">
+          <Link to="/">
+            <img
+              src="./fairlySettledLogo.jpg"
+              alt="FairlySettled Logo"
+              className="w-10 h-10 rounded-full"
+            />
+          </Link>
+          <Link to="/">
+            <span className="text-lg font-semibold tracking-wide hidden sm:inline">
+              FairlySettled
+            </span>
+          </Link>
+
+        </div>
 
         {/* Search */}
         <div className="w-full sm:max-w-lg sm:order-2 order-3">
@@ -66,35 +67,41 @@ const Navbar = ({ language, setLanguage, searchQuery, setSearchQuery }) => {
 
         {/* Buttons & Language */}
         <div className="flex items-center gap-2 sm:order-3 order-2 sm:ml-0 ml-auto flex-wrap justify-end w-full sm:w-auto">
-          {userData ? (
-            <motion.button
-              onClick={() => navigate("/profile")}
-              className="text-white bg-blue-600 text-sm px-4 py-1.5 rounded-full hover:bg-blue-700 transition"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {userData.username}
-            </motion.button>
-          ) : (
+          {loading ?
+            <ProfileLoading /> :
             <>
-              <motion.button
-                onClick={() => navigate("/phonesignup")}
-                className="bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-700 transition"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Sign up
-              </motion.button>
-              <motion.button
-                onClick={() => navigate("/phonesignin")}
-                className="text-white bg-gray-700 border border-gray-500 hover:bg-white hover:text-gray-900 cursor-pointer text-sm px-4 py-1.5 rounded-full transition"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Log in
-              </motion.button>
+              {userData ? (
+                <motion.button
+                  onClick={() => navigate("/profile")}
+                  className="text-white bg-blue-600 text-sm px-4 py-1.5 rounded-full hover:bg-blue-700 transition"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {userData.username}
+                </motion.button>
+              ) : (
+                <>
+                  <motion.button
+                    onClick={() => navigate("/phonesignup")}
+                    className="bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-blue-700 transition"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Sign up
+                  </motion.button>
+                  <motion.button
+                    onClick={() => navigate("/phonesignin")}
+                    className="text-white bg-gray-700 border border-gray-500 hover:bg-white hover:text-gray-900 cursor-pointer text-sm px-4 py-1.5 rounded-full transition"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Log in
+                  </motion.button>
+                </>
+              )}
             </>
-          )}
+          }
+
 
           {/* Language Dropdown */}
           <div className="relative inline-block text-left" ref={dropdownRef}>

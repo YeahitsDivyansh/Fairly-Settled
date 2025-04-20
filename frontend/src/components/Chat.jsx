@@ -34,8 +34,6 @@ const Chat = () => {
   };
 
 
-
-
   return (
     <div className={`bg-[#9db6d9bd] flex flex-col  ${selected === null || messages.length === 0 ? "h-[calc(100vh-5rem)]" : "min-h-screen"} items-center relative`}>
       {/* Overlay */}
@@ -56,27 +54,27 @@ const Chat = () => {
             </p>
             <NewChat />
           </div>
-        ) : loading ? <ChatLoading/> : messages.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-full text-center px-6 py-10 space-y-4 backdrop-blur-sm ">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
-            How can I assist you today?
-          </h2>
-          <p className="text-base font-medium text-gray-600 max-w-md leading-relaxed">
-            Ask your legal questions and get AI-powered advice instantly. Type your query below to begin the conversation.
-          </p>
-        </div>
+        ) : loading ? <ChatLoading /> : messages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-center px-6 py-10 space-y-4 backdrop-blur-sm ">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
+              How can I assist you today?
+            </h2>
+            <p className="text-base font-medium text-gray-600 max-w-md leading-relaxed">
+              Ask your legal questions and get AI-powered advice instantly. Type your query below to begin the conversation.
+            </p>
+          </div>
         ) : (
-        <>
-          {messages.map((msg, idx) => (
-            <div key={idx} className="w-full mx-auto space-y-4">
-              {msg.sender === "ai" && <AIChat msg={msg} />}
-              {msg.sender === "user" && <UserChat msg={msg} />}
-            </div>
-          ))}
-          {newRequestLoading && <ResponseLoading />}
-          <div ref={bottomRef} />
-        </>
-)}
+          <>
+            {messages.map((msg, idx) => (
+              <div key={idx} className="w-full mx-auto space-y-4">
+                {msg.sender === "ai" && <AIChat msg={msg} />}
+                {msg.sender === "user" && <UserChat msg={msg} />}
+              </div>
+            ))}
+            {newRequestLoading && <ResponseLoading />}
+            <div ref={bottomRef} />
+          </>
+        )}
 
       </div>
 
