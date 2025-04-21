@@ -47,6 +47,7 @@ export const ChatProvider = ({ children }) => {
         };
 
         try {
+            setPrompt("");
             // Store user's message in subcollection
             const msgRef = collection(db, "Chats", selected, "Conversation");
             // Add user message to Firestore
@@ -81,7 +82,7 @@ export const ChatProvider = ({ children }) => {
             console.error("API error:", error);
             alert("Something went wrong");
         } finally {
-            setPrompt("");
+            
             setNewRequestLoading(false);
         }
     };
