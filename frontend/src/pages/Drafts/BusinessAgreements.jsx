@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import { useNavigate } from "react-router-dom";
+import { uploadAndSavePDF } from "@/context/uploadAndSavePDF";
+import { useUserAuth } from "@/context/UserAuthContext";
+ 
 
 const agreementTypes = [
   "Partnership Agreement",
@@ -360,7 +363,7 @@ export default function BusinessAgreementsForm({}) {
   const [submitted, setSubmitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate();
-
+  const { userData } = useUserAuth();
   
   useEffect(() => {
     if (showSuccessMessage) {
@@ -382,7 +385,7 @@ export default function BusinessAgreementsForm({}) {
     window.scrollTo({ top: 0, behavior: "smooth" }); 
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     const doc = new jsPDF("p", "mm", "a4");
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 15;
@@ -403,9 +406,18 @@ export default function BusinessAgreementsForm({}) {
       y += lineHeight;
     });
 
-    doc.save(`${type.replace(/\s+/g, "_")}_Agreement.pdf`);
-    window.alert("Document downloaded successfully!");
+    const fileName = `${type.replace(/\s+/g, "_")}_${Date.now()}.pdf`;
+  const pdfBlob = doc.output("blob");
+
+  const { success, downloadURL, error } = await uploadAndSavePDF(pdfBlob, fileName, type,userData);
+
+  if (success) {
+    doc.save(fileName);
+    alert("PDF downloaded and saved to your history successfully.");
     navigate("/draft-doc");
+  } else {
+    alert("Error uploading PDF: " + error);
+  }
   };
 
   return (

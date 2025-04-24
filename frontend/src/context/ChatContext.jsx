@@ -104,7 +104,7 @@ export const ChatProvider = ({ children }) => {
             setChats(chatData);
             if (!selected && chatData[0]) setSelected(chatData[0].id);
             else if (chatData.length === 0) setSelected(null);
-        } catch (err) {
+        } catch (err) { 
             console.error(err);
         }
         setChatsLoading(false);

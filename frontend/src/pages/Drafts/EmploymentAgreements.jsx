@@ -1,7 +1,8 @@
-
 import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import { useNavigate } from "react-router-dom";
+import { uploadAndSavePDF } from "@/context/uploadAndSavePDF";
+import { useUserAuth } from "@/context/UserAuthContext";
 
 const agreementTypes = [
   "Employment Contract",
@@ -93,6 +94,7 @@ export default function EmploymentAgreementsForm() {
   const [submitted, setSubmitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate();
+  const { userData } = useUserAuth();
 
   useEffect(() => {
     if (showSuccessMessage) {
@@ -114,7 +116,7 @@ export default function EmploymentAgreementsForm() {
     window.scrollTo({ top: 0, behavior: "smooth" }); 
   };
 
-  const handleDownload = () => {
+  const handleDownload = async() => {
     const doc = new jsPDF("p", "mm", "a4");
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 15;
@@ -134,10 +136,17 @@ export default function EmploymentAgreementsForm() {
       doc.text(line, margin, y);
       y += lineHeight;
     });
+    const fileName = `${type.replace(/\s+/g, "_")}_${Date.now()}.pdf`;
+    const pdfBlob = doc.output("blob");
 
-    doc.save(`${type.replace(/\s+/g, "_")}_Agreement.pdf`);
-    window.alert("Do You Want to Download This Document!");
-    navigate("/draft-doc");
+    const { success, downloadURL, error } = await uploadAndSavePDF(pdfBlob, fileName, type,userData);
+    if (success) {
+      doc.save(fileName);
+      alert("PDF downloaded and saved to your history successfully.");
+      navigate("/draft-doc");
+    } else {
+      alert("Error uploading PDF: " + error);
+    }
   };
 
   return (

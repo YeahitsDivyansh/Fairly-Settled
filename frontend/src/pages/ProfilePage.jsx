@@ -1,11 +1,11 @@
-import Navbar from '@/components/ui/Navbar1/Navbar1'
+import Navbar from '@/components/Navbar/Navbar'
 import Profile from '@/components/ui/Profile'
 import React from 'react'
 
 const ProfilePage = () => {
     return (
         <>
-            <Navbar />
+            <Navbar/>
             <Profile />
         </>
     )

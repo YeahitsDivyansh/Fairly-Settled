@@ -1,7 +1,8 @@
-
 import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import { useNavigate } from "react-router-dom";
+import { uploadAndSavePDF } from "@/context/uploadAndSavePDF";
+import { useUserAuth } from "@/context/UserAuthContext";
 
 const agreementTypes = [
   "Intellectual Property Assignment Agreement",
@@ -130,6 +131,7 @@ export default function IPAgreementsForm() {
   const [submitted, setSubmitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate();
+  const { userData } = useUserAuth();
 
   useEffect(() => {
     if (showSuccessMessage) {
@@ -151,33 +153,38 @@ export default function IPAgreementsForm() {
     window.scrollTo({ top: 0, behavior: "smooth" }); 
   };
 
-  const handleDownload = () => {
-    const doc = new jsPDF("p", "mm", "a4");
+  const handleDownload = async() => {
+        const doc = new jsPDF("p", "mm", "a4");
         const pageHeight = doc.internal.pageSize.getHeight();
         const margin = 15;
         const lineHeight = 7;
         const maxLineWidth = 180;
         let y = margin;
-
-    doc.setFont("Times", "");
-    doc.setFontSize(12);
-
-
-    const lines = doc.splitTextToSize(generatedText, maxLineWidth);
-    lines.forEach((line) => {
-      if (y + lineHeight > pageHeight - margin) {
-        doc.addPage();
-        y = margin;
-      }
-      doc.text(line, margin, y);
-      y += lineHeight;
-    });
-
-    doc.save(`${type.replace(/\s+/g, "_")}_Agreement.pdf`);
-    window.alert("Document downloaded successfully!");
-    navigate("/draft-doc");
-
-  };
+    
+        doc.setFont("Times", "");
+        doc.setFontSize(12);
+    
+        const lines = doc.splitTextToSize(generatedText, maxLineWidth);
+        lines.forEach((line) => {
+          if (y + lineHeight > pageHeight - margin) {
+            doc.addPage();
+            y = margin;
+          }
+          doc.text(line, margin, y);
+          y += lineHeight;
+        });
+        const fileName = `${type.replace(/\s+/g, "_")}_${Date.now()}.pdf`;
+        const pdfBlob = doc.output("blob");
+    
+        const { success, downloadURL, error } = await uploadAndSavePDF(pdfBlob, fileName, type,userData);
+        if (success) {
+          doc.save(fileName);
+          alert("PDF downloaded and saved to your history successfully.");
+          navigate("/draft-doc");
+        } else {
+          alert("Error uploading PDF: " + error);
+        }
+      };
 
   return (
     <div className="min-h-screen p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex flex-col items-center">

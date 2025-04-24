@@ -18,14 +18,16 @@ const PhoneSignin = () => {
 
   const getOtp = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     setError("");
     if (!number) return setError("Please enter a valid phone number!");
     try {
+      setLoading(true);
       const q = query(collection(db, "Users"), where("phone", "==", number));
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
+        setLoading(false);
         alert("Phone number not registered!");
         return;
       }
@@ -43,9 +45,11 @@ const PhoneSignin = () => {
   const verifyOtp = async (e) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
 
     if (!otp) return setError("Please enter the OTP!");
+
+    setLoading(true);
+
     try {
       const res = await result.confirm(otp);
       navigate("/");
@@ -109,17 +113,19 @@ const PhoneSignin = () => {
                 required
                 className="w-full p-2 mb-3 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              <div className="mt-3 flex justify-center">
-                <div id="recaptcha-container"></div>
+              <div className="mt-3 flex justify-center overflow-hidden w-full max-w-full">
+                <div
+                  id="recaptcha-container"
+                  className="scale-90 transform origin-center"
+                ></div>
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
-                  loading
+                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
-                }`}
+                  }`}
               >
                 {loading ? "Loading..." : "Send OTP"}
               </button>
@@ -152,11 +158,10 @@ const PhoneSignin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
-                  loading
+                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
-                }`}
+                  }`}
               >
                 {loading ? "Loading..." : "Verify"}
               </button>

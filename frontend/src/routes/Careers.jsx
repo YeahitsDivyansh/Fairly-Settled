@@ -45,9 +45,15 @@ const Careers = () => {
   }, []);
 
   const [expanded, setExpanded] = useState(null);
+  const [expandedCategory, setExpandedCategory] = useState(null);
+  const [activeForm, setActiveForm] = useState(null);
 
+  // const toggleExpand = (category) => {
+  //   setExpanded(expanded === category ? null : category);
+  // };
   const toggleExpand = (category) => {
-    setExpanded(expanded === category ? null : category);
+    setExpandedCategory(expandedCategory === category ? null : category);
+    setActiveForm(null); // Close any open forms when switching category
   };
 
   return (
@@ -169,7 +175,7 @@ const Careers = () => {
                     {openRoles} Open Role{openRoles > 1 ? "s" : ""}
                   </p>
                 </div>
-                {expanded === category ? (
+                {expandedCategory === category ? (
                   <ChevronUp className="w-5 h-5 text-gray-500" />
                 ) : (
                   <ChevronDown className="w-5 h-5 text-gray-500" />
@@ -177,21 +183,107 @@ const Careers = () => {
               </div>
 
               {/* Expanded Positions */}
-              {expanded === category && (
+              {expandedCategory === category && (
                 <div className="px-6 pb-4 space-y-3">
-                  {positions.map((position, idx) => (
-                    <div
-                      key={idx}
-                      className="flex justify-between items-center border-gray-200 pb-3"
-                    >
-                      <span className="text-gray-800 font-medium">
-                        {position}
-                      </span>
-                      <Button className="text-sm shadow-md px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white">
-                        Apply
-                      </Button>
-                    </div>
-                  ))}
+                  {positions.map((position, idx) => {
+                    const positionKey = `${category}-${idx}`;
+                    return (
+                      <div key={positionKey} className="pb-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-800 font-medium">
+                            {position}
+                          </span>
+                          <Button
+                            className="text-sm shadow-md px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white"
+                            onClick={() =>
+                              setActiveForm(
+                                activeForm === positionKey ? null : positionKey
+                              )
+                            }
+                          >
+                            Apply
+                          </Button>
+                        </div>
+
+                        {/* Form dropdown */}
+                        {activeForm === positionKey && (
+                          <form className=" mt-4 pt-6 px-8 border border-gray-300 rounded-xl shadow-lg bg-white">
+                            <h1 className="text-xl font-extrabold text-gray-800 text-center mb-1 tracking-tight">
+                              Apply for <span className="text-blue-600">{position}</span>
+                            </h1>
+                            <div className="mb-4">
+                              <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
+                                Name
+                              </label>
+                              <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="name"
+                                type="text"
+                                placeholder="Enter your name"
+                              />
+                            </div>
+
+                            <div className="mb-4">
+                              <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
+                                Email
+                              </label>
+                              <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="email"
+                                type="email"
+                                placeholder="Enter your email"
+                              />
+                            </div>
+
+                            <div className="mb-4">
+                              <label className="block text-gray-700 font-bold mb-2" htmlFor="linkedin">
+                                LinkedIn Profile URL:
+                              </label>
+                              <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="linkedin"
+                                type="text"
+                                placeholder="Enter your LinkedIn Profile URL"
+                              />
+                            </div>
+
+                            <div className="mb-4">
+                              <label className="block text-gray-700 font-bold mb-2" htmlFor="resume">
+                                Resume:
+                              </label>
+                              <input
+                                id="resume"
+                                type="file"
+                                className="mt-2 block w-full text-sm 
+          file:mr-4 
+          file:rounded-md 
+          file:border-0 
+          file:bg-blue-600 
+          file:py-2 
+          file:px-4 
+          file:text-sm 
+          file:font-semibold 
+          file:text-white 
+          hover:file:bg-blue-800 
+          focus:outline-none 
+          disabled:pointer-events-none 
+          disabled:opacity-60"
+                              />
+                            </div>
+
+                            <div className="flex items-center justify-center mb-4">
+                              <button
+                                className="bg-gradient-to-r from-blue-500 to-blue-800 text-white text-base font-semibold py-2 px-7 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out hover:from-blue-600 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                type="submit"
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          </form>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -202,9 +294,8 @@ const Careers = () => {
       {/* How we hire / What we offer */}
       <div
         ref={hireRef}
-        className={`max-w-3xl mx-auto mt-20 text-left transition-all duration-1000 ease-out transform ${
-          hireVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`max-w-3xl mx-auto mt-20 text-left transition-all duration-1000 ease-out transform ${hireVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
           How We Hire / What We Offer
