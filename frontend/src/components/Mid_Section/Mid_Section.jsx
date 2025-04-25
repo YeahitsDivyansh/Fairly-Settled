@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Search, MessageSquare, FileText, Upload, Star } from "lucide-react";
 import { useUserAuth } from "@/context/UserAuthContext";
 import "./Mid_Section.css";
+import CarouselBackground from "./carousel/carousel";
 
 const features = [
   {
@@ -73,37 +74,43 @@ const MidSection = () => {
 
   return (
     <div className="px-4 bg-[#9db6d9bd] pt-15 md:px-20 overflow-hidden">
-      {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="py-20 text-center bg-cover bg-center bg-no-repeat rounded-xl"
-        style={{ backgroundImage: "url('./mid-img2.webp')" }}
-      >
-        <h1 className="text-3xl sm:text-5xl md:text-6xl text-white font-bold mb-6 leading-tight">
-          Your Legal Questions,
-          <br />
-          Answered Instantly
-        </h1>
-        <p className="text-white text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-          {t.benefits}
-        </p>
+     <motion.section
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  className="relative py-20 text-center bg-cover bg-center bg-no-repeat rounded-xl overflow-hidden"
+>
+  {/* Carousel as background */}
+  <CarouselBackground />
 
-        <div className="max-w-xl mx-auto mb-8 px-4">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder={t.search}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full text-white px-5 py-3 border border-gray-300 rounded-full bg-black/20 backdrop-blur-sm placeholder-white focus:ring-2 focus:ring-blue-500"
-            />
-            <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white" />
-          </div>
-        </div>
+  {/* Foreground content */}
+  <div className="relative z-10">
+  <h1
+    className="text-3xl sm:text-5xl md:text-6xl text-gray-700 font-bold mb-6 leading-tight"
+  >
+    Your Legal Questions,
+    <br />
+    Answered Instantly
+  </h1>
 
-        <div className="flex flex-wrap justify-center gap-4">
-          <button
+  <p className="text-gray-900 text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+    {t.benefits}
+  </p>
+
+  <div className="max-w-xl mx-auto mb-8 px-4">
+    <div className="relative">
+      <input
+        type="text"
+        placeholder={t.search}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="w-full text-gray-900 px-5 py-3 border border-gray-900 rounded-full bg-black/20 backdrop-blur-sm placeholder-gray-900 focus:ring-2 focus:ring-blue-500"
+      />
+      <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-900" />
+    </div>
+  </div>
+
+    <div className="flex flex-wrap justify-center gap-4">
+    <button
             className="flex items-center gap-2 px-6 py-3 bg-[#2563EB] text-white rounded-full hover:bg-blue-700 cursor-pointer transition duration-200"
             onClick={() => navigate("chat")}
           >
@@ -148,8 +155,10 @@ const MidSection = () => {
             <FileText size={20} className="group-hover:text-white" />
             {t.upload}
           </button>
-        </div>
-      </motion.section>
+    </div>
+  </div>
+</motion.section>
+
 
       <motion.section className="py-16 bg-[#9db6d9bd] px-4 rounded-xl mt-10 mb-10 overflow-hidden">
         <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
