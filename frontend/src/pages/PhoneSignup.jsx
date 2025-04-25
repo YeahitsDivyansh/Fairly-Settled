@@ -132,18 +132,20 @@ const PhoneSignup = () => {
                 required
                 className="w-full p-2 mb-3 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              <div className="mt-3 flex justify-center">
-                <div id="recaptcha-container"></div>
+              <div className="mt-3 flex justify-center overflow-hidden w-full max-w-full">
+                <div
+                  id="recaptcha-container"
+                  className="scale-90 transform origin-center"
+                ></div>
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
-                  loading
+                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
-                }`}
+                  }`}
               >
                 {loading ? "Loading..." : "Send OTP"}
               </button>
@@ -171,17 +173,17 @@ const PhoneSignup = () => {
               <input
                 type="text"
                 placeholder="Enter OTP"
+                value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 className="w-full p-2 mb-3 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
-                  loading
+                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
-                }`}
+                  }`}
               >
                 {loading ? "Loading..." : "Verify"}
               </button>
