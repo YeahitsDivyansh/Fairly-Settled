@@ -73,91 +73,91 @@ const MidSection = () => {
   const { user, loading } = useUserAuth();
 
   return (
-    <div className="px-4 bg-[#9db6d9bd] pt-15 md:px-20 overflow-hidden">
-     <motion.section
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  className="relative py-20 text-center bg-cover bg-center bg-no-repeat rounded-xl overflow-hidden"
->
-  {/* Carousel as background */}
-  <CarouselBackground />
+    <div className="px-4 bg-[#9db6d9bd] pt-5 md:px-20 overflow-hidden">
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="relative py-20 text-center bg-cover bg-center bg-no-repeat rounded-xl overflow-hidden"
+      >
+        {/* Carousel as background */}
+        <CarouselBackground />
 
-  {/* Foreground content */}
-  <div className="relative z-10">
-  <h1
-    className="text-3xl sm:text-5xl md:text-6xl text-gray-700 font-bold mb-6 leading-tight"
-  >
-    Your Legal Questions,
-    <br />
-    Answered Instantly
-  </h1>
-
-  <p className="text-gray-900 text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-    {t.benefits}
-  </p>
-
-  <div className="max-w-xl mx-auto mb-8 px-4">
-    <div className="relative">
-      <input
-        type="text"
-        placeholder={t.search}
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full text-gray-900 px-5 py-3 border border-gray-900 rounded-full bg-black/20 backdrop-blur-sm placeholder-gray-900 focus:ring-2 focus:ring-blue-500"
-      />
-      <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-900" />
-    </div>
-  </div>
-
-    <div className="flex flex-wrap justify-center gap-4">
-    <button
-            className="flex items-center gap-2 px-6 py-3 bg-[#2563EB] text-white rounded-full hover:bg-blue-700 cursor-pointer transition duration-200"
-            onClick={() => navigate("chat")}
+        {/* Foreground content */}
+        <div className="relative z-10">
+          <h1
+            className="text-3xl sm:text-5xl md:text-6xl text-white text-gradient font-bold mb-6 leading-tight"
           >
-            <MessageSquare size={20} />
-            {t.talk}
-          </button>
+            Your Legal Questions,
+            <br />
+            Answered Instantly
+          </h1>
 
-          <button
-            className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
-            onClick={() => {
-              if (loading) {
-                alert("Checking authentication status");
-                return;
-              }
-              if (user) {
-                navigate("/draft-doc");
-              } else {
-                alert("Please login first to generate a draft.");
-                navigate("/phonesignin");
-              }
-            }}
-          >
-            <FileText size={20} className="group-hover:text-white" />
-            {t.draft}
-          </button>
+          <p className="text-[#f1f3f4] text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+            {t.benefits}
+          </p>
 
-          <button
-            className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
-            onClick={() => {
-              if (loading) {
-                alert("Checking authentication status");
-                return;
-              }
-              if (user) {
-                navigate("/upload-doc");
-              } else {
-                alert("Please login first to generate a draft.");
-                navigate("/phonesignin");
-              }
-            }}
-          >
-            <FileText size={20} className="group-hover:text-white" />
-            {t.upload}
-          </button>
-    </div>
-  </div>
-</motion.section>
+          <div className="max-w-xl mx-auto mb-8 px-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder={t.search}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full text-white text-center placeholder-white px-5 py-3 bg-white/10 border border-[#2563EB] rounded-full focus:ring-2 focus:ring-[#00BFFF] backdrop-blur-md focus:outline-none"
+              />
+              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#E0F7FF]" />
+            </div>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              className="flex items-center gap-2 px-6 py-3 bg-[#2563EB] text-white rounded-full hover:bg-blue-700 cursor-pointer transition duration-200"
+              onClick={() => navigate("chat")}
+            >
+              <MessageSquare size={20} />
+              {t.talk}
+            </button>
+
+            <button
+              className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
+              onClick={() => {
+                if (loading) {
+                  alert("Checking authentication status");
+                  return;
+                }
+                if (user) {
+                  navigate("/draft-doc");
+                } else {
+                  alert("Please login first to generate a draft.");
+                  navigate("/phonesignin");
+                }
+              }}
+            >
+              <FileText size={20} className="group-hover:text-white" />
+              {t.draft}
+            </button>
+
+            <button
+              className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
+              onClick={() => {
+                if (loading) {
+                  alert("Checking authentication status");
+                  return;
+                }
+                if (user) {
+                  navigate("/upload-doc");
+                } else {
+                  alert("Please login first to generate a draft.");
+                  navigate("/phonesignin");
+                }
+              }}
+            >
+              <FileText size={20} className="group-hover:text-white" />
+              {t.upload}
+            </button>
+          </div>
+        </div>
+      </motion.section>
 
 
       <motion.section className="py-16 bg-[#9db6d9bd] px-4 rounded-xl mt-10 mb-10 overflow-hidden">

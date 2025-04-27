@@ -406,7 +406,7 @@ export default function BusinessAgreementsForm({}) {
       y += lineHeight;
     });
 
-    const fileName = `${type.replace(/\s+/g, "_")}_${Date.now()}.pdf`;
+  const fileName = `${type.replace(/\s+/g, "_")}_${Date.now()}.pdf`;
   const pdfBlob = doc.output("blob");
 
   const { success, downloadURL, error } = await uploadAndSavePDF(pdfBlob, fileName, type,userData);
