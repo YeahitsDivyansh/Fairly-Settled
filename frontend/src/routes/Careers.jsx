@@ -1,31 +1,35 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { db, storage } from "../firebase";
+import { collection, getDocs, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import toast from "react-hot-toast";
+import JobsLoading from "@/components/JobsLoading";
 
-const roles = [
-  {
-    category: "Engineering",
-    openRoles: 3,
-    positions: ["Full Stack Developer", "ML/AI Engineer", "UI/UX Developer"],
-  },
-  {
-    category: "Legal",
-    openRoles: 4,
-    positions: [
-      "Advocate",
-      "Legal Associate",
-      "Legal Intern",
-      "Legal Researcher",
-    ],
-  },
-  {
-    category: "Non Legal",
-    openRoles: 2,
-    positions: ["HR Manager", "Content Writer"],
-  },
-];
 
 const Careers = () => {
+  const [roles, setRoles] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        setLoading(true);
+        const querySnapshot = await getDocs(collection(db, "roles"));
+        const rolesData = querySnapshot.docs.map(doc => doc.data());
+        setRoles(rolesData);
+        // console.log(roles);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+      setLoading(false);
+    };
+
+    fetchRoles();
+  }, []);
+
+
   const [hireVisible, setHireVisible] = useState(false);
   const hireRef = useRef(null);
   useEffect(() => {
@@ -44,17 +48,50 @@ const Careers = () => {
     };
   }, []);
 
-  const [expanded, setExpanded] = useState(null);
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [activeForm, setActiveForm] = useState(null);
 
-  // const toggleExpand = (category) => {
-  //   setExpanded(expanded === category ? null : category);
-  // };
+
   const toggleExpand = (category) => {
     setExpandedCategory(expandedCategory === category ? null : category);
     setActiveForm(null); // Close any open forms when switching category
   };
+
+  const handleSubmit = async (e, position) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const linkedin = e.target.linkedin.value;
+    const resumeFile = e.target.resume.files[0];
+
+    if (!name || !email || !linkedin || !resumeFile) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const resumeRef = ref(storage, `resumes/${Date.now()}_${resumeFile.name}`);
+      await uploadBytes(resumeRef, resumeFile);
+      const resumeURL = await getDownloadURL(resumeRef);
+
+      const newAppRef = doc(collection(db, "Applications"));
+      await setDoc(newAppRef, {
+        name,
+        email,
+        linkedin,
+        resumeURL,
+        position,
+        createdAt: serverTimestamp()
+      });
+
+      toast.success("Application submitted successfully!");
+      e.target.reset();
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      toast.error("Something went wrong.");
+    }
+  };
+
 
   return (
     <section className="bg-[#9db6d9bd] px-4 py-16 md:py-24 mx-auto text-center">
@@ -151,145 +188,167 @@ const Careers = () => {
         />
       </div>
 
+
       {/* Role Section */}
-      <div className="max-w-3xl mx-auto mt-12 space-y-8 text-left relative">
-        {roles.map(({ category, openRoles, positions }) => (
-          <div
-            key={category}
-            className="relative rounded overflow-hidden transition-transform duration-300 hover:scale-102 hover:-translate-y-1"
-          >
-            {/* Glow Background */}
-            <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-800 opacity-30 blur-xl animate-pulse"></div>
-
-            {/* Content Wrapper */}
-            <div className="relative z-10 bg-white shadow-sm rounded-lg overflow-hidden">
+      <div className="max-w-3xl mx-auto mt-12 space-y-8 text-left relative min-h-80">
+        {loading ?
+        <>
+         <JobsLoading/> <JobsLoading/> <JobsLoading/>
+         </>
+          : (
+          roles.map(({ category, positions }) => {
+            return (
               <div
-                onClick={() => toggleExpand(category)}
-                className="flex justify-between items-center p-4 transition cursor-pointer"
+                key={category}
+                className="relative rounded overflow-hidden transition-transform duration-300 hover:scale-102 hover:-translate-y-1"
               >
-                <div>
-                  <h3 className="font-semibold text-lg text-gray-900">
-                    {category}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {openRoles} Open Role{openRoles > 1 ? "s" : ""}
-                  </p>
-                </div>
-                {expandedCategory === category ? (
-                  <ChevronUp className="w-5 h-5 text-gray-500" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-500" />
-                )}
-              </div>
+                {/* Glow Background */}
+                <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-800 opacity-30 blur-xl animate-pulse"></div>
 
-              {/* Expanded Positions */}
-              {expandedCategory === category && (
-                <div className="px-6 pb-4 space-y-3">
-                  {positions.map((position, idx) => {
-                    const positionKey = `${category}-${idx}`;
-                    return (
-                      <div key={positionKey} className="pb-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-800 font-medium">
-                            {position}
-                          </span>
-                          <Button
-                            className="text-sm shadow-md px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white"
-                            onClick={() =>
-                              setActiveForm(
-                                activeForm === positionKey ? null : positionKey
-                              )
-                            }
-                          >
-                            Apply
-                          </Button>
-                        </div>
+                {/* Content Wrapper */}
+                <div className="relative z-10 bg-white shadow-sm rounded-lg overflow-hidden">
+                  <div
+                    onClick={() => toggleExpand(category)}
+                    className="flex justify-between items-center p-4 transition cursor-pointer"
+                  >
+                    <div>
+                      <h3 className="font-semibold text-lg text-gray-900">
+                        {category}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        {positions.length} Open Role{positions.length > 1 ? 's' : ''}
+                      </p>
+                    </div>
+                    {expandedCategory === category ? (
+                      <ChevronUp className="w-5 h-5 text-gray-500" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-gray-500" />
+                    )}
+                  </div>
 
-                        {/* Form dropdown */}
-                        {activeForm === positionKey && (
-                          <form className=" mt-4 pt-6 px-8 border border-gray-300 rounded-xl shadow-lg bg-white">
-                            <h1 className="text-xl font-extrabold text-gray-800 text-center mb-1 tracking-tight">
-                              Apply for <span className="text-blue-600">{position}</span>
-                            </h1>
-                            <div className="mb-4">
-                              <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
-                                Name
-                              </label>
-                              <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="name"
-                                type="text"
-                                placeholder="Enter your name"
-                              />
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
-                                Email
-                              </label>
-                              <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="email"
-                                type="email"
-                                placeholder="Enter your email"
-                              />
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="block text-gray-700 font-bold mb-2" htmlFor="linkedin">
-                                LinkedIn Profile URL:
-                              </label>
-                              <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="linkedin"
-                                type="text"
-                                placeholder="Enter your LinkedIn Profile URL"
-                              />
-                            </div>
-
-                            <div className="mb-4">
-                              <label className="block text-gray-700 font-bold mb-2" htmlFor="resume">
-                                Resume:
-                              </label>
-                              <input
-                                id="resume"
-                                type="file"
-                                className="mt-2 block w-full text-sm 
-          file:mr-4 
-          file:rounded-md 
-          file:border-0 
-          file:bg-blue-600 
-          file:py-2 
-          file:px-4 
-          file:text-sm 
-          file:font-semibold 
-          file:text-white 
-          hover:file:bg-blue-800 
-          focus:outline-none 
-          disabled:pointer-events-none 
-          disabled:opacity-60"
-                              />
-                            </div>
-
-                            <div className="flex items-center justify-center mb-4">
-                              <button
-                                className="bg-gradient-to-r from-blue-500 to-blue-800 text-white text-base font-semibold py-2 px-7 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out hover:from-blue-600 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                type="submit"
+                  {/* Expanded Positions */}
+                  {expandedCategory === category && (
+                    <div className="px-6 pb-4 space-y-3">
+                      {positions.map((position, idx) => {
+                        const positionKey = `${category}-${idx}`;
+                        return (
+                          <div key={positionKey} className="pb-4">
+                            <div className="flex justify-between items-center">
+                              <span className="text-gray-800 font-medium">
+                                {position}
+                              </span>
+                              <Button
+                                className="text-sm shadow-md px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white hover:cursor-pointer"
+                                onClick={() =>
+                                  setActiveForm(
+                                    activeForm === positionKey ? null : positionKey
+                                  )
+                                }
                               >
-                                Submit
-                              </button>
+                                Apply
+                              </Button>
                             </div>
-                          </form>
-                        )}
-                      </div>
-                    );
-                  })}
+
+                            {/* Form dropdown */}
+                            {activeForm === positionKey && (
+                              <form
+                                onSubmit={(e) => handleSubmit(e, position)}
+                                className="mt-4 pt-6 px-8 border border-gray-300 rounded-xl shadow-lg bg-white"
+                              >
+                                <h1 className="text-xl font-extrabold text-gray-800 text-center mb-1 tracking-tight">
+                                  Apply for{' '}
+                                  <span className="text-blue-600">{position}</span>
+                                </h1>
+
+                                <div className="mb-4">
+                                  <label
+                                    className="block text-gray-700 font-bold mb-2"
+                                    htmlFor="name"
+                                  >
+                                    Name
+                                  </label>
+                                  <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    placeholder="Enter your name"
+                                    required
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                                  />
+                                </div>
+
+                                <div className="mb-4">
+                                  <label
+                                    className="block text-gray-700 font-bold mb-2"
+                                    htmlFor="email"
+                                  >
+                                    Email
+                                  </label>
+                                  <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    required
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                                  />
+                                </div>
+
+                                <div className="mb-4">
+                                  <label
+                                    className="block text-gray-700 font-bold mb-2"
+                                    htmlFor="linkedin"
+                                  >
+                                    LinkedIn Profile URL:
+                                  </label>
+                                  <input
+                                    id="linkedin"
+                                    name="linkedin"
+                                    type="url"
+                                    placeholder="Enter your LinkedIn Profile URL"
+                                    required
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                                  />
+                                </div>
+
+                                <div className="mb-4">
+                                  <label
+                                    className="block text-gray-700 font-bold mb-2"
+                                    htmlFor="resume"
+                                  >
+                                    Resume:
+                                  </label>
+                                  <input
+                                    id="resume"
+                                    name="resume"
+                                    type="file"
+                                    required
+                                    className="mt-2 block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-blue-600 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-800 focus:outline-none"
+                                  />
+                                </div>
+
+                                <div className="flex items-center justify-center mb-4">
+                                  <button
+                                    className="bg-gradient-to-r from-blue-500 to-blue-800 text-white text-base font-semibold py-2 px-7 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out hover:from-blue-600 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-300 hover:cursor-pointer"
+                                    type="submit"
+                                  >
+                                    Submit
+                                  </button>
+                                </div>
+                              </form>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-        ))}
+              </div>
+            );
+          })
+        )}
       </div>
+
 
       {/* How we hire / What we offer */}
       <div

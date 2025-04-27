@@ -1,14 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 
 const images = [
-  "/campus_img1.jpg",
-  "/campus_img2.jpg",
-  "/campus_img3.jpg",
-  "/campus_img4.png",
-  "/campus_img5.jpg",
-  "/campus_img6.jpg",
-  "/campus_img7.png",
-  "/campus_img8.jpg",
+  "https://img.freepik.com/premium-photo/ai-regulation-legal-concept_628331-319.jpg?semt=ais_hybrid&w=740",
+  "https://img.freepik.com/premium-photo/sophisticated-image-robotic-hand-bespoke-suit-tie-perfectly-knotted_1039156-2559.jpg?ga=GA1.1.245847750.1745763404&semt=ais_hybrid&w=740",
+  "https://img.freepik.com/free-photo/lawyer-working-document-with-scales-justice_23-2151962523.jpg?ga=GA1.1.245847750.1745763404&semt=ais_hybrid&w=740",
+  "https://img.freepik.com/free-photo/collaborative-law-collaborative-practice-divorce-family-law-desk_1150-9090.jpg?ga=GA1.1.245847750.1745763404&semt=ais_hybrid&w=740",
+  "/mid-img2.webp"
 ];
 
 // Add cloned first image at end for infinite loop trick
@@ -54,7 +51,7 @@ const CarouselBackground = () => {
             key={index}
             src={img}
             alt={`Slide ${index + 1}`}
-            className="w-full h-full object-cover inline-block opacity-60"
+            className="w-full h-full object-cover inline-block opacity-80"
           />
         ))}
       </div>
