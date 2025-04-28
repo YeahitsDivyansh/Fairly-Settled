@@ -118,18 +118,19 @@ const MidSection = () => {
 
             <button
               className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
-              onClick={() => {
-                if (loading) {
-                  alert("Checking authentication status");
-                  return;
-                }
-                if (user) {
-                  navigate("/draft-doc");
-                } else {
-                  alert("Please login first to generate a draft.");
-                  navigate("/phonesignin");
-                }
-              }}
+              // onClick={() => {
+              //   if (loading) {
+              //     alert("Checking authentication status");
+              //     return;
+              //   }
+              //   if (user) {
+              //     navigate("/draft-doc");
+              //   } else {
+              //     alert("Please login first to generate a draft.");
+              //     navigate("/phonesignin");
+              //   }
+              // }}
+              onClick={() => navigate("/draft-doc")}
             >
               <FileText size={20} className="group-hover:text-white" />
               {t.draft}
@@ -181,7 +182,7 @@ const MidSection = () => {
                   style={{ willChange: "transform" }}
                 >
                   {/* Gradient border */}
-                  <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white/60 via-black/30 to-gray-400 opacity-30 blur-xl animate-pulse"></div>
+                  <div className="absolute -inset-[1px] z-0 rounded-3xl bg-white opacity-30  animate-pulse"></div>
 
                   {/* Card content */}
                   <div className="relative z-10 p-6 flex flex-col justify-between h-full">
