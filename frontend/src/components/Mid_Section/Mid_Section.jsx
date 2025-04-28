@@ -74,25 +74,23 @@ const MidSection = () => {
 
   return (
     <div className="px-4 bg-[#9db6d9bd] pt-5 md:px-20 overflow-hidden">
+      <div className="w-full h-[500px] mt-10 mb-40 relative">
+        <CarouselBackground />
+      </div>
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="relative py-20 text-center bg-cover bg-center bg-no-repeat rounded-xl overflow-hidden"
+        className="relative py-20 mb-20 text-center bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl px-6 md:px-20 mx-auto overflow-hidden"
       >
-        {/* Carousel as background */}
-        <CarouselBackground />
-
         {/* Foreground content */}
         <div className="relative z-10">
-          <h1
-            className="text-3xl sm:text-5xl md:text-6xl text-white text-gradient font-bold mb-6 leading-tight"
-          >
+          <h1 className="text-3xl sm:text-5xl md:text-6xl text-[#1e293b] font-extrabold mb-6 leading-tight drop-shadow-sm">
             Your Legal Questions,
             <br />
             Answered Instantly
           </h1>
 
-          <p className="text-[#f1f3f4] text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+          <p className="text-gray-700 text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
             {t.benefits}
           </p>
 
@@ -103,9 +101,9 @@ const MidSection = () => {
                 placeholder={t.search}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full text-white text-center placeholder-white px-5 py-3 bg-white/10 border border-[#2563EB] rounded-full focus:ring-2 focus:ring-[#00BFFF] backdrop-blur-md focus:outline-none"
+                className="w-full text-gray-800 text-center placeholder-gray-500 px-5 py-3 bg-white/60 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 backdrop-blur-sm focus:outline-none"
               />
-              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#E0F7FF]" />
+              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600" />
             </div>
           </div>
 
@@ -158,7 +156,6 @@ const MidSection = () => {
           </div>
         </div>
       </motion.section>
-
 
       <motion.section className="py-16 bg-[#9db6d9bd] px-4 rounded-xl mt-10 mb-10 overflow-hidden">
         <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">

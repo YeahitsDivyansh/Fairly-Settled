@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle,  
 } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
