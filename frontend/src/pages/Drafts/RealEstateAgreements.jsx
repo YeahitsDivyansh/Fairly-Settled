@@ -5,7 +5,7 @@ import { uploadAndSavePDF } from "@/context/uploadAndSavePDF";
 import { useUserAuth } from "@/context/UserAuthContext";
 
 const agreementTypes = [
-  "Lease/Rent Agreement",
+  "Lease or Rent Agreement",
   "Sale Agreement",
   "Leave & License Agreement",
   "Mortgage & Property Management Agreement",
