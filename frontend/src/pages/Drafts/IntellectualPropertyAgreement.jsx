@@ -6,7 +6,7 @@ import { useUserAuth } from "@/context/UserAuthContext";
 
 const agreementTypes = [
   "Intellectual Property Assignment Agreement",
-  "Trademark/Patent/Technology Licensing",
+  "Patent",
   "Copyright Assignment Agreement",
 ];
 
