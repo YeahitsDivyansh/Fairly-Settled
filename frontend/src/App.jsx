@@ -21,6 +21,9 @@ import PrivacyPolicy from "./legal_routes/PrivacyPolicy";
 import TermsAndConditions from "./legal_routes/TermsAndConditions";
 import DataProtection from "./legal_routes/DataProtection";
 import Disclaimer from "./legal_routes/Disclaimer";
+import Lawyers from "./pages/Lawyers";
+import LawyerProfile from "./pages/LawyerProfile";
+import AppointmentForm from "./pages/AppointmentForm";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -91,6 +94,18 @@ const App = () => {
         {
           path: "/disclaimer",
           element: <Disclaimer />,
+        },
+        {
+          path:"/lawyers",
+          element: <Lawyers/>
+        },
+        {
+          path:"/lawyerprofile",
+          element: <LawyerProfile/>
+        },
+        {
+          path:"/appointment",
+          element: <AppointmentForm/>
         },
       ],
     },
