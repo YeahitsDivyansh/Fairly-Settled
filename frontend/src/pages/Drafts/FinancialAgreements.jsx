@@ -109,10 +109,9 @@ Signature.`,
     fields: [
       "borrowerName",
       "borrowerAddress",
-      "borrowerConstitution",
       "borrowerPAN",
-      "branchName",
-      "branchAddress",
+      "financialInstitutionName",
+      "financialInstitutionAddress",
       "loanAmountFigures",
       "loanAmountWords",
       "loanPurpose",
@@ -129,11 +128,11 @@ Signature.`,
 
 THIS AGREEMENT is made at ${data.agreementPlace} on ${data.agreementDate} BETWEEN:
 
-${data.borrowerName}, a ${data.borrowerConstitution}, having its address at ${data.borrowerAddress}, PAN: ${data.borrowerPAN}, (hereinafter called "Borrower");
+${data.borrowerName}, having its address at ${data.borrowerAddress}, PAN: ${data.borrowerPAN}, (hereinafter called "Borrower");
 
 AND
 
-The South Indian Bank Ltd, ${data.branchName}, having its address at ${data.branchAddress}, (hereinafter called "Bank").
+The South Indian Bank Ltd, ${data.financialInstitutionName}, having its address at ${data.financialInstitutionAddress}, (hereinafter called "Bank").
 
 WHEREAS the Borrower has applied to the Bank for a loan of Rs. ${data.loanAmountFigures} (Rupees ${data.loanAmountWords} only) for ${data.loanPurpose} and the Bank has agreed to sanction the same.
 
@@ -240,10 +239,9 @@ Bank: ${data.escrowBankName}`,
       "guarantor2Address",
       "guarantor2Constitution",
       "borrowerName",
-      "borrowerConstitution",
       "borrowerAddress",
-      "branchName",
-      "branchAddress",
+      "financialInstitutionName",
+      "financialInstitutionAddress",
       "creditAmountFigures",
       "creditAmountWords",
       "executionDate",
@@ -252,14 +250,14 @@ Bank: ${data.escrowBankName}`,
     ],
     generateText: (data) => `AGREEMENT OF GUARANTEE
 
-This Agreement made on ${data.executionDate} at the branch office of ${data.branchName}, located at ${data.branchAddress}, is entered into by:
+This Agreement made on ${data.executionDate} at the branch office of ${data.financialInstitutionName}, located at ${data.financialInstitutionAddress}, is entered into by:
 
 Guarantor 1: ${data.guarantor1Name}, a ${data.guarantor1Constitution}, residing at ${data.guarantor1Address}  
 Guarantor 2: ${data.guarantor2Name}, a ${data.guarantor2Constitution}, residing at ${data.guarantor2Address}  
 
 IN FAVOUR OF The South Indian Bank Ltd.
 
-Borrower: ${data.borrowerName}, a ${data.borrowerConstitution}, residing at ${data.borrowerAddress}
+Borrower: ${data.borrowerName}, residing at ${data.borrowerAddress}
 
 In consideration of the Bank granting credit facilities of Rs. ${data.creditAmountFigures} (Rupees ${data.creditAmountWords} only) to the Borrower, the Guarantors jointly and severally guarantee payment up to Rs. ${data.guaranteeAmountFigures} (Rupees ${data.guaranteeAmountWords} only).
 
