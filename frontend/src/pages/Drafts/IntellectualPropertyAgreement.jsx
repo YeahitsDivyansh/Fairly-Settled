@@ -6,7 +6,7 @@ import { useUserAuth } from "@/context/UserAuthContext";
 
 const agreementTypes = [
   "Intellectual Property Assignment Agreement",
-  "Trademark/Patent/Technology Licensing",
+  "Trademark or Patent or Technology Licensing",
   "Copyright Assignment Agreement",
 ];
 
@@ -104,7 +104,7 @@ NOTARY PUBLIC: ${data.notaryName}
 My Commission Expires: ${data.commissionExpiry}`,
   },
 
-  "Trademark/Patent/Technology Licensing": {
+  "Trademark or Patent or Technology Licensing": {
     fields: [
       "effectiveDate",
       "licensorName",

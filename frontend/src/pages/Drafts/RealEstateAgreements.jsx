@@ -5,14 +5,14 @@ import { uploadAndSavePDF } from "@/context/uploadAndSavePDF";
 import { useUserAuth } from "@/context/UserAuthContext";
 
 const agreementTypes = [
-  "Lease/Rent Agreement",
+  "Lease or Rent Agreement",
   "Sale Agreement",
   "Leave & License Agreement",
   "Mortgage & Property Management Agreement",
 ];
 
 const templates = {
-    "Lease/Rent Agreement": {
+    "Lease or Rent Agreement": {
       fields: [
         "place", "date", "month", "year", "ownerName", "ownerFather", "ownerAddress",
         "tenantName", "tenantFather", "tenantJobAddress", "tenantPermanentAddress",
@@ -41,7 +41,7 @@ const templates = {
   };
 
 export default function RealEstateForm() {
-  const [type, setType] = useState("Lease/Rent Agreement");
+  const [type, setType] = useState("Lease or Rent Agreement");
   const [formData, setFormData] = useState({});
   const [generatedText, setGeneratedText] = useState("");
   const [submitted, setSubmitted] = useState(false);
