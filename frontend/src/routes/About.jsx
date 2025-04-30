@@ -179,9 +179,9 @@ const About = () => {
               Prof. Aashish Argade
             </h3>
             <p className="text-sm text-gray-600">
-              <strong>PhD</strong> from <strong>IIM Ahmedabad</strong>
+            <strong>Assistant Professor</strong> at <strong>IRMA</strong>
               <br />
-              <strong>Assistant Professor</strong> at <strong>IRMA</strong>
+              <strong>PhD</strong> from <strong>IIM Ahmedabad</strong>
               <br />
               Consultant to various government departments for over a decade
             </p>
