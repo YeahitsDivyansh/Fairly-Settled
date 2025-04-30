@@ -181,7 +181,7 @@ const About = () => {
             <p className="text-sm text-gray-600">
               <strong>PhD</strong> from <strong>IIM Ahmedabad</strong>
               <br />
-              <strong>Ex-Deputy Dean</strong> at <strong>IRMA</strong>
+              <strong>Assistant Professor</strong> at <strong>IRMA</strong>
               <br />
               Consultant to various government departments for over a decade
             </p>
