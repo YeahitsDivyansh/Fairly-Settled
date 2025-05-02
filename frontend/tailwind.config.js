@@ -1,17 +1,28 @@
-// tailwind.config.js
+// ✅ with `content`
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    theme: {
-      extend: {
-        animation: {
-          fadeIn: "fadeIn 0.6s ease-in-out",
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}", // ← make sure this globs your code
+    "./public/index.html",
+  ],
+  theme: {
+    extend: {
+      animation: {
+        fadeIn: "fadeIn 0.6s ease-in-out",
+        aurora: "aurora 60s linear infinite",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: 0, transform: "translateY(20px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
         },
-        keyframes: {
-          fadeIn: {
-            "0%": { opacity: 0, transform: "translateY(20px)" },
-            "100%": { opacity: 1, transform: "translateY(0)" },
-          },
+        aurora: {
+          "0%": { backgroundPosition: "50% 50%, 50% 50%" },
+          "100%": { backgroundPosition: "350% 50%, 350% 50%" },
         },
       },
     },
-  };
-  
+  },
+  darkMode: "class", // if you’re using dark mode
+  plugins: [],
+};
