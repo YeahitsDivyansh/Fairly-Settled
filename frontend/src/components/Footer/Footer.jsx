@@ -7,6 +7,7 @@ import {
   FaInstagram,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -59,20 +60,26 @@ const Footer = () => {
           <h3 className="font-semibold mb-3 text-white">Explore</h3>
           <ul className="space-y-2 text-sm text-white">
             <li>
-              <a href="/about us" className="hover:text-blue-400 transition">
+              <Link to="/about us" className="hover:text-blue-400 transition">
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/faq" className="hover:text-blue-400 transition">
+              <Link to="/faq" className="hover:text-blue-400 transition">
                 FAQs
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/careers" className="hover:text-blue-400 transition">
+              <Link to="/careers" className="hover:text-blue-400 transition">
                 Careers
-              </a>
+              </Link>
             </li>
+            <li>
+              <Link to="/lawyers" className="hover:text-blue-400 transition">
+                Find a Lawyer
+              </Link>
+            </li>
+            
           </ul>
         </motion.div>
 
@@ -87,33 +94,33 @@ const Footer = () => {
           <h3 className="font-semibold mb-3 text-white">Legal</h3>
           <ul className="space-y-2 text-sm text-white">
             <li>
-              <a
-                href="/privacy-policy"
+              <Link
+                to="/privacy-policy"
                 className="hover:text-blue-400 transition"
               >
                 Privacy Policy
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/terms-and-conditions"
+              <Link
+                to="/terms-and-conditions"
                 className="hover:text-blue-400 transition"
               >
                 Terms & Conditions
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/data-protection"
+              <Link
+                to="/data-protection"
                 className="hover:text-blue-400 transition"
               >
                 Data Protection
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/disclaimer" className="hover:text-blue-400 transition">
+              <Link to="/disclaimer" className="hover:text-blue-400 transition">
                 Disclaimer
-              </a>
+              </Link>
             </li>
           </ul>
         </motion.div>
@@ -167,24 +174,24 @@ const Footer = () => {
           &copy; 2025 FairlySettled. All rights reserved.
         </p>
         <div className="flex gap-5 mt-4 md:mt-0">
-          <a
-            href="https://x.com/agilityai564"
+          <Link
+            to="https://x.com/agilityai564"
             className="hover:text-[#8F87F1] text-white transition"
           >
             <FaXTwitter size={24} />
-          </a>
-          <a
-            href="https://www.linkedin.com/posts/agility-ai-pvt-ltd_ai-aiprototyping-businesssolutions-activity-7315728608163942402-_1ZY?utm_source=share&utm_medium=member_ios&rcm=ACoAAETUSCkBKkCGeBpPsq4_7VnwIuHEjfgHTYk"
+          </Link>
+          <Link
+            to="https://www.linkedin.com/posts/agility-ai-pvt-ltd_ai-aiprototyping-businesssolutions-activity-7315728608163942402-_1ZY?utm_source=share&utm_medium=member_ios&rcm=ACoAAETUSCkBKkCGeBpPsq4_7VnwIuHEjfgHTYk"
             className="hover:text-[#8F87F1] text-white transition"
           >
             <FaLinkedin size={24} />
-          </a>
-          <a
-            href="https://www.instagram.com/reel/DH8s_34S_gD/?igsh=MWM4ajRucTkzdnF6cQ=="
+          </Link>
+          <Link
+            to="https://www.instagram.com/reel/DH8s_34S_gD/?igsh=MWM4ajRucTkzdnF6cQ=="
             className="hover:text-[#8F87F1] text-white transition"
           >
             <FaInstagram size={24} />
-          </a>
+          </Link>
         </div>
       </motion.div>
     </footer>
