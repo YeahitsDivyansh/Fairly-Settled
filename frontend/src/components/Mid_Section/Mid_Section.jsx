@@ -6,6 +6,7 @@ import { Search, MessageSquare, FileText, Upload, Star } from "lucide-react";
 import { useUserAuth } from "@/context/UserAuthContext";
 import "./Mid_Section.css";
 import CarouselBackground from "./carousel/carousel";
+import { BackgroundBeams } from "@/animations/BackgroundBeams";
 
 const features = [
   {
@@ -73,24 +74,29 @@ const MidSection = () => {
   const { user, loading } = useUserAuth();
 
   return (
-    <div className="px-4 bg-[#9db6d9bd] pt-5 md:px-20 overflow-hidden">
+    <div className="px-4 bg-[#9db6d9] pt-5 md:px-20 overflow-hidden">
       <div className="w-full h-[500px] mt-10 mb-40 relative">
         <CarouselBackground />
       </div>
+
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="relative py-20 mb-20 text-center bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl px-6 md:px-20 mx-auto overflow-hidden"
+        className="relative py-20 mb-20 text-center bg-black backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl px-6 md:px-20 mx-auto overflow-hidden"
       >
-        {/* Foreground content */}
-        <div className="relative z-10">
-          <h1 className="text-3xl sm:text-5xl md:text-6xl text-[#1e293b] font-extrabold mb-6 leading-tight drop-shadow-sm">
+        <BackgroundBeams />
+        {/* Foreground content with hover zoom */}
+        <motion.div
+          className="relative z-10 rounded-xl py-12 px-4 sm:px-6 lg:px-8"
+          style={{ willChange: "transform" }}
+        >
+          <h1 className="text-3xl sm:text-5xl md:text-6xl text-white font-extrabold mb-6 leading-tight drop-shadow-sm">
             Your Legal Questions,
             <br />
             Answered Instantly
           </h1>
 
-          <p className="text-gray-700 text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+          <p className="text-white text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
             {t.benefits}
           </p>
 
@@ -101,7 +107,7 @@ const MidSection = () => {
                 placeholder={t.search}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full text-gray-800 text-center placeholder-gray-500 px-5 py-3 bg-white/60 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 backdrop-blur-sm focus:outline-none"
+                className="w-full text-gray-800 text-center placeholder-white px-5 py-3 bg-white/60 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 backdrop-blur-sm focus:outline-none"
               />
               <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600" />
             </div>
@@ -118,18 +124,6 @@ const MidSection = () => {
 
             <button
               className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition duration-200"
-              // onClick={() => {
-              //   if (loading) {
-              //     alert("Checking authentication status");
-              //     return;
-              //   }
-              //   if (user) {
-              //     navigate("/draft-doc");
-              //   } else {
-              //     alert("Please login first to generate a draft.");
-              //     navigate("/phonesignin");
-              //   }
-              // }}
               onClick={() => navigate("/draft-doc")}
             >
               <FileText size={20} className="group-hover:text-white" />
@@ -155,11 +149,11 @@ const MidSection = () => {
               {t.upload}
             </button>
           </div>
-        </div>
+        </motion.div>
       </motion.section>
 
       <motion.section className="py-16 bg-[#9db6d9bd] px-4 rounded-xl mt-10 mb-10 overflow-hidden">
-        <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
+        <h2 className="text-5xl font-extrabold text-center mb-10 text-gray-800">
           Your legal ally, powered by AI
         </h2>
 
@@ -176,7 +170,7 @@ const MidSection = () => {
               return (
                 <motion.div
                   key={idx}
-                  className="relative w-[300px] shrink-0 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner mx-2 transition-all duration-300 hover:z-50"
+                  className="mt-6 relative w-[300px] shrink-0 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner mx-2 transition-all duration-300 hover:z-50"
                   onClick={() => setExpandedIndex(isExpanded ? null : idx)}
                   whileHover={{ scale: 1.05 }}
                   style={{ willChange: "transform" }}
