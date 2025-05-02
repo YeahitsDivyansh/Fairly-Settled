@@ -100,7 +100,7 @@ const App = () => {
           element: <Lawyers/>
         },
         {
-          path:"/lawyerprofile",
+          path:"/lawyerprofile/:id",
           element: <LawyerProfile/>
         },
         {
