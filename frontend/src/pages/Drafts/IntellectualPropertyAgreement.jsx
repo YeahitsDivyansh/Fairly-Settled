@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import { useNavigate } from "react-router-dom";
 import { uploadAndSavePDF } from "@/context/uploadAndSavePDF";
 import { useUserAuth } from "@/context/UserAuthContext";
-
+ 
 const agreementTypes = [
   "Intellectual Property Assignment Agreement",
   "Trademark or Patent or Technology Licensing",
