@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { FloatingDockDemo } from "../floatingDemo";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -172,26 +173,7 @@ const Footer = () => {
         <p className="text-white text-sm font-semibold">
           &copy; 2025 FairlySettled. All rights reserved.
         </p>
-        <div className="flex gap-5 mt-4 md:mt-0">
-          <Link
-            to="https://x.com/agilityai564"
-            className="hover:text-[#8F87F1] text-white transition"
-          >
-            <FaXTwitter size={24} />
-          </Link>
-          <Link
-            to="https://www.linkedin.com/posts/agility-ai-pvt-ltd_ai-aiprototyping-businesssolutions-activity-7315728608163942402-_1ZY?utm_source=share&utm_medium=member_ios&rcm=ACoAAETUSCkBKkCGeBpPsq4_7VnwIuHEjfgHTYk"
-            className="hover:text-[#8F87F1] text-white transition"
-          >
-            <FaLinkedin size={24} />
-          </Link>
-          <Link
-            to="https://www.instagram.com/reel/DH8s_34S_gD/?igsh=MWM4ajRucTkzdnF6cQ=="
-            className="hover:text-[#8F87F1] text-white transition"
-          >
-            <FaInstagram size={24} />
-          </Link>
-        </div>
+        <FloatingDockDemo />
       </motion.div>
     </footer>
   );
