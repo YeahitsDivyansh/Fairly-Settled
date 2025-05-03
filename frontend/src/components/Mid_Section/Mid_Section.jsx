@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "@/components/TranslationContext/TranslationContext";
 import { motion } from "framer-motion";
@@ -7,6 +7,7 @@ import { useUserAuth } from "@/context/UserAuthContext";
 import "./Mid_Section.css";
 import CarouselBackground from "./carousel/carousel";
 import { BackgroundBeams } from "@/animations/BackgroundBeams";
+import { BentoGridDemo } from "../BentoGridDemo";
 
 const features = [
   {
@@ -72,9 +73,33 @@ const MidSection = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const { user, loading } = useUserAuth();
+  const [isVisible, setIsVisible] = useState(false);
+
+  const sectionRef = useRef(null); // inside component
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3,
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   return (
-    <div className="px-4 bg-[#9db6d9] pt-5 md:px-20 overflow-hidden">
+    <div className="px-4 bg-white pt-5 md:px-20 overflow-hidden">
       <div className="w-full h-[500px] mt-10 mb-40 relative">
         <CarouselBackground />
       </div>
@@ -152,11 +177,10 @@ const MidSection = () => {
         </motion.div>
       </motion.section>
 
-      <motion.section className="py-16 bg-[#9db6d9bd] px-4 rounded-xl mt-10 mb-10 overflow-hidden">
-        <h2 className="text-5xl font-extrabold text-center mb-10 text-gray-800">
+      <motion.section className="py-16 bg-black px-4 rounded-xl mt-10 mb-10 overflow-hidden">
+        <h2 className="text-5xl font-extrabold text-center mb-10 text-white">
           Your legal ally, powered by AI
         </h2>
-
         {/* Motion div for infinite scrolling */}
         <motion.div className="w-full overflow-x-visible px-6  relative">
           <motion.div
@@ -180,12 +204,12 @@ const MidSection = () => {
 
                   {/* Card content */}
                   <div className="relative z-10 p-6 flex flex-col justify-between h-full">
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900">
+                    <h3 className="text-lg font-semibold mb-2 text-white">
                       {item.title}
                     </h3>
-                    <p className="text-gray-700 text-sm mb-2">{item.brief}</p>
+                    <p className="text-white text-sm mb-2">{item.brief}</p>
                     {isExpanded && (
-                      <p className="text-gray-600 text-sm">{item.detail}</p>
+                      <p className="text-white text-sm">{item.detail}</p>
                     )}
                     <div className="mt-auto">
                       <button
@@ -205,6 +229,42 @@ const MidSection = () => {
           </motion.div>
         </motion.div>
       </motion.section>
+
+      <section
+        ref={sectionRef}
+        className={`text-white px-6 py-12 rounded-xl mt-10 flex flex-col lg:flex-row items-center justify-between gap-8 transform transition-all duration-1000 ease-out ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        {/* Text Content */}
+        <div className="lg:w-1/2">
+          <h2 className="text-3xl text-black font-bold mb-4">
+            You don't have to{" "}
+            <span className="text-black text-5xl font-extrabold">
+              fight alone.
+            </span>
+          </h2>
+          <p className="text-gray-500 text-lg max-w-md">
+            At <span className="font-semibold text-black">Fairly Settled</span>,
+            we believe no one should navigate legal battles alone — we're here
+            to guide, support, and empower you every step of the way.
+          </p>
+        </div>
+
+        {/* Image */}
+        <div className="w-full flex justify-center">
+          <img
+            src="https://images.unsplash.com/photo-1634424332103-6193490bfcc4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHlvdSUyMGRpbnQlMjBoYXZlJTIwdG8lMjBmaWdodCUyMGFsb25lfGVufDB8fDB8fHww"
+            alt="Consultation"
+            className="rounded-2xl w-full max-w-md h-auto object-cover transform transition-transform duration-500 hover:scale-90"
+          />
+        </div>
+      </section>
+
+      {/* Bento Grid Section */}
+      <div className="mt-20">
+        <BentoGridDemo />
+      </div>
     </div>
   );
 };
