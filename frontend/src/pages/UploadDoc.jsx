@@ -43,52 +43,15 @@ const UploadDoc = () => {
   };
 
   return (
-    <div className="bg-[#9db6d9bd]">
-      {/* Blob Background */}
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <linearGradient
-              id="bg-gradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="100%"
-            >
-              <stop offset="0%" stopColor="#a2c4f8" />
-              <stop offset="100%" stopColor="#f0e4ff" />
-            </linearGradient>
-          </defs>
-          <g>
-            <circle r="200" cx="20%" cy="30%" fill="url(#bg-gradient)" />
-            <circle r="250" cx="80%" cy="60%" fill="url(#bg-gradient)" />
-            <circle r="180" cx="50%" cy="80%" fill="url(#bg-gradient)" />
-          </g>
-        </svg>
-      </div>
-      <style>
-        {`
-      .blockquote-list li {
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.25;
-        margin-top: 0;
-        margin-bottom: 0;
-        padding: 0;
-        color: #1f2937;
-      }
-    `}
-      </style>
+    <div className="bg-white">
       <div className="p-6 max-w-5xl mx-auto">
         <h1 className="text-3xl font-bold mb-3">Document Analyzer</h1>
 
         {/* Upload Box */}
         <div className="border-dashed border-2 border-black rounded-xl p-8 text-center bg-gray-50 mb-8">
-          <p className="mb-4 text-lg font-semibold text-center text-gray-800">Drag and drop files here, or browse</p>
+          <p className="mb-4 text-lg font-semibold text-center text-gray-800">
+            Drag and drop files here, or browse
+          </p>
           <p className="mb-2 text-lg font-semibold text-center text-gray-800">
             Supported file types: PDF, DOCX, TXT. Maximum file size: 20MB
           </p>
@@ -113,8 +76,6 @@ const UploadDoc = () => {
           )}
         </div>
 
-
-
         <h1 className="text-3xl font-bold">Generated Summary</h1>
         <div className="bg-white border border-black rounded-lg px-4 py-9 mt-3 mb-6 whitespace-pre-wrap">
           {loading ? (
@@ -133,12 +94,14 @@ const UploadDoc = () => {
                 Summarizing... Please wait.
               </span>
             </p>
-          ) :
-            summary ? (<ReactMarkdown
+          ) : summary ? (
+            <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
                 p: ({ children }) => (
-                  <p className="text-base my-0 leading-tight text-gray-800">{children}</p>
+                  <p className="text-base my-0 leading-tight text-gray-800">
+                    {children}
+                  </p>
                 ),
                 blockquote: ({ children }) => (
                   <blockquote className="relative blockquote-list bg-gray-50 border-l-4 border-blue-500 pl-6 rounded-lg shadow-sm mb-8">
@@ -146,19 +109,25 @@ const UploadDoc = () => {
                   </blockquote>
                 ),
                 li: ({ children }) => (
-                  <li className="text-2xl font-semibold leading-0 m-0 p-0">{children}</li>
+                  <li className="text-2xl font-semibold leading-0 m-0 p-0">
+                    {children}
+                  </li>
                 ),
-                ol: ({ children }) => <ol className="m-0 p-0 pl-3 leading-1">{children}</ol>,
-                ul: ({ children }) => <ul className="m-0 p-0 pl-2 leading-1">{children}</ul>,
+                ol: ({ children }) => (
+                  <ol className="m-0 p-0 pl-3 leading-1">{children}</ol>
+                ),
+                ul: ({ children }) => (
+                  <ul className="m-0 p-0 pl-2 leading-1">{children}</ul>
+                ),
               }}
             >
               {summary}
             </ReactMarkdown>
-            ) : (
-              <p className="text-lg font-semibold text-center text-gray-800">
-                📁 Please select a file to generate summary.
-              </p>
-            )}
+          ) : (
+            <p className="text-lg font-semibold text-center text-gray-800">
+              📁 Please select a file to generate summary.
+            </p>
+          )}
         </div>
         {/* <Card className=" bg-white p-6">
           <CardContent className="flex flex-col md:flex-row justify-between items-center">

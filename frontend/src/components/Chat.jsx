@@ -16,35 +16,34 @@ const Chat = () => {
     newRequestLoading,
     selected,
     chatsLoading,
-    loading
+    loading,
   } = ChatData();
-
-
-
 
   const bottomRef = useRef(null);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-
   const handleSubmit = async () => {
     await fetchResponse();
     console.log(messages);
   };
 
-
   return (
-    <div className={`bg-[#9db6d9bd] flex flex-col  ${selected === null || messages.length === 0 ? "h-[calc(100vh-5rem)]" : "min-h-screen"} items-center relative`}>
+    <div
+      className={`bg-white flex flex-col  ${
+        selected === null || messages.length === 0
+          ? "h-[calc(100vh-5rem)]"
+          : "min-h-screen"
+      } items-center relative`}
+    >
       {/* Overlay */}
       <div className="absolute inset-0 bg-opacity-30 z-0" />
-
 
       {/* Chat Messages */}
       <div
         className={`relative z-10 w-full mx-auto pt-22 px-8 pb-28 flex flex-col flex-grow overflow-y-auto`}
       >
-
         {chatsLoading ? (
           <ConversationLoading />
         ) : selected === null ? (
@@ -54,13 +53,16 @@ const Chat = () => {
             </p>
             <NewChat />
           </div>
-        ) : loading ? <ChatLoading /> : messages.length === 0 ? (
+        ) : loading ? (
+          <ChatLoading />
+        ) : messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center px-6 py-10 space-y-4 backdrop-blur-sm ">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
               How can I assist you today?
             </h2>
             <p className="text-base font-medium text-gray-600 max-w-md leading-relaxed">
-              Ask your legal questions and get AI-powered advice instantly. Type your query below to begin the conversation.
+              Ask your legal questions and get AI-powered advice instantly. Type
+              your query below to begin the conversation.
             </p>
           </div>
         ) : (
@@ -75,13 +77,11 @@ const Chat = () => {
             <div ref={bottomRef} />
           </>
         )}
-
       </div>
 
       {/* Chat Input */}
-      <div className="fixed bottom-0 left-0 w-full z-20 bg-[#1F2937] border-t p-4">
+      <div className="fixed bottom-0 left-0 w-full z-20 bg-black border-t p-4">
         <div className="max-w-4xl mx-auto flex items-center space-x-4">
-
           <NewChat />
 
           <input
@@ -100,7 +100,6 @@ const Chat = () => {
           </button>
         </div>
       </div>
-
     </div>
   );
 };
