@@ -24,7 +24,7 @@ const fadeUp = {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1F2937] text-gray-200 pt-16 pb-8 px-6">
+    <footer className="bg-black text-gray-200 pt-16 pb-8 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_1.5fr] gap-x-12 gap-y-10">
         {/* Company Info */}
         <motion.div
@@ -79,7 +79,6 @@ const Footer = () => {
                 Find a Lawyer
               </Link>
             </li>
-            
           </ul>
         </motion.div>
 
