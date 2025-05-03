@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "@/components/TranslationContext/TranslationContext";
 import MidSection from "@/components/Mid_Section/Mid_Section";
-import { SVGMaskEffectDemo } from "@/components/mask-demo";
 
 const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,7 +16,6 @@ const App = () => {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-      <SVGMaskEffectDemo />
     </div>
   );
 };
