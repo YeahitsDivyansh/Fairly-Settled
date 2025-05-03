@@ -8,6 +8,7 @@ import "./Mid_Section.css";
 import CarouselBackground from "./carousel/carousel";
 import { BackgroundBeams } from "@/animations/BackgroundBeams";
 import { BentoGridDemo } from "../BentoGridDemo";
+import { SVGMaskEffectDemo } from "../mask-demo";
 
 const features = [
   {
@@ -87,13 +88,14 @@ const MidSection = () => {
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -134,7 +136,7 @@ const MidSection = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full text-gray-800 text-center placeholder-white px-5 py-3 bg-white/60 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 backdrop-blur-sm focus:outline-none"
               />
-              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600" />
+              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white" />
             </div>
           </div>
 
@@ -264,6 +266,46 @@ const MidSection = () => {
       {/* Bento Grid Section */}
       <div className="mt-20">
         <BentoGridDemo />
+      </div>
+
+      <SVGMaskEffectDemo />
+
+      <div className="group flex flex-col lg:flex-row items-start gap-10 px-6 md:px-12 py-16 mb-20 bg-white">
+        {/* Image Left of Text */}
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <img
+            src="https://images.pexels.com/photos/461049/pexels-photo-461049.jpeg?auto=compress&cs=tinysrgb&w=600"
+            alt="Supporting community"
+            className="w-full max-w-md rounded-lg opacity-90 transition-transform duration-500 hover:scale-105"
+          />
+        </div>
+
+        {/* Text Section */}
+        <div className="w-full lg:w-1/2">
+          <h2 className="text-5xl font-extrabold uppercase mb-8 border-l-4 border-yellow-500 pl-4">
+            A Commitment to
+            <br /> Accessible Justice
+          </h2>
+          <h3 className="text-2xl font-bold mb-6">
+            Empowering Communities with AI-Driven Legal Solutions.
+          </h3>
+          <p className="text-black mb-8 leading-relaxed">
+            At Fairly Settled, we believe justice should be swift, smart, and
+            accessible. Through our cutting-edge platform powered by Agility AI,
+            we bridge the gap between individuals and legal support —
+            eliminating complexity and reducing barriers to fair outcomes. We’ve
+            reimagined the legal experience for modern needs: intuitive,
+            informed, and deeply human.
+          </p>
+          <p className="text-gray-700 leading-relaxed">
+            Our commitment extends beyond technology — it’s about people. We
+            actively support initiatives that democratize legal knowledge,
+            empower underserved communities, and ensure that no one is left
+            behind in the pursuit of justice. With every case, every feature,
+            and every partnership, we’re reshaping what justice looks like in
+            the AI age.
+          </p>
+        </div>
       </div>
     </div>
   );
