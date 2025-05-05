@@ -96,7 +96,7 @@ const App = () => {
           element: <Disclaimer />,
         },
         {
-          path:"/lawyers",
+          path:"/find-lawyer",
           element: <Lawyers/>
         },
         {
