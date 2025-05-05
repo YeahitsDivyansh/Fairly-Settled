@@ -80,69 +80,82 @@ const MidSection = () => {
         <CarouselBackground />
       </div>
 
-      <div className="md:px-20">
+      <div className="md:px-20 px-8 xl:px-32 2xl:px-40">
         <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="relative py-20 mb-20 text-center bg-black backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl px-6 md:px-20 mx-auto overflow-hidden"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative py-6 mb-20 text-center bg-transparent backdrop-blur-xl border border-gray-300 shadow-2xl rounded-4xl px-6 md:px-20 mx-auto overflow-hidden"
         >
           <BackgroundBeams />
+
           <motion.div
             className="relative z-10 rounded-xl py-12 px-4 sm:px-6 lg:px-8"
-            style={{ willChange: "transform" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
           >
-            <h1 className="text-3xl sm:text-5xl md:text-6xl text-white font-extrabold mb-6 leading-tight drop-shadow-sm">
-              Your Legal Questions,
-              <br />
-              Answered Instantly
+            {/* Headline */}
+            <h1 className="text-3xl py-2 sm:text-5xl md:text-6xl font-extrabold mb-6 leading-[1.1] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-800 drop-shadow-lg">
+              Your Legal Questions,<br />Answered Instantly
             </h1>
-            <p className="text-white text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+
+            {/* Subtext */}
+            <p className="text-gray-700 text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
               {t.benefits}
             </p>
 
-            <div className="max-w-xl mx-auto mb-8 px-4">
+            {/* Search Input */}
+            <div className="max-w-xl mx-auto mb-6 px-4">
               <div className="relative">
                 <input
                   type="text"
                   placeholder={t.search}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full text-gray-800 text-center placeholder-white px-5 py-3 bg-white/30 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 backdrop-blur-sm focus:outline-none"
+                  className="w-full text-gray-900 text-center placeholder-gray-800 px-5 py-3 bg-white/40 border border-gray-800 rounded-full shadow-md backdrop-blur-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 />
-                <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white" />
+                <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600" />
               </div>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap justify-center gap-4 mb-6">
               <button
-                className="flex items-center gap-2 px-6 py-3 bg-[#2563EB] text-white rounded-full hover:bg-blue-700 transition"
+                className="hover:cursor-pointer group flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full border border-blue-600 hover:bg-white hover:text-blue-600 transition shadow-lg hover:scale-105"
                 onClick={() => navigate("chat")}
               >
-                <MessageSquare size={20} />
+                <MessageSquare size={20} className="text-white group-hover:text-blue-600 transition-transform group-hover:-translate-y-0.5" />
                 {t.talk}
               </button>
+
               <button
-                className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition"
+                className="hover:cursor-pointer group flex items-center gap-2 px-6 py-3 rounded-full bg-blue-600 text-white hover:bg-white hover:text-blue-600 border border-blue-600 transition shadow-lg hover:scale-105"
                 onClick={() => navigate("/draft-doc")}
               >
-                <FileText size={20} className="group-hover:text-white" />
+                <FileText size={20} className="text-white group-hover:text-blue-600 transition-transform group-hover:-translate-y-0.5" />
                 {t.draft}
               </button>
+
               <button
-                className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 text-gray-700 hover:bg-[#42536a] hover:text-white transition"
+                className="hover:cursor-pointer group flex items-center gap-2 px-6 py-3 rounded-full bg-blue-600 text-white hover:bg-white hover:text-blue-600 border border-blue-600 transition shadow-lg hover:scale-105"
                 onClick={() => {
                   if (loading) return alert("Checking authentication status");
-                  user ? navigate("/upload-doc") : (alert("Please login first to generate a draft."), navigate("/phonesignin"));
+                  user
+                    ? navigate("/upload-doc")
+                    : (alert("Please login first to generate a draft."), navigate("/phonesignin"));
                 }}
               >
-                <FileText size={20} className="group-hover:text-white" />
+                <FileText size={20} className="text-white group-hover:text-blue-600 transition-transform group-hover:-translate-y-0.5" />
                 {t.upload}
               </button>
             </div>
+
           </motion.div>
         </motion.section>
 
-        <motion.section className="py-16 bg-black px-4 rounded-xl mt-10 mb-10 overflow-hidden">
+
+        <motion.section className="py-16 bg-black px-4 rounded-xl mt-10 overflow-hidden">
           <h2 className="text-5xl font-extrabold text-center mb-10 text-white">
             Your legal ally, powered by AI
           </h2>
@@ -219,16 +232,16 @@ const MidSection = () => {
 
 
 
-        <div className="mt-20">
+        <div className="mt-12">
           <BentoGridDemo />
         </div>
 
 
-        <div className="mt-20">
+        <div className="mt-12">
           <SVGMaskEffectDemo />
         </div>
 
-        <div className="group flex flex-col lg:flex-row items-start gap-10 py-16 mb-20 bg-white">
+        <div className="group flex flex-col lg:flex-row items-start gap-10 py-16 mb-12 bg-white">
           <div className="w-full lg:w-1/2 flex justify-center items-center">
             <img
               src="https://images.pexels.com/photos/461049/pexels-photo-461049.jpeg?auto=compress&cs=tinysrgb&w=600"
