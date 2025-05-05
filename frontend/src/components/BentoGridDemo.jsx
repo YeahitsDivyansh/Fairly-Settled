@@ -1,18 +1,14 @@
 import React from "react";
-import {
-  IconArrowWaveRightUp,
-  IconBoxAlignRightFilled,
-  IconBoxAlignTopLeft,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-} from "@tabler/icons-react";
+
 import { BentoGrid, BentoGridItem } from "@/animations/BentoGrid";
+
 
 export function BentoGridDemo() {
   return (
-    <BentoGrid className="max-w-4xl mx-auto mb-4">
+    <div>
+       
+      <BentoGrid className="max-w-4xl mx-auto mb-4">
+     
       {items.map((item, i) => (
         <BentoGridItem
           key={i}
@@ -24,6 +20,8 @@ export function BentoGridDemo() {
         />
       ))}
     </BentoGrid>
+    </div>
+    
   );
 }
 
@@ -39,7 +37,6 @@ const items = [
         className="w-full shadow-gray-400 h-32 object-cover rounded-xl"
       />
     ),
-    icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Legal Analytics",
@@ -52,7 +49,6 @@ const items = [
         className="w-full h-32 object-cover rounded-xl"
       />
     ),
-    icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Digital Signatures",
@@ -65,7 +61,6 @@ const items = [
         className="w-full h-32 object-cover rounded-xl"
       />
     ),
-    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Case Management",
@@ -78,7 +73,6 @@ const items = [
         className="w-full h-32 object-cover rounded-xl"
       />
     ),
-    icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Compliance Monitoring",
@@ -91,7 +85,6 @@ const items = [
         className="w-full h-32 object-cover rounded-xl"
       />
     ),
-    icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Client Portals",
@@ -104,7 +97,7 @@ const items = [
         className="w-full h-32 object-cover rounded-xl"
       />
     ),
-    icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
+    
   },
   {
     title: "AI-Powered Legal Research",
@@ -117,6 +110,6 @@ const items = [
         className="w-full h-32 object-cover rounded-xl"
       />
     ),
-    icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
+    
   },
 ];

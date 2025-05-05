@@ -117,13 +117,13 @@ const MidSection = () => {
           className="relative z-10 rounded-xl py-12 px-4 sm:px-6 lg:px-8"
           style={{ willChange: "transform" }}
         >
-          <h1 className="text-3xl sm:text-5xl md:text-6xl text-white font-extrabold mb-6 leading-tight drop-shadow-sm">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl text-gray-500 font-extrabold mb-6 leading-tight drop-shadow-sm">
             Your Legal Questions,
             <br />
             Answered Instantly
           </h1>
 
-          <p className="text-white text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+          <p className="text-gray-500 text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto">
             {t.benefits}
           </p>
 
@@ -134,7 +134,7 @@ const MidSection = () => {
                 placeholder={t.search}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full text-gray-800 text-center placeholder-white px-5 py-3 bg-white/60 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 backdrop-blur-sm focus:outline-none"
+                className="w-full text-gray-800 text-center placeholder-gray-500 px-5 py-3 bg-white/60 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 backdrop-blur-sm focus:outline-none"
               />
               <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white" />
             </div>
@@ -234,19 +234,19 @@ const MidSection = () => {
 
       <section
         ref={sectionRef}
-        className={`text-white px-6 py-12 rounded-xl mt-10 flex flex-col lg:flex-row items-center justify-between gap-8 transform transition-all duration-1000 ease-out ${
+        className={`text-white px-4 sm:px-6 lg:px-24 py-12 rounded-xl mt-10 flex flex-col lg:flex-row items-center justify-between lg:gap-12 gap-8 transform transition-all duration-1000 ease-out ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
         {/* Text Content */}
-        <div className="lg:w-1/2">
-          <h2 className="text-3xl text-black font-bold mb-4">
+        <div className="w-full lg:w-1/2 text-center lg:text-left">
+          <h2 className="text-2xl sm:text-3xl text-black font-bold mb-4">
             You don't have to{" "}
-            <span className="text-black text-5xl font-extrabold">
+            <span className="text-black text-4xl sm:text-5xl font-extrabold block sm:inline">
               fight alone.
             </span>
           </h2>
-          <p className="text-gray-500 text-lg max-w-md">
+          <p className="text-gray-500 text-base sm:text-lg max-w-full lg:max-w-lg mx-auto lg:mx-0">
             At <span className="font-semibold text-black">Fairly Settled</span>,
             we believe no one should navigate legal battles alone — we're here
             to guide, support, and empower you every step of the way.
@@ -254,11 +254,11 @@ const MidSection = () => {
         </div>
 
         {/* Image */}
-        <div className="w-full flex justify-center">
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
           <img
             src="https://images.unsplash.com/photo-1634424332103-6193490bfcc4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHlvdSUyMGRpbnQlMjBoYXZlJTIwdG8lMjBmaWdodCUyMGFsb25lfGVufDB8fDB8fHww"
             alt="Consultation"
-            className="rounded-2xl w-full max-w-md h-auto object-cover transform transition-transform duration-500 hover:scale-90"
+            className="rounded-2xl w-full max-w-sm md:max-w-md h-auto object-cover transform transition-transform duration-500 hover:scale-90"
           />
         </div>
       </section>
