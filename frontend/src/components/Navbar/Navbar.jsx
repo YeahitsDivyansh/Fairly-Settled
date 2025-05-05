@@ -25,9 +25,9 @@ const Navbar = ({ language, setLanguage }) => {
   }, []);
 
   const navLinks = [
-    { name: "About Us", path: "/about" },
+    { name: "About Us", path: "/about us" },
     { name: "Careers", path: "/careers" },
-    { name: "Find a Lawyer", path: "/find-lawyer" },
+    { name: "Find a Lawyer", path: "/lawyers" },
     { name: "Blog", path: "/blog" },
   ];
 
@@ -99,7 +99,7 @@ const Navbar = ({ language, setLanguage }) => {
           )}
 
           {/* Language Dropdown */}
-          <div className="relative" ref={dropdownRef}>
+          {/* <div className="relative" ref={dropdownRef}>
             <motion.button
               onClick={() => setIsDropdownOpen((prev) => !prev)}
               className="inline-flex justify-center items-center gap-1 text-sm text-white hover:bg-gray-700 px-3 py-1.5 rounded-full transition"
@@ -140,7 +140,7 @@ const Navbar = ({ language, setLanguage }) => {
                 </div>
               </motion.div>
             )}
-          </div>
+          </div> */}
 
           {/* Hamburger (mobile only) */}
           <div className="sm:hidden">
