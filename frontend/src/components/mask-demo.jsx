@@ -10,7 +10,7 @@ export function SVGMaskEffectDemo() {
             "Injustice anywhere is a threat to justice everywhere." — Martin Luther King Jr.
           </p>
         }
-        className="h-[40rem] rounded-md border bg-white dark:bg-black"
+        className="h-[40rem] rounded-md  bg-white dark:bg-black"
       >
         <p className="mx-auto max-w-4xl text-center text-4xl font-bold">
           Experience the future of law with{" "}

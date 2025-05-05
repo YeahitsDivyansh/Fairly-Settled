@@ -44,7 +44,7 @@ const CarouselBackground = () => {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-full  md:h-[620px] sm:h-[60vh] overflow-hidden p-0 m-0">
       {images.map((img, index) => (
         <img
           key={index}
@@ -55,7 +55,7 @@ const CarouselBackground = () => {
             e.target.src =
               "https://via.placeholder.com/1920x1080?text=Image+Not+Found";
           }}
-          className={`absolute inset-0 w-full h-full object-cover object-left transition-opacity duration-1000 ${
+          className={`absolute inset-0 w-full h-full object-contain md:object-contain transition-opacity bg-black duration-1000 ${
             index === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         />
@@ -64,19 +64,19 @@ const CarouselBackground = () => {
       {/* Left Arrow */}
       <button
         onClick={handleManualPrev}
-        className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-md p-3 rounded-full cursor-pointer hover:scale-110 transition z-20"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/40 backdrop-blur-md p-2 sm:p-1 rounded-full hover:scale-110 transition z-20"
         aria-label="Previous Slide"
       >
-        <FaChevronLeft size={24} className="text-black" />
+        <FaChevronLeft size={20} className="text-black" />
       </button>
 
       {/* Right Arrow */}
       <button
         onClick={handleManualNext}
-        className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-md p-3 rounded-full cursor-pointer hover:scale-110 transition z-20"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/40 backdrop-blur-md p-2 sm:p-1 rounded-full hover:scale-110 transition z-20"
         aria-label="Next Slide"
       >
-        <FaChevronRight size={24} className="text-black" />
+        <FaChevronRight size={20} className="text-black" />
       </button>
     </div>
   );
