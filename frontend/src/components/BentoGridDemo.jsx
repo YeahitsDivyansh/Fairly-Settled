@@ -1,14 +1,6 @@
 import React from "react";
-import {
-  IconArrowWaveRightUp,
-  IconBoxAlignRightFilled,
-  IconBoxAlignTopLeft,
-  IconClipboardCopy,
-  IconFileBroken, 
-  IconSignature,
-  IconTableColumn,
-} from "@tabler/icons-react";
 import { BentoGrid, BentoGridItem } from "@/animations/BentoGrid";
+
 
 export function BentoGridDemo() {
   return (
@@ -38,8 +30,7 @@ const items = [
         alt="Contract Automation"
         className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconClipboardCopy className="h-6 w-6 text-gray-300" />,
+    )
   },
   {
     title: "Legal Analytics",
@@ -51,8 +42,7 @@ const items = [
         alt="Contract Automation"
         className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconTableColumn className="h-6 w-6 text-gray-300" />,
+    )
   },
   {
     title: "Digital Signatures",
@@ -64,8 +54,7 @@ const items = [
         alt="Contract Automation"
         className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconSignature className="h-6 w-6 text-gray-300" />,
+    )
   },
   {
     title: "Case Management",
@@ -77,8 +66,7 @@ const items = [
         alt="Contract Automation"
         className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconBoxAlignTopLeft className="h-6 w-6 text-gray-300" />,
+    )
   },
   {
     title: "Compliance Monitoring",
@@ -90,8 +78,7 @@ const items = [
         alt="Contract Automation"
         className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconFileBroken className="h-6 w-6 text-gray-300" />,
+    )
   },
   {
     title: "Client Portals",
@@ -103,8 +90,7 @@ const items = [
         alt="Contract Automation"
         className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconBoxAlignRightFilled className="h-6 w-6 text-gray-300" />,
+    )
   }, 
   {
     title: "AI-Powered Legal Research",
@@ -116,7 +102,6 @@ const items = [
         alt="Contract Automation"
         className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconArrowWaveRightUp className="h-6 w-6 text-gray-300"/>,
+    )
   },
 ];
