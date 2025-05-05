@@ -1,19 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-const images = [
-  "https://img.freepik.com/premium-photo/ai-regulation-legal-concept_628331-319.jpg?semt=ais_hybrid&w=740",
-  "https://img.freepik.com/premium-photo/sophisticated-image-robotic-hand-bespoke-suit-tie-perfectly-knotted_1039156-2559.jpg?ga=GA1.1.245847750.1745763404&semt=ais_hybrid&w=740",
-  "https://img.freepik.com/free-photo/lawyer-working-document-with-scales-justice_23-2151962523.jpg?ga=GA1.1.245847750.1745763404&semt=ais_hybrid&w=740",
-  "https://img.freepik.com/free-photo/collaborative-law-collaborative-practice-divorce-family-law-desk_1150-9090.jpg?ga=GA1.1.245847750.1745763404&semt=ais_hybrid&w=740",
-  "/mid-img2.webp"
-];
-
-const extendedImages = [images[images.length - 1], ...images, images[0]];
+const images = ["/2.png", "/3.png"];
 
 const CarouselBackground = () => {
-  const [current, setCurrent] = useState(1);
-  const [transitioning, setTransitioning] = useState(true);
+  const [current, setCurrent] = useState(0);
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -33,29 +24,11 @@ const CarouselBackground = () => {
   };
 
   const nextSlide = () => {
-    setCurrent((prev) => (prev >= images.length + 1 ? 1 : prev + 1));
+    setCurrent((prev) => (prev + 1) % images.length);
   };
 
   const prevSlide = () => {
-    setCurrent((prev) => (prev <= 0 ? images.length : prev - 1));
-  };
-
-  const handleTransitionEnd = () => {
-    if (current === 0) {
-      setTransitioning(false);
-      setCurrent(images.length);
-      setTimeout(() => setTransitioning(true), 20);
-    } else if (current === images.length + 1) {
-      setTransitioning(false);
-      setCurrent(1);
-      setTimeout(() => setTransitioning(true), 20);
-    }
-  };
-
-  const handleManualPrev = () => {
-    stopAutoSlide();
-    prevSlide();
-    startAutoSlide();
+    setCurrent((prev) => (prev - 1 + images.length) % images.length);
   };
 
   const handleManualNext = () => {
@@ -64,40 +37,47 @@ const CarouselBackground = () => {
     startAutoSlide();
   };
 
+  const handleManualPrev = () => {
+    stopAutoSlide();
+    prevSlide();
+    startAutoSlide();
+  };
+
   return (
-    <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden rounded-3xl shadow-2xl">
-      <div
-        className={`whitespace-nowrap h-full ${transitioning ? "transition-transform duration-700" : ""}`}
-        style={{ transform: `translateX(-${current * 100}%)` }}
-        onTransitionEnd={handleTransitionEnd}
-      >
-        {extendedImages.map((img, index) => (
-          <div key={index} className="relative inline-block w-full h-full">
-            <img
-              src={img}
-              alt={`Slide ${index}`}
-              className="w-full h-full object-cover brightness-90 hover:brightness-100 transition duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-          </div>
-        ))}
-      </div>
+    <div className="relative w-full h-screen overflow-hidden">
+      {images.map((img, index) => (
+        <img
+          key={index}
+          src={img}
+          alt={`Slide ${index}`}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src =
+              "https://via.placeholder.com/1920x1080?text=Image+Not+Found";
+          }}
+          className={`absolute inset-0 w-full h-full object-cover object-left transition-opacity duration-1000 ${
+            index === current ? "opacity-100 z-10" : "opacity-0 z-0"
+          }`}
+        />
+      ))}
 
       {/* Left Arrow */}
-      <div
-        className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-md p-3 rounded-full cursor-pointer hover:scale-110 transition z-20"
+      <button
         onClick={handleManualPrev}
+        className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-md p-3 rounded-full cursor-pointer hover:scale-110 transition z-20"
+        aria-label="Previous Slide"
       >
         <FaChevronLeft size={24} className="text-black" />
-      </div>
+      </button>
 
       {/* Right Arrow */}
-      <div
-        className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-md p-3 rounded-full cursor-pointer hover:scale-110 transition z-20"
+      <button
         onClick={handleManualNext}
+        className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-md p-3 rounded-full cursor-pointer hover:scale-110 transition z-20"
+        aria-label="Next Slide"
       >
         <FaChevronRight size={24} className="text-black" />
-      </div>
+      </button>
     </div>
   );
 };

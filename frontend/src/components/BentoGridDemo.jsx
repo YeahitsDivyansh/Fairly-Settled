@@ -1,18 +1,10 @@
 import React from "react";
-import {
-  IconArrowWaveRightUp,
-  IconBoxAlignRightFilled,
-  IconBoxAlignTopLeft,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-} from "@tabler/icons-react";
 import { BentoGrid, BentoGridItem } from "@/animations/BentoGrid";
+
 
 export function BentoGridDemo() {
   return (
-    <BentoGrid className="max-w-4xl mx-auto mb-4">
+    <BentoGrid className="mb-4">
       {items.map((item, i) => (
         <BentoGridItem
           key={i}
@@ -36,10 +28,9 @@ const items = [
       <img
         src="https://images.pexels.com/photos/7731330/pexels-photo-7731330.jpeg?auto=compress&cs=tinysrgb&w=600"
         alt="Contract Automation"
-        className="w-full shadow-gray-400 h-32 object-cover rounded-xl"
+        className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
+    )
   },
   {
     title: "Legal Analytics",
@@ -49,10 +40,9 @@ const items = [
       <img
         src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=600"
         alt="Contract Automation"
-        className="w-full h-32 object-cover rounded-xl"
+        className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
+    )
   },
   {
     title: "Digital Signatures",
@@ -62,10 +52,9 @@ const items = [
       <img
         src="https://images.pexels.com/photos/4440885/pexels-photo-4440885.jpeg?auto=compress&cs=tinysrgb&w=600"
         alt="Contract Automation"
-        className="w-full h-32 object-cover rounded-xl"
+        className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
+    )
   },
   {
     title: "Case Management",
@@ -75,10 +64,9 @@ const items = [
       <img
         src="https://images.pexels.com/photos/8369524/pexels-photo-8369524.jpeg?auto=compress&cs=tinysrgb&w=600"
         alt="Contract Automation"
-        className="w-full h-32 object-cover rounded-xl"
+        className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
+    )
   },
   {
     title: "Compliance Monitoring",
@@ -88,10 +76,9 @@ const items = [
       <img
         src="https://images.pexels.com/photos/1181316/pexels-photo-1181316.jpeg?auto=compress&cs=tinysrgb&w=600"
         alt="Contract Automation"
-        className="w-full h-32 object-cover rounded-xl"
+        className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
+    )
   },
   {
     title: "Client Portals",
@@ -101,11 +88,10 @@ const items = [
       <img
         src="https://images.pexels.com/photos/5699466/pexels-photo-5699466.jpeg?auto=compress&cs=tinysrgb&w=600"
         alt="Contract Automation"
-        className="w-full h-32 object-cover rounded-xl"
+        className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
-  },
+    )
+  }, 
   {
     title: "AI-Powered Legal Research",
     description:
@@ -114,9 +100,8 @@ const items = [
       <img
         src="https://images.pexels.com/photos/17484975/pexels-photo-17484975/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-depicts-how-ai-can-help-humans-to-understand-the-complexity-of-biology-it-was-created-by-artist-khyati-trehan-as-part.png?auto=compress&cs=tinysrgb&w=600"
         alt="Contract Automation"
-        className="w-full h-32 object-cover rounded-xl"
+        className="w-full h-54 object-cover rounded-xl"
       />
-    ),
-    icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
+    )
   },
 ];
