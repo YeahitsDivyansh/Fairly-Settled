@@ -94,41 +94,14 @@ const Careers = () => {
 
 
   return (
-    <section className="bg-[#9db6d9bd] px-4 py-16 md:py-24 mx-auto text-center">
-      {/* Blob Background */}
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <linearGradient
-              id="bg-gradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="100%"
-            >
-              <stop offset="0%" stopColor="#a2c4f8" />
-              <stop offset="100%" stopColor="#f0e4ff" />
-            </linearGradient>
-          </defs>
-          <g>
-            <circle r="200" cx="20%" cy="30%" fill="url(#bg-gradient)" />
-            <circle r="250" cx="80%" cy="60%" fill="url(#bg-gradient)" />
-            <circle r="180" cx="50%" cy="80%" fill="url(#bg-gradient)" />
-          </g>
-        </svg>
-      </div>
-
+    <section className="bg-white px-4 py-16 md:py-24 mx-auto text-center">
       <h4 className="text-sm font-semibold text-gray-500 tracking-wide uppercase mb-4">
         Careers at FairlySettled
       </h4>
 
-      <h1 className="text-[#1F2937] text-6xl md:text-5xl font-extrabold leading-tight mt-6">
+      <h1 className="text-gray-900 text-4xl md:text-5xl font-extrabold leading-tight mt-6">
         Shape legal systems with{" "}
-        <span className="bg-gradient-to-r from-blue-500 to-blue-900 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-r from-blue-600 to-blue-900 bg-clip-text text-transparent">
           purpose & precision
         </span>
       </h1>
@@ -191,30 +164,28 @@ const Careers = () => {
 
       {/* Role Section */}
       <div className="max-w-3xl mx-auto mt-12 space-y-8 text-left relative min-h-80">
-        {loading ?
-        <>
-         <JobsLoading/> <JobsLoading/> <JobsLoading/>
-         </>
-          : (
+        {loading ? (
+          <>
+            <JobsLoading /> <JobsLoading /> <JobsLoading />
+          </>
+        ) : (
           roles.map(({ category, positions }) => {
             return (
               <div
                 key={category}
-                className="relative rounded overflow-hidden transition-transform duration-300 hover:scale-102 hover:-translate-y-1"
+                className="relative rounded transition-transform duration-300 hover:scale-[1.01] hover:-translate-y-1"
               >
-                {/* Glow Background */}
-                <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-800 opacity-30 blur-xl animate-pulse"></div>
+                {/* Subtle Glow (toned down) */}
+                <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white via-gray-100 to-gray-200 opacity-40 blur-lg animate-pulse"></div>
 
                 {/* Content Wrapper */}
-                <div className="relative z-10 bg-white shadow-sm rounded-lg overflow-hidden">
+                <div className="relative z-10 bg-white border border-gray-500 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                   <div
                     onClick={() => toggleExpand(category)}
-                    className="flex justify-between items-center p-4 transition cursor-pointer"
+                    className="flex justify-between items-center p-4 transition cursor-pointer hover:bg-gray-50"
                   >
                     <div>
-                      <h3 className="font-semibold text-lg text-gray-900">
-                        {category}
-                      </h3>
+                      <h3 className="font-semibold text-lg text-gray-900">{category}</h3>
                       <p className="text-sm text-gray-600">
                         {positions.length} Open Role{positions.length > 1 ? 's' : ''}
                       </p>
@@ -234,15 +205,11 @@ const Careers = () => {
                         return (
                           <div key={positionKey} className="pb-4">
                             <div className="flex justify-between items-center">
-                              <span className="text-gray-800 font-medium">
-                                {position}
-                              </span>
+                              <span className="text-gray-800 font-medium">{position}</span>
                               <Button
-                                className="text-sm shadow-md px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white hover:cursor-pointer"
+                                className="text-sm shadow-sm px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white"
                                 onClick={() =>
-                                  setActiveForm(
-                                    activeForm === positionKey ? null : positionKey
-                                  )
+                                  setActiveForm(activeForm === positionKey ? null : positionKey)
                                 }
                               >
                                 Apply
@@ -253,69 +220,34 @@ const Careers = () => {
                             {activeForm === positionKey && (
                               <form
                                 onSubmit={(e) => handleSubmit(e, position)}
-                                className="mt-4 pt-6 px-8 border border-gray-300 rounded-xl shadow-lg bg-white"
+                                className="mt-4 pt-6 px-6 border border-gray-500 rounded-xl shadow-sm bg-white"
                               >
-                                <h1 className="text-xl font-extrabold text-gray-800 text-center mb-1 tracking-tight">
-                                  Apply for{' '}
-                                  <span className="text-blue-600">{position}</span>
+                                <h1 className="text-xl font-extrabold text-gray-800 text-center mb-4">
+                                  Apply for <span className="text-blue-600">{position}</span>
                                 </h1>
 
-                                <div className="mb-4">
-                                  <label
-                                    className="block text-gray-700 font-bold mb-2"
-                                    htmlFor="name"
-                                  >
-                                    Name
-                                  </label>
-                                  <input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    placeholder="Enter your name"
-                                    required
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                                  />
-                                </div>
+                                {[
+                                  { id: 'name', label: 'Name', type: 'text', placeholder: 'Enter your name' },
+                                  { id: 'email', label: 'Email', type: 'email', placeholder: 'Enter your email' },
+                                  { id: 'linkedin', label: 'LinkedIn Profile URL:', type: 'url', placeholder: 'Enter your LinkedIn Profile URL' },
+                                ].map(({ id, label, type, placeholder }) => (
+                                  <div key={id} className="mb-4">
+                                    <label htmlFor={id} className="block text-gray-700 font-medium mb-2">
+                                      {label}
+                                    </label>
+                                    <input
+                                      id={id}
+                                      name={id}
+                                      type={type}
+                                      required
+                                      placeholder={placeholder}
+                                      className="shadow-sm border border-gray-300 rounded w-full py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                    />
+                                  </div>
+                                ))}
 
                                 <div className="mb-4">
-                                  <label
-                                    className="block text-gray-700 font-bold mb-2"
-                                    htmlFor="email"
-                                  >
-                                    Email
-                                  </label>
-                                  <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    placeholder="Enter your email"
-                                    required
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                                  />
-                                </div>
-
-                                <div className="mb-4">
-                                  <label
-                                    className="block text-gray-700 font-bold mb-2"
-                                    htmlFor="linkedin"
-                                  >
-                                    LinkedIn Profile URL:
-                                  </label>
-                                  <input
-                                    id="linkedin"
-                                    name="linkedin"
-                                    type="url"
-                                    placeholder="Enter your LinkedIn Profile URL"
-                                    required
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                                  />
-                                </div>
-
-                                <div className="mb-4">
-                                  <label
-                                    className="block text-gray-700 font-bold mb-2"
-                                    htmlFor="resume"
-                                  >
+                                  <label htmlFor="resume" className="block text-gray-700 font-medium mb-2">
                                     Resume:
                                   </label>
                                   <input
@@ -323,14 +255,14 @@ const Careers = () => {
                                     name="resume"
                                     type="file"
                                     required
-                                    className="mt-2 block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-blue-600 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-800 focus:outline-none"
+                                    className="mt-2 block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-blue-600 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-700"
                                   />
                                 </div>
 
                                 <div className="flex items-center justify-center mb-4">
                                   <button
-                                    className="bg-gradient-to-r from-blue-500 to-blue-800 text-white text-base font-semibold py-2 px-7 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out hover:from-blue-600 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-300 hover:cursor-pointer"
                                     type="submit"
+                                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-7 rounded-full shadow-sm transition-all duration-300"
                                   >
                                     Submit
                                   </button>
