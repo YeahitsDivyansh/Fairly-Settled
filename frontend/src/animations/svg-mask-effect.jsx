@@ -29,14 +29,15 @@ export const MaskContainer = ({
       }
     };
   }, []);
-  let maskSize = isHovered ? revealSize : size;
+  const fixedMaskSize = 300;
+  const maskSize = isHovered ? fixedMaskSize : 0;
 
   return (
     <motion.div
       ref={containerRef}
       className={cn("relative w-full  h-screen", className)}
       animate={{
-        backgroundColor: isHovered ? "var(--slate-900)" : "var(--white)",
+        backgroundColor: isHovered ? "#0f172a" : "#1e293b", // slate-800
       }}
       transition={{
         backgroundColor: { duration: 0.3 },
@@ -54,6 +55,8 @@ export const MaskContainer = ({
           maskSize: { duration: 0.3, ease: "easeInOut" },
           maskPosition: { duration: 0.15, ease: "linear" },
         }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <div className="absolute inset-0 z-0 h-full w-full bg-black opacity-50 dark:bg-white" />
         <div
