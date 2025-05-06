@@ -6,8 +6,9 @@ export function SVGMaskEffectDemo() {
     <div className="flex h-[40rem] w-full items-center justify-center overflow-hidden">
       <MaskContainer
         revealText={
-          <p className="mx-auto max-w-4xl text-center text-4xl font-bold text-black dark:text-white">
-            "Injustice anywhere is a threat to justice everywhere." — Martin Luther King Jr.
+          <p className="mx-auto max-w-4xl text-center text-4xl font-bold text-white dark:text-white">
+            "Injustice anywhere is a threat to justice everywhere." — Martin
+            Luther King Jr.
           </p>
         }
         className="h-[40rem] rounded-md  bg-white dark:bg-black"
