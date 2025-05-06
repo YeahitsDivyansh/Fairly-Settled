@@ -9,6 +9,7 @@ import CarouselBackground from "./carousel/carousel";
 import { BackgroundBeams } from "@/animations/BackgroundBeams";
 import { BentoGridDemo } from "../BentoGridDemo";
 import { SVGMaskEffectDemo } from "../mask-demo";
+import { WavyBackgroundDemo } from "../wavyBackgroundDemo";
 
 const features = [
   {
@@ -157,7 +158,6 @@ const MidSection = () => {
                     : (alert("Please login first to generate a draft."),
                       navigate("/phonesignin"));
                 }}
-              
               >
                 <FileText
                   size={20}
@@ -324,6 +324,10 @@ const MidSection = () => {
               behind in the pursuit of justice.
             </p>
           </div>
+        </div>
+
+        <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+          <WavyBackgroundDemo />
         </div>
       </div>
     </div>
