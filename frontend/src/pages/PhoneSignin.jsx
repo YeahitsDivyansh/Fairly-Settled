@@ -5,6 +5,7 @@ import "react-phone-number-input/style.css";
 import { useUserAuth } from "../context/UserAuthContext";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import { SpotlightPreview2 } from "@/components/SpotLightDemo2";
 
 const PhoneSignin = () => {
   const [error, setError] = useState("");
@@ -60,34 +61,9 @@ const PhoneSignin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-[#9db6d9bd] px-4">
-      {/* Blob Background */}
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <linearGradient
-              id="bg-gradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="100%"
-            >
-              <stop offset="0%" stopColor="#a2c4f8" />
-              <stop offset="100%" stopColor="#f0e4ff" />
-            </linearGradient>
-          </defs>
-          <g>
-            <circle r="200" cx="20%" cy="30%" fill="url(#bg-gradient)" />
-            <circle r="250" cx="80%" cy="60%" fill="url(#bg-gradient)" />
-            <circle r="180" cx="50%" cy="80%" fill="url(#bg-gradient)" />
-          </g>
-        </svg>
-      </div>
+    <div className="flex justify-center items-center min-h-screen bg-black px-4">
       <div className="flex flex-col lg:flex-row items-center justify-center gap-10 w-full max-w-6xl">
+        <SpotlightPreview2 />
         {/* LEFT SIDE: Sign In Form */}
         <form
           onSubmit={flag ? verifyOtp : getOtp}
@@ -122,10 +98,11 @@ const PhoneSignin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${loading
+                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                  loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
-                  }`}
+                }`}
               >
                 {loading ? "Loading..." : "Send OTP"}
               </button>
@@ -158,27 +135,17 @@ const PhoneSignin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${loading
+                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                  loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
-                  }`}
+                }`}
               >
                 {loading ? "Loading..." : "Verify"}
               </button>
             </>
           )}
         </form>
-
-        {/* RIGHT SIDE: Motivational Quote */}
-        <div className="max-w-xl text-center lg:text-right lg:w-1/2">
-          <h1 className="text-6xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-800 via-purple-700 to-indigo-900">
-            “Purpose fuels progress. Let yours inspire change.”
-          </h1>
-          <p className="mt-5 text-2xl text-gray-700">
-            Welcome back to <strong>FairlySettled</strong>, powered by{" "}
-            <strong>Agility AI</strong>. Let’s make a difference together.
-          </p>
-        </div>
       </div>
     </div>
   );

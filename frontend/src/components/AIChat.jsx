@@ -1,9 +1,8 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import toast from 'react-hot-toast';
+import React from "react";
+import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
 
 const AIChat = ({ msg }) => {
   const synth = window.speechSynthesis;
@@ -28,8 +27,10 @@ const AIChat = ({ msg }) => {
   const speakHandler = () => {
     if (msg.text.trim() && !isSpeaking) {
       const selectedVoice =
-        voices.find((voice) => voice.name.includes("India") || voice.lang.includes("en-IN")) ||
-        voices[0]; // Fallback to first available voice
+        voices.find(
+          (voice) =>
+            voice.name.includes("India") || voice.lang.includes("en-IN")
+        ) || voices[0]; // Fallback to first available voice
 
       const sanitizedResponse = msg.text.replace(/[*_,`|\-]/g, "");
 
@@ -61,21 +62,28 @@ const AIChat = ({ msg }) => {
         <div className="flex items-center justify-between mt-1 text-xs drop-shadow-sm">
           <span className="text-black">
             {msg.time?.toDate
-              ? msg.time.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+              ? msg.time.toDate().toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
               : ""}
           </span>
           <div className="space-x-2">
-            {isSpeaking ?
-              <span className="material-icons text-sm cursor-pointer text-black hover:text-white hover:bg-blue-500 p-1 rounded-full transition duration-200"
-                onClick={stopSpeakingHandler}>
+            {isSpeaking ? (
+              <span
+                className="material-icons text-sm cursor-pointer text-black hover:text-white hover:bg-blue-500 p-1 rounded-full transition duration-200"
+                onClick={stopSpeakingHandler}
+              >
                 volume_off
               </span>
-              :
-              <span className="material-icons text-sm cursor-pointer text-black hover:text-white hover:bg-blue-500 p-1 rounded-full transition duration-200"
-                onClick={speakHandler}>
+            ) : (
+              <span
+                className="material-icons text-sm cursor-pointer text-black hover:text-white hover:bg-blue-500 p-1 rounded-full transition duration-200"
+                onClick={speakHandler}
+              >
                 volume_up
               </span>
-            }
+            )}
             <span
               onClick={() => {
                 navigator.clipboard.writeText(msg.text);

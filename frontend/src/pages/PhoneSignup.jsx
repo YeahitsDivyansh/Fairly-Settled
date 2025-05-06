@@ -12,6 +12,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+import { SpotlightPreview1 } from "@/components/SpotlightDemo1";
 
 const PhoneSignup = () => {
   const [error, setError] = useState("");
@@ -71,35 +72,10 @@ const PhoneSignup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-[#9db6d9bd] px-4">
-      {/* Blob Background */}
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <linearGradient
-              id="bg-gradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="100%"
-            >
-              <stop offset="0%" stopColor="#a2c4f8" />
-              <stop offset="100%" stopColor="#f0e4ff" />
-            </linearGradient>
-          </defs>
-          <g>
-            <circle r="200" cx="20%" cy="30%" fill="url(#bg-gradient)" />
-            <circle r="250" cx="80%" cy="60%" fill="url(#bg-gradient)" />
-            <circle r="180" cx="50%" cy="80%" fill="url(#bg-gradient)" />
-          </g>
-        </svg>
-      </div>
+    <div className="flex justify-center items-center min-h-screen bg-black px-4">
       <div className="flex flex-col lg:flex-row items-center justify-center gap-14 w-full max-w-6xl">
         {/* Sign Up / OTP Form - LEFT SIDE */}
+        <SpotlightPreview1 />
         <form
           onSubmit={flag ? verifyOtp : getOtp}
           className="bg-[#f5f9fbe6] mt-6 p-8 rounded-xl shadow-xl w-full max-w-md animate-fade-in lg:w-1/2"
@@ -142,10 +118,11 @@ const PhoneSignup = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${loading
+                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                  loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
-                  }`}
+                }`}
               >
                 {loading ? "Loading..." : "Send OTP"}
               </button>
@@ -180,27 +157,17 @@ const PhoneSignup = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${loading
+                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                  loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
-                  }`}
+                }`}
               >
                 {loading ? "Loading..." : "Verify"}
               </button>
             </>
           )}
         </form>
-
-        {/* Motivational Quote - RIGHT SIDE */}
-        <div className="max-w-xl text-center lg:text-right lg:w-1/2">
-          <h1 className="text-6xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-800 via-purple-700 to-indigo-900">
-            “When one rises with purpose, many find direction.”
-          </h1>
-          <p className="mt-5 text-2xl text-gray-700">
-            Join the revolution with <strong>FairlySettled</strong> brought to
-            you by <strong>Agility AI</strong> and make an impact that matters.
-          </p>
-        </div>
       </div>
     </div>
   );
