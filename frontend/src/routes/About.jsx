@@ -22,39 +22,12 @@ const About = () => {
   }, []);
 
   return (
-    <div className="bg-[#9db6d9bd] relative overflow-hidden min-h-[80vh] px-4 py-10">
-      {/* Blob Background */}
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <linearGradient
-              id="bg-gradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="100%"
-            >
-              <stop offset="0%" stopColor="#a2c4f8" />
-              <stop offset="100%" stopColor="#f0e4ff" />
-            </linearGradient>
-          </defs>
-          <g>
-            <circle r="200" cx="20%" cy="30%" fill="url(#bg-gradient)" />
-            <circle r="250" cx="80%" cy="60%" fill="url(#bg-gradient)" />
-            <circle r="180" cx="50%" cy="80%" fill="url(#bg-gradient)" />
-          </g>
-        </svg>
-      </div>
-
+    <div className="bg-white relative overflow-hidden min-h-[80vh] px-4 py-10">
       {/* Introduction Section */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 bg-white rounded-xl shadow-md p-8 my-6 transition-transform duration-300 ease-in-out hover:scale-95">
+      <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 bg-white  p-8 my-6 transition-transform duration-300 ease-in-out ">
         {/* Text Content */}
         <div className="md:w-1/2">
-          <h2 className="text-4xl font-extrabold text-[#1F2937] mb-4">
+          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
             We're with you <br /> in every case
           </h2>
           <p className="text-gray-700 text-lg leading-relaxed">
@@ -73,15 +46,15 @@ const About = () => {
         <div className="md:w-1/2">
           <img
             src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            className="w-full h-64 md:h-full object-cover rounded-lg shadow-lg"
+            className="w-full h-64 md:h-full object-cover rounded-lg shadow-lg hover:scale-95 hover:shadow-xl transition-transform duration-300 ease-in-out"
           />
         </div>
       </div>
 
       {/* Core Features Section */}
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
-        <div className="p-6 rounded-lg bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
-          <h3 className="text-2xl font-bold text-[#1F2937] mb-2">
+        <div className="p-6 rounded-lg bg-white border border-gray-200 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">
             Collaborative Expertise
           </h3>
           <p className="text-gray-700">
@@ -91,8 +64,8 @@ const About = () => {
             control.
           </p>
         </div>
-        <div className="p-6 rounded-lg bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
-          <h3 className="text-2xl font-bold text-[#1F2937] mb-2">
+        <div className="p-6 rounded-lg bg-white border border-gray-200 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">
             AI-Powered Resolution
           </h3>
           <p className="text-gray-700">
@@ -102,8 +75,8 @@ const About = () => {
             every step.
           </p>
         </div>
-        <div className="p-6 rounded-lg bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
-          <h3 className="text-2xl font-bold text-[#1F2937] mb-2">
+        <div className="p-6 rounded-lg bg-white border border-gray-200 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">
             Seamless Experience
           </h3>
           <p className="text-gray-700">
@@ -118,17 +91,16 @@ const About = () => {
       {/* Meet the Minds Section */}
       <div
         ref={meetRef}
-        className={`rounded-xl max-w-5xl mx-auto px-4 py-8 transform transition-all duration-1000 ease-out ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`rounded-xl max-w-5xl mx-auto px-4 py-8 transform transition-all duration-1000 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <img
-          src="https://agilityai.co.in/new_logo.jpg"
+          src="./AGILITYAI.png"
           alt="Agility AI Logo"
           className="mx-auto mb-6 h-20 object-contain rounded-full"
         />
 
-        <h2 className="text-center text-3xl font-extrabold text-[#1F2937] mb-6">
+        <h2 className="text-center text-3xl font-extrabold text-gray-900 mb-6">
           Meet the Minds Behind Agility AI
         </h2>
         <p className="text-lg leading-relaxed text-gray-800">
@@ -165,7 +137,7 @@ const About = () => {
 
       {/* Advisory Board Section */}
       <div className="max-w-6xl w-full mx-auto px-4 py-10">
-        <h2 className="text-3xl font-extrabold text-[#1F2937] text-center mb-10">
+        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-10">
           Our Advisory Board
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -179,7 +151,7 @@ const About = () => {
               Prof. Aashish Argade
             </h3>
             <p className="text-sm text-gray-600">
-            <strong>Assistant Professor</strong> at <strong>IRMA</strong>
+              <strong>Assistant Professor</strong> at <strong>IRMA</strong>
               <br />
               <strong>PhD</strong> from <strong>IIM Ahmedabad</strong>
               <br />
@@ -208,7 +180,7 @@ const About = () => {
 
       {/* Our Core Values */}
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-extrabold text-center text-[#1F2937] mb-4">
+        <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-4">
           Our Core Values
         </h2>
         <p className="text-center text-xl text-gray-600 max-w-2xl mx-auto mb-10">
@@ -273,7 +245,7 @@ const About = () => {
 
       {/* Diversity, Equity, and Inclusion Section */}
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-extrabold text-[#1F2937] text-center mb-8">
+        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-8">
           Diversity, Equity, and Inclusion
         </h2>
         <p className="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
