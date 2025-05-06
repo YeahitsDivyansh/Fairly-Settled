@@ -20,7 +20,7 @@ const Lawyer = ({ lawyer }) => {
   } = lawyer;
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between bg-white p-6 rounded-2xl shadow-lg w-full max-w-5xl mx-auto border border-gray-200">
+    <div className="flex flex-col md:flex-row items-center justify-between bg-white p-6 rounded-2xl shadow-lg w-full max-w-5xl mx-auto border border-gray-400">
       {/* Left Section */}
       <div className="flex items-center gap-6">
         <img
