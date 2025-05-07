@@ -142,7 +142,7 @@ const About = () => {
           Our Advisory Board
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-[#f4f5f1] rounded-xl shadow-md p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
+          <div className="bg-[#f4f5f1] rounded-xl shadow-[10px_10px_30px_rgba(0,0,0,0.7)] p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
             <img
               src="./aashish-argade.jpeg"
               alt="Prof. Aashish Argade"
@@ -159,7 +159,7 @@ const About = () => {
               Consultant to various government departments for over a decade
             </p>
           </div>
-          <div className="bg-[#f4f5f1] rounded-xl shadow-md p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
+          <div className="bg-[#f4f5f1] rounded-xl shadow-[10px_10px_30px_rgba(0,0,0,0.7)] p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
             <img
               src="./Sumit Kumar Yadav.jpeg"
               alt="Prof. Sumit Kumar Yadav"
@@ -174,6 +174,24 @@ const About = () => {
               <strong>PhD</strong> from <strong>IIM Ahmedabad</strong>
               <br />
               <strong>BTech</strong> from <strong>IIT Bombay</strong>
+            </p>
+          </div>
+          <div className="bg-[#f4f5f1] rounded-xl shadow-[10px_10px_30px_rgba(0,0,0,0.7)] p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
+            <img
+              src="./R_Ramaseshan_sir.jpg"
+              alt="Sri R Ramaseshan"
+              className="w-28 h-28 rounded-full object-cover shadow-lg mb-4"
+            />
+            <h3 className="text-xl font-semibold text-blue-800 mb-1">
+              Sri R Ramaseshan 
+            </h3>
+            <p className="text-sm text-gray-600">
+              Former <strong>IAS</strong> <br />
+              Former <strong>MD</strong> & <strong>CEO</strong> at <strong>NCDEX</strong>
+              <br />
+              Chairman of th Board at Nationa Commodity Clearing Limited
+              <br />
+              
             </p>
           </div>
         </div>
