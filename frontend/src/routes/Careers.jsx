@@ -2,11 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { db, storage } from "../firebase";
-import { collection, getDocs, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import toast from "react-hot-toast";
 import JobsLoading from "@/components/JobsLoading";
-
+import { LampDemo } from "@/components/lampDemo";
 
 const Careers = () => {
   const [roles, setRoles] = useState([]);
@@ -17,7 +23,7 @@ const Careers = () => {
       try {
         setLoading(true);
         const querySnapshot = await getDocs(collection(db, "roles"));
-        const rolesData = querySnapshot.docs.map(doc => doc.data());
+        const rolesData = querySnapshot.docs.map((doc) => doc.data());
         setRoles(rolesData);
         // console.log(roles);
       } catch (error) {
@@ -28,7 +34,6 @@ const Careers = () => {
 
     fetchRoles();
   }, []);
-
 
   const [hireVisible, setHireVisible] = useState(false);
   const hireRef = useRef(null);
@@ -51,7 +56,6 @@ const Careers = () => {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [activeForm, setActiveForm] = useState(null);
 
-
   const toggleExpand = (category) => {
     setExpandedCategory(expandedCategory === category ? null : category);
     setActiveForm(null); // Close any open forms when switching category
@@ -70,7 +74,10 @@ const Careers = () => {
     }
 
     try {
-      const resumeRef = ref(storage, `resumes/${Date.now()}_${resumeFile.name}`);
+      const resumeRef = ref(
+        storage,
+        `resumes/${Date.now()}_${resumeFile.name}`
+      );
       await uploadBytes(resumeRef, resumeFile);
       const resumeURL = await getDownloadURL(resumeRef);
 
@@ -81,7 +88,7 @@ const Careers = () => {
         linkedin,
         resumeURL,
         position,
-        createdAt: serverTimestamp()
+        createdAt: serverTimestamp(),
       });
 
       toast.success("Application submitted successfully!");
@@ -92,6 +99,20 @@ const Careers = () => {
     }
   };
 
+  const rolesRef = useRef(null);
+
+  const handleScroll = () => {
+    const offset = 40; // Adjust this value as needed (in pixels)
+    const topPosition =
+      rolesRef.current?.getBoundingClientRect().top + window.scrollY;
+
+    if (topPosition) {
+      window.scrollTo({
+        top: topPosition - offset,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <section className="bg-white px-4 py-16 md:py-24 mx-auto text-center">
@@ -106,7 +127,7 @@ const Careers = () => {
         </span>
       </h1>
 
-      <p className="text-gray-700 text-lg md:text-xl mt-6 max-w-4xl mx-auto">
+      <p className="text-gray-700 mx-auto text-lg md:text-xl mt-6 max-w-4xl">
         We're reimagining the legal system for speed, accessibility, and impact.
         Our work centers on eliminating the bottlenecks that slow down justice —
         from tedious paperwork to outdated processes. Enter{" "}
@@ -124,6 +145,7 @@ const Careers = () => {
       <Button
         variant="outline"
         className="mt-8 bg-gray-800 text-white hover:bg-blue-900 font-semibold text-base px-6 py-3"
+        onClick={handleScroll}
       >
         Have a look at our Open Roles
       </Button>
@@ -161,9 +183,11 @@ const Careers = () => {
         />
       </div>
 
-
       {/* Role Section */}
-      <div className="max-w-3xl mx-auto mt-12 space-y-8 text-left relative min-h-80">
+      <div
+        ref={rolesRef}
+        className="max-w-3xl mx-auto mt-12 space-y-8 text-left relative min-h-80"
+      >
         {loading ? (
           <>
             <JobsLoading /> <JobsLoading /> <JobsLoading />
@@ -185,9 +209,12 @@ const Careers = () => {
                     className="flex justify-between items-center p-4 transition cursor-pointer hover:bg-gray-50"
                   >
                     <div>
-                      <h3 className="font-semibold text-lg text-gray-900">{category}</h3>
+                      <h3 className="font-semibold text-lg text-gray-900">
+                        {category}
+                      </h3>
                       <p className="text-sm text-gray-600">
-                        {positions.length} Open Role{positions.length > 1 ? 's' : ''}
+                        {positions.length} Open Role
+                        {positions.length > 1 ? "s" : ""}
                       </p>
                     </div>
                     {expandedCategory === category ? (
@@ -205,11 +232,17 @@ const Careers = () => {
                         return (
                           <div key={positionKey} className="pb-4">
                             <div className="flex justify-between items-center">
-                              <span className="text-gray-800 font-medium">{position}</span>
+                              <span className="text-gray-800 font-medium">
+                                {position}
+                              </span>
                               <Button
                                 className="text-sm shadow-sm px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white"
                                 onClick={() =>
-                                  setActiveForm(activeForm === positionKey ? null : positionKey)
+                                  setActiveForm(
+                                    activeForm === positionKey
+                                      ? null
+                                      : positionKey
+                                  )
                                 }
                               >
                                 Apply
@@ -223,16 +256,38 @@ const Careers = () => {
                                 className="mt-4 pt-6 px-6 border border-gray-500 rounded-xl shadow-sm bg-white"
                               >
                                 <h1 className="text-xl font-extrabold text-gray-800 text-center mb-4">
-                                  Apply for <span className="text-blue-600">{position}</span>
+                                  Apply for{" "}
+                                  <span className="text-blue-600">
+                                    {position}
+                                  </span>
                                 </h1>
 
                                 {[
-                                  { id: 'name', label: 'Name', type: 'text', placeholder: 'Enter your name' },
-                                  { id: 'email', label: 'Email', type: 'email', placeholder: 'Enter your email' },
-                                  { id: 'linkedin', label: 'LinkedIn Profile URL:', type: 'url', placeholder: 'Enter your LinkedIn Profile URL' },
+                                  {
+                                    id: "name",
+                                    label: "Name",
+                                    type: "text",
+                                    placeholder: "Enter your name",
+                                  },
+                                  {
+                                    id: "email",
+                                    label: "Email",
+                                    type: "email",
+                                    placeholder: "Enter your email",
+                                  },
+                                  {
+                                    id: "linkedin",
+                                    label: "LinkedIn Profile URL:",
+                                    type: "url",
+                                    placeholder:
+                                      "Enter your LinkedIn Profile URL",
+                                  },
                                 ].map(({ id, label, type, placeholder }) => (
                                   <div key={id} className="mb-4">
-                                    <label htmlFor={id} className="block text-gray-700 font-medium mb-2">
+                                    <label
+                                      htmlFor={id}
+                                      className="block text-gray-700 font-medium mb-2"
+                                    >
                                       {label}
                                     </label>
                                     <input
@@ -247,7 +302,10 @@ const Careers = () => {
                                 ))}
 
                                 <div className="mb-4">
-                                  <label htmlFor="resume" className="block text-gray-700 font-medium mb-2">
+                                  <label
+                                    htmlFor="resume"
+                                    className="block text-gray-700 font-medium mb-2"
+                                  >
                                     Resume:
                                   </label>
                                   <input
@@ -281,38 +339,9 @@ const Careers = () => {
         )}
       </div>
 
-
       {/* How we hire / What we offer */}
-      <div
-        ref={hireRef}
-        className={`max-w-3xl mx-auto mt-20 text-left transition-all duration-1000 ease-out transform ${hireVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
-      >
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          How We Hire / What We Offer
-        </h2>
-        <p className="text-gray-700 text-base leading-relaxed space-y-2">
-          We're at the cusp of evolution—from a few driven builders to a
-          mission-driven organization. While our culture is still taking shape,
-          we remain anchored by core values: generosity of thought, clarity in
-          communication, and a deep respect for collective knowledge. We lean
-          into first principles, and we believe true expertise is marked not
-          only by insight, but by humility and the ability to teach.
-        </p>
-        <p className="text-gray-700 text-base mt-4 leading-relaxed">
-          We look for people who are sharp, curious, and a little
-          unconventional. Those who thrive in ambiguity, learn quickly, and are
-          eager to take initiative. We believe interest, intent, and potential
-          matter more than credentials or traditional experience.
-        </p>
-        <p className="text-gray-700 text-base mt-4 leading-relaxed">
-          In return, we promise clarity and candor about roles,
-          responsibilities, and what success looks like. Equity is not an
-          afterthought—we’re generous because we see this as shared ownership.
-          We also believe in flexible paths: you help shape your role here, not
-          the other way around.
-        </p>
-      </div>
+
+      <LampDemo />
     </section>
   );
 };

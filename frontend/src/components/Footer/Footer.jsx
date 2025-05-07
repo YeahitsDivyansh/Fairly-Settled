@@ -42,11 +42,11 @@ const Footer = () => {
           </p>
           <div className="flex items-center gap-3 text-sm text-white mb-2">
             <FaEnvelope className="text-blue-400" />{" "}
-            <span>support@fairlysettled.in</span>
+            <span>service@agilityai.in</span>
           </div>
           <div className="flex items-center gap-3 text-sm text-white">
             <FaPhoneAlt className="text-blue-400" />{" "}
-            <span>+91 98765 43210</span>
+            <span>+91 70421 49608</span>
           </div>
         </motion.div>
 
@@ -76,7 +76,10 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link to="/find-lawyer" className="hover:text-blue-400 transition">
+              <Link
+                to="/find-lawyer"
+                className="hover:text-blue-400 transition"
+              >
                 Find a Lawyer
               </Link>
             </li>

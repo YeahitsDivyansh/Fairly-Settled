@@ -53,7 +53,7 @@ const About = () => {
 
       {/* Core Features Section */}
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
-        <div className="p-6 rounded-lg bg-white border border-gray-200 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
+        <div className="p-6 rounded-lg bg-white border border-gray-200 shadow-inner mx-2 hover:z-10 transition-transform duration-300 ease-in-out hover:scale-95">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">
             Collaborative Expertise
           </h3>
@@ -64,7 +64,7 @@ const About = () => {
             control.
           </p>
         </div>
-        <div className="p-6 rounded-lg bg-white border border-gray-200 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
+        <div className="p-6 rounded-lg bg-white border border-gray-200 shadow-inner mx-2 hover:z-10 transition-transform duration-300 ease-in-out hover:scale-95">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">
             AI-Powered Resolution
           </h3>
@@ -75,7 +75,7 @@ const About = () => {
             every step.
           </p>
         </div>
-        <div className="p-6 rounded-lg bg-white border border-gray-200 shadow-inner mx-2 hover:z-50 transition-transform duration-300 ease-in-out hover:scale-95">
+        <div className="p-6 rounded-lg bg-white border border-gray-200 shadow-inner mx-2 hover:z-10 transition-transform duration-300 ease-in-out hover:scale-95">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">
             Seamless Experience
           </h3>
@@ -91,8 +91,9 @@ const About = () => {
       {/* Meet the Minds Section */}
       <div
         ref={meetRef}
-        className={`rounded-xl max-w-5xl mx-auto px-4 py-8 transform transition-all duration-1000 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+        className={`rounded-xl max-w-5xl mx-auto px-4 py-8 transform transition-all duration-1000 ease-out ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
       >
         <img
           src="./AGILITYAI.png"
@@ -188,7 +189,7 @@ const About = () => {
           strive to deliver — for our clients, our team, and society at large.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-blue-900 text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
+          <div className="bg-black text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
             <img
               src="https://cdn.prod.website-files.com/6716c4cb5dee34138060e719/67d994caf5a1624e9c88303b_noun-think-5247342%202.svg"
               alt="Innovation icon"
@@ -201,7 +202,7 @@ const About = () => {
               faster, fairer, and more accessible.
             </p>
           </div>
-          <div className="bg-blue-900 text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
+          <div className="bg-black text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
             <img
               src="https://cdn.prod.website-files.com/6716c4cb5dee34138060e719/67d9962bcddbaa38d72afedd_noun-engineer-1204424%202.svg"
               alt="Integrity icon"
@@ -214,7 +215,7 @@ const About = () => {
               keeping justice and accountability at our core.
             </p>
           </div>
-          <div className="bg-blue-900 text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
+          <div className="bg-black text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
             <img
               src="https://cdn.prod.website-files.com/6716c4cb5dee34138060e719/67d9a95e2aada0c14b379720_noun-handshake-680244%202%20(1).svg"
               alt="Empathy icon"
@@ -227,7 +228,7 @@ const About = () => {
               because legal help should feel human.
             </p>
           </div>
-          <div className="bg-blue-900 text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
+          <div className="bg-black text-white rounded-lg p-6 flex flex-col items-start transition-transform duration-300 ease-in-out hover:scale-95">
             <img
               src="https://cdn.prod.website-files.com/6716c4cb5dee34138060e719/67d9aa1d3abe65c79ad483a3_noun-trophy-6915046%202.svg"
               alt="Impact icon"
