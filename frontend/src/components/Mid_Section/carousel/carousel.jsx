@@ -44,7 +44,7 @@ const CarouselBackground = () => {
   };
 
   return (
-    <div className="relative w-full h-full  md:h-[620px] sm:h-[60vh] overflow-hidden p-0 m-0">
+    <div className="relative w-full h-screen sm:h-[90vh] overflow-hidden p-0 m-0">
       {images.map((img, index) => (
         <img
           key={index}
@@ -55,7 +55,7 @@ const CarouselBackground = () => {
             e.target.src =
               "https://via.placeholder.com/1920x1080?text=Image+Not+Found";
           }}
-          className={`absolute inset-0 w-full h-full object-contain md:object-contain transition-opacity bg-black duration-1000 ${
+          className={`absolute inset-0 w-full h-full object-contain md:object-contain transition-opacity bg-white duration-1000 ${
             index === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         />

@@ -68,7 +68,7 @@ const DraftDocument = () => {
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
             className="w-full max-w-[360px]"
           >
-            <Card className="relative bg-white/30 backdrop-blur-xl border border-white/40 shadow-2xl rounded-3xl overflow-hidden hover:shadow-[0_15px_50px_rgba(0,0,0,0.25)] transition-all duration-300">
+            <Card className="relative bg-white/30 backdrop-blur-xl border border-white/40 shadow-[10px_10px_30px_rgba(0,0,0,0.7)] rounded-3xl overflow-hidden hover:shadow-[15px_15px_50px_rgba(0,0,0,1)] transition-all duration-300">
               {/* glowing gradient border */}
               <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-300 to-gray-500 opacity-30 blur-xl animate-pulse"></div>
 
