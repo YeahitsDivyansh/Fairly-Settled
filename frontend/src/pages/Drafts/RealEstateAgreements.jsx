@@ -144,7 +144,7 @@ export default function RealEstateForm() {
           onSubmit={handleSubmit}
           className="w-full max-w-3xl bg-white/60 backdrop-blur-md p-8 rounded-3xl shadow-2xl space-y-6 animate-fadeIn transition-all"
         >
-          <h2 className="text-3xl font-bold text-purple-700 text-center mb-4 drop-shadow">
+          <h2 className="text-3xl font-bold text-blue-700 text-center mb-4 drop-shadow">
             {type}
           </h2>
           {templates[type].fields.map((field) => (
@@ -157,14 +157,14 @@ export default function RealEstateForm() {
                 name={field}
                 value={formData[field] || ""}
                 onChange={handleChange}
-                className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm transition duration-200"
+                className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 shadow-sm transition duration-200"
                 required
               />
             </div>
           ))}
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white font-semibold p-3 rounded-xl shadow-md hover:bg-purple-700 hover:scale-[1.03] transition-transform duration-300"
+            className="w-full bg-blue-600 text-white font-semibold p-3 rounded-xl border border-blue-600 hover:bg-white hover:text-blue-600 transition shadow-lg hover:scale-[1.03] transition-transform duration-300"
           >
             Generate Agreement
           </button>
@@ -178,11 +178,11 @@ export default function RealEstateForm() {
             value={generatedText}
             rows="25"
             onChange={(e) => setGeneratedText(e.target.value)}
-            className="w-full border border-gray-300 p-4 rounded-lg shadow-inner font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 transition"
+            className="w-full border border-gray-300 p-4 rounded-lg shadow-inner font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-200 transition"
           />
           <button
             onClick={handleDownload}
-            className="w-full bg-green-600 text-white font-semibold p-3 rounded-xl shadow-md hover:bg-green-700 hover:scale-[1.03] transition-transform duration-300"
+            className="w-full bg-blue-600 text-white font-semibold p-3 rounded-xl border border-blue-600 hover:bg-white hover:text-blue-600 transition shadow-lg hover:scale-[1.03] transition-transform duration-300"
           >
             Download PDF
           </button>

@@ -153,7 +153,7 @@ const LawyerProfile = () => {
                 </div>
 
                 {/* Reviews */}
-                <div className="my-16 max-w-5xl mx-auto px-4">
+                {/* <div className="my-16 max-w-5xl mx-auto px-4">
                     <h1 className="text-3xl font-bold text-blue-800 mb-6 border-b-4 border-blue-400 inline-block pb-1">
                         Popular Reviews
                     </h1>
@@ -165,7 +165,7 @@ const LawyerProfile = () => {
                             <ReviewForm />
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
 

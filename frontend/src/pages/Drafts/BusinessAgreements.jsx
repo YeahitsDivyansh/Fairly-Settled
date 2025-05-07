@@ -78,7 +78,7 @@ Partner: ${data.partner1Name}
 _______________________  
 Partner: ${data.partner2Name}`,
   },
-
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   "Non-Disclosure Agreement": {
     fields: [
       "agreementDate",
@@ -90,6 +90,7 @@ Partner: ${data.partner2Name}`,
       "receivingName",
       "disclosingSignatureDate",
       "receivingSignatureDate",
+      "yourName"
     ],
     generateText: (data) => `NON-DISCLOSURE AGREEMENT (NDA)
 
@@ -180,6 +181,9 @@ Typed or Printed Name: ${data.receivingName}
 Date: ${data.receivingSignatureDate}`,
   },
 
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
   "Franchise Agreement": {
     fields: [
       "franchisorName",
@@ -256,6 +260,9 @@ By: ${data.franchiseeName}
 Date: ${data.signingDate}`,
   },
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
   "Service Agreement": {
     fields: [
       "agreementDate",
@@ -283,17 +290,41 @@ In consideration of the mutual covenants and obligations herein expressed, it is
 
 3. Early Termination. The Principal may terminate this Agreement without cause by providing at least ${data.terminationNoticeDays} days' written notice.
 
-...
+4. Suspension.  Without terminating this Agreement or breaching its obligations hereunder, the Principal may, at its convenience, suspend the services of the Contractor by giving the Contractor written notice one day in advance of the suspension Suspension.  Without terminating this Agreement or breaching its obligations hereunder, the Principal may, at its convenience, suspend the services of the Contractor by giving the Contractor written notice one day in advance of the suspension 
 
 5. Compensation. The Principal agrees to pay the Contractor ${data.compensation} for the services rendered.
 
-...
+6. Qualifications on Obligations to Pay.  No partial payment shall be final acceptance or approval of that part of the Scope of Services paid for or shall relieve the Contractor of any of its obligations under this Agreement.  Notwithstanding any other terms of this Agreement, the Principal may withhold any payment (whether a progress payment or final payment) to the Contractor if any one or more of the following conditions exists: 
+(a) Agreement.The Contractor is in default of any of its obligations under this 
+(b) Any part of such payment is attributable to services that are not performed according to this Agreement.  The Principal will pay for any portion of the services performed according to this Agreement. 
+(c) The Contractor has failed to make payments promptly to any third party used to perform any portion of the services hereunder, subject to Paragraph 9, for which the Principal has made payments to the Contractor.
+
+7. Principal Representative. The Principal will designate, prior to commencement of work, its project representative (the “Principal Representative”) who shall make, within the scope of his or her authority, all necessary and proper decisions with reference to the Scope of Services.  All requests for contract interpretations, change orders, and other clarification or instruction shall be directed to the Principal Representative. 
+
+8. Independent Contractor. The services to be performed by the Contractor are those of an independent contractor and not of an employee of the Principal. The Contractor is obligated to pay federal and state income tax on any moneys earned pursuant to this Agreement.  Neither the Contractor nor its employees, if any, are entitled to workers’ compensation benefits from the Principal for the performance of the services specified in this Agreement.
+
 
 IN WITNESS WHEREOF, the parties have executed this Agreement.
 
-Principal: ${data.principalName}  
-Contractor: ${data.contractorName}`,
+PRINCIPAL: 
+[INSERT NAME OF PRINCIPAL] 
+By:________________________  
+Name:______________________  
+Title:_____________________  
+Date:______________________  
+CONTRACTOR:________________ 
+
+
+[INSERT NAME OF CONTRACTOR] 
+By:________________________  
+Name:______________________  
+Title:_____________________  
+Date:______________________ `,
   },
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
   "Distribution Agreement": {
     fields: [
       "supplierName",
@@ -325,6 +356,10 @@ Signed by:
 Supplier: ${data.supplierName}  
 Distributor: ${data.distributorName}`,
   },
+
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
   "Agency Contract": {
     fields: [
       "agreementDate",
@@ -447,7 +482,7 @@ export default function BusinessAgreementsForm({}) {
             setShowSuccessMessage(false);
             window.scrollTo({ top: 0, behavior: "smooth" }); 
           }}
-          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm text-lg font-medium focus:outline-none focus-visible:ring-4 focus-visible:ring-purple-400 transition duration-300 bg-white"
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm text-lg font-medium focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400 transition duration-300 bg-white"
         >
           {agreementTypes.map((t) => (
             <option key={t} value={t}>
@@ -462,7 +497,7 @@ export default function BusinessAgreementsForm({}) {
           onSubmit={handleSubmit}
           className="w-full max-w-3xl bg-white/60 backdrop-blur-md p-8 rounded-3xl shadow-2xl space-y-6 animate-fadeIn transition-all"
         >
-          <h2 className="text-3xl font-bold text-purple-700 text-center mb-4 drop-shadow">
+          <h2 className="text-3xl font-bold text-blue-600 text-center mb-4 drop-shadow">
             {type}
           </h2>
           {templates[type].fields.map((field) => (
@@ -475,21 +510,21 @@ export default function BusinessAgreementsForm({}) {
                 name={field}
                 value={formData[field] || ""}
                 onChange={handleChange}
-                className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm transition duration-200"
+                className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm transition duration-200"
                 required
               />
             </div>
           ))}
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white font-semibold p-3 rounded-xl shadow-md hover:bg-purple-700 hover:scale-[1.03] transition-transform duration-300"
+            className="w-full bg-blue-600 text-white font-semibold p-3 rounded-xl border border-blue-600 hover:bg-white hover:text-blue-600 transition shadow-lg hover:scale-[1.03] transition-transform duration-300"
           >
             Generate Agreement
           </button>
         </form>
       ) : (
         <div className="w-full max-w-3xl bg-white/60 backdrop-blur-md p-6 rounded-3xl shadow-2xl space-y-4 animate-fadeIn transition-all">
-          <h2 className="text-2xl font-bold text-purple-700 text-center mb-2">
+          <h2 className="text-2xl font-bold text-blue-600 text-center mb-2">
             Preview & Download
           </h2>
           <textarea
@@ -500,7 +535,7 @@ export default function BusinessAgreementsForm({}) {
           />
           <button
             onClick={handleDownload}
-            className="w-full bg-green-600 text-white font-semibold p-3 rounded-xl shadow-md hover:bg-green-700 hover:scale-[1.03] transition-transform duration-300"
+            className="w-full bg-blue-600 text-white font-semibold p-3 rounded-xl border border-blue-600 shadow-lg hover:bg-white hover:text-blue-600 hover:scale-[1.03] transition transition-transform duration-300"
           >
             Download PDF
           </button>
