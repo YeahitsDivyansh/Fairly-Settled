@@ -20,14 +20,14 @@ export function FloatingDockDemo() {
       icon: (
         <IconBrandLinkedin className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "https://www.linkedin.com/posts/agility-ai-pvt-ltd_ai-aiprototyping-businesssolutions-activity-7315728608163942402-_1ZY?utm_source=share&utm_medium=member_ios&rcm=ACoAAETUSCkBKkCGeBpPsq4_7VnwIuHEjfgHTYk",
+      href: "https://www.linkedin.com/company/agility-ai-pvt-ltd/posts/?feedView=all",
     },
     {
       title: "Instagram",
       icon: (
         <IconBrandInstagram className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "https://www.instagram.com/reel/DH8s_34S_gD/?igsh=MWM4ajRucTkzdnF6cQ==",
+      href: "https://www.instagram.com/agilityy.ai/",
     },
   ];
   return (
