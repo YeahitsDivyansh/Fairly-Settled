@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import Tilt from "react-parallax-tilt";
 
 const cardData = [
   {
@@ -54,7 +55,7 @@ const DraftDocument = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen px-10 py-10 bg-white">
+    <div className="min-h-screen mt-20 px-10 py-10 bg-white">
       {/* Blob Background */}
       <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 place-items-center">
         {cardData.map((doc, index) => (
@@ -68,6 +69,7 @@ const DraftDocument = () => {
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
             className="w-full max-w-[360px]"
           >
+            <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.02} transitionSpeed={2500}>
             <Card className="relative bg-white/30 backdrop-blur-xl border border-white/40 shadow-[10px_10px_30px_rgba(0,0,0,0.7)] rounded-3xl overflow-hidden hover:shadow-[15px_15px_50px_rgba(0,0,0,1)] transition-all duration-300">
               {/* glowing gradient border */}
               <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-300 to-gray-500 opacity-30 blur-xl animate-pulse"></div>
@@ -114,6 +116,7 @@ const DraftDocument = () => {
                 </CardFooter>
               </div>
             </Card>
+            </Tilt>
           </motion.div>
         ))}
       </div>

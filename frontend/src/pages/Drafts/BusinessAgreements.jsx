@@ -386,6 +386,8 @@ Agreement made this ${data.agreementDate} between ${data.principalName} ("Princi
 
 IN WITNESS WHEREOF the parties have signed this deed.
 
+Witness: ${data.witnessName}
+Witness: ${data.witnessName}  
 Principal: ${data.principalName}  
 Agent: ${data.agentName}`,
   },

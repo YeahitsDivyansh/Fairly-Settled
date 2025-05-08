@@ -136,7 +136,7 @@ ${data.borrowerName}, having its address at ${data.borrowerAddress}, PAN: ${data
 
 AND
 
-The South Indian Bank Ltd, ${data.financialInstitutionName}, having its address at ${data.financialInstitutionAddress}, (hereinafter called "Bank").
+The ${data.financialInstitutionName}, having its address at ${data.financialInstitutionAddress}, (hereinafter called "Bank").
 
 WHEREAS the Borrower has applied to the Bank for a loan of Rs. ${data.loanAmountFigures} (Rupees ${data.loanAmountWords} only) for ${data.loanPurpose} and the Bank has agreed to sanction the same.
 
@@ -152,7 +152,7 @@ This agreement is governed by the terms of the sanction letter, security documen
 
 SIGNED:
 Borrower: ${data.borrowerName}
-Bank: The South Indian Bank Ltd.`,
+Bank: ${data.financialInstitutionName}`,
   },
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -188,6 +188,9 @@ Funds shall be used in the area of ${data.useOfFundsArea} to promote housing and
 - Proper board authorization: ${data.boardAuthorization}
 - CDFI status maintained: ${data.cdfiStatus}
 - Community rep on board: ${data.communityRepConfirmation}
+
+4. General: 
+ The relationship of Investor Bank and [HOUSING LOAN FUND] is that of debtor and creditor and does not constitute a partnership, joint venture, or any other type of business organization.  Neither party shall have any authority to act on behalf of or obligate the other party and Investor Bank assumes no liability whatsoever for any decision, action or omission taken by [HOUSING LOAN FUND] at any time prior to, during or after the term of the investment described in this Agreement. 
 
 IN WITNESS WHEREOF:
 Investor: ${data.investorName}
@@ -272,7 +275,7 @@ This Agreement made on ${data.executionDate} at the branch office of ${data.fina
 Guarantor 1: ${data.guarantor1Name}, a ${data.guarantor1Constitution}, residing at ${data.guarantor1Address}  
 Guarantor 2: ${data.guarantor2Name}, a ${data.guarantor2Constitution}, residing at ${data.guarantor2Address}  
 
-IN FAVOUR OF The South Indian Bank Ltd.
+IN FAVOUR OF ${data.financialInstitutionName}
 
 Borrower: ${data.borrowerName}, residing at ${data.borrowerAddress}
 
