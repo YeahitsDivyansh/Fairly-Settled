@@ -91,7 +91,7 @@ const MidSection = () => {
 
   return (
     <div className=" bg-white pt-0 overflow-hidden">
-      <div className="w-screen h-screen relative mb-16">
+      <div className="top-0 left-0 w-full h-screen sm:h-[90vh] overflow-hidden p-0 m-0 relative mb-5">
         <CarouselBackground />
       </div>
 

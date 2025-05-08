@@ -68,7 +68,7 @@ const App = () => {
           element: <PersonalLegalAgreements />,
         },
         {
-          path: "/about us",
+          path: "/aboutus",
           element: <About />,
         },
         {
