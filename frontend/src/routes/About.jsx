@@ -4,8 +4,12 @@ import { CardSpotlightDemo } from "@/components/card-spotlight-demo";
 import React, { useEffect, useRef, useState } from "react";
 
 const About = () => {
+
   const [isVisible, setIsVisible] = useState(false);
   const meetRef = useRef(null);
+
+
+ 
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -22,6 +26,8 @@ const About = () => {
       if (current) observer.unobserve(current);
     };
   }, []);
+
+
 
   return (
     <div className="bg-white relative overflow-hidden min-h-[80vh] px-4 py-10">
@@ -140,11 +146,19 @@ const About = () => {
 
       {/* Advisory Board Section */}
       <div className="max-w-6xl w-full mx-auto px-4 py-10">
-        <h2 className="text-6xl font-extrabold text-gray-900 text-center mb-10">
-          Our Advisory Board
-        </h2>
-        <AnimatedTestimonialsDemo />
-      </div>
+  <h2 className="text-6xl font-extrabold text-gray-900 text-center mb-10">
+    Our Advisory Board
+  </h2>
+  {(() => {
+    try {
+      return <AnimatedTestimonialsDemo />;
+    } catch (err) {
+      console.error("Render error:", err);
+      return <p className="text-red-600 text-center">Failed to load testimonials.</p>;
+    }
+  })()}
+</div>
+
 
       {/* Our Core Values */}
       {/* <div className="max-w-6xl mx-auto px-4 py-12">

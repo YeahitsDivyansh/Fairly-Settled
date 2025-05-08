@@ -54,7 +54,7 @@ const DraftDocument = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen px-10 py-10 bg-white">
+    <div className="min-h-screen mt-20 px-10 py-10 bg-white">
       {/* Blob Background */}
       <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 place-items-center">
         {cardData.map((doc, index) => (

@@ -24,6 +24,5 @@ export function AnimatedTestimonialsDemo() {
       src: "./Sumit Kumar Yadav.jpeg",
     },
   ];
-
-  return <AnimatedTestimonials testimonials={testimonials} />;
+  return <AnimatedTestimonials testimonials={testimonials}  />;
 }
