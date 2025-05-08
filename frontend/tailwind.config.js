@@ -47,3 +47,17 @@ module.exports = {
     },
   },
 };
+
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}", // ensure correct path
+  ],
+  safelist: [
+    "text-lg",
+    "font-semibold",
+    "text-gray-500",
+    "text-black",
+    "text-white",
+    // add anything else that's missing
+  ],
+};
