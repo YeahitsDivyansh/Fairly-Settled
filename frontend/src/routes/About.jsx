@@ -1,4 +1,6 @@
 "use client";
+import { AnimatedTestimonialsDemo } from "@/components/animated-testimonial-demo";
+import { CardSpotlightDemo } from "@/components/card-spotlight-demo";
 import React, { useEffect, useRef, useState } from "react";
 
 const About = () => {
@@ -27,7 +29,7 @@ const About = () => {
       <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 bg-white  p-8 my-6 transition-transform duration-300 ease-in-out ">
         {/* Text Content */}
         <div className="md:w-1/2">
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
+          <h2 className="text-6xl font-extrabold text-gray-900 mb-4">
             We're with you <br /> in every case
           </h2>
           <p className="text-gray-700 text-lg leading-relaxed">
@@ -101,7 +103,7 @@ const About = () => {
           className="mx-auto mb-6 h-20 object-contain rounded-full"
         />
 
-        <h2 className="text-center text-3xl font-extrabold text-gray-900 mb-6">
+        <h2 className="text-center text-6xl font-extrabold text-gray-900 mb-6">
           Meet the Minds Behind Agility AI
         </h2>
         <p className="text-lg leading-relaxed text-gray-800">
@@ -138,68 +140,15 @@ const About = () => {
 
       {/* Advisory Board Section */}
       <div className="max-w-6xl w-full mx-auto px-4 py-10">
-        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-10">
+        <h2 className="text-6xl font-extrabold text-gray-900 text-center mb-10">
           Our Advisory Board
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-[#f4f5f1] rounded-xl shadow-[10px_10px_30px_rgba(0,0,0,0.7)] p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
-            <img
-              src="./aashish-argade.jpeg"
-              alt="Prof. Aashish Argade"
-              className="w-28 h-28 rounded-full object-cover shadow-lg mb-4"
-            />
-            <h3 className="text-xl font-semibold text-blue-800 mb-1">
-              Prof. Aashish Argade
-            </h3>
-            <p className="text-sm text-gray-600">
-              <strong>Assistant Professor</strong> at <strong>IRMA</strong>
-              <br />
-              <strong>PhD</strong> from <strong>IIM Ahmedabad</strong>
-              <br />
-              Consultant to various government departments for over a decade
-            </p>
-          </div>
-          <div className="bg-[#f4f5f1] rounded-xl shadow-[10px_10px_30px_rgba(0,0,0,0.7)] p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
-            <img
-              src="./Sumit Kumar Yadav.jpeg"
-              alt="Prof. Sumit Kumar Yadav"
-              className="w-28 h-28 rounded-full object-cover shadow-lg mb-4"
-            />
-            <h3 className="text-xl font-semibold text-blue-800 mb-1">
-              Prof. Sumit Kumar Yadav
-            </h3>
-            <p className="text-sm text-gray-600">
-              Professor at <strong>IIT Roorkee</strong>
-              <br />
-              <strong>PhD</strong> from <strong>IIM Ahmedabad</strong>
-              <br />
-              <strong>BTech</strong> from <strong>IIT Bombay</strong>
-            </p>
-          </div>
-          <div className="bg-[#f4f5f1] rounded-xl shadow-[10px_10px_30px_rgba(0,0,0,0.7)] p-6 flex flex-col items-center text-center transition-transform duration-300 ease-in-out hover:scale-95">
-            <img
-              src="./R_Ramaseshan_sir.jpg"
-              alt="Sri R Ramaseshan"
-              className="w-28 h-28 rounded-full object-cover shadow-lg mb-4"
-            />
-            <h3 className="text-xl font-semibold text-blue-800 mb-1">
-              Sri R Ramaseshan 
-            </h3>
-            <p className="text-sm text-gray-600">
-              Former <strong>IAS</strong> <br />
-              Former <strong>MD</strong> & <strong>CEO</strong> at <strong>NCDEX</strong>
-              <br />
-              Chairman of th Board at Nationa Commodity Clearing Limited
-              <br />
-              
-            </p>
-          </div>
-        </div>
+        <AnimatedTestimonialsDemo />
       </div>
 
       {/* Our Core Values */}
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-4">
+      {/* <div className="max-w-6xl mx-auto px-4 py-12">
+        <h2 className="text-6xl font-extrabold text-center text-gray-900 mb-4">
           Our Core Values
         </h2>
         <p className="text-center text-xl text-gray-600 max-w-2xl mx-auto mb-10">
@@ -260,11 +209,13 @@ const About = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
+
+      <CardSpotlightDemo />
 
       {/* Diversity, Equity, and Inclusion Section */}
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-8">
+        <h2 className="text-6xl font-extrabold text-gray-900 text-center mb-8">
           Diversity, Equity, and Inclusion
         </h2>
         <p className="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
