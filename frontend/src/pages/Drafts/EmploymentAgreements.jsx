@@ -4,9 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { uploadAndSavePDF } from "@/context/uploadAndSavePDF";
 import { useUserAuth } from "@/context/UserAuthContext";
 
+// NEW DOCX IMPORTS
+import { Document as DocxDocument, Packer, Paragraph, TextRun } from "docx";
+import { saveAs } from "file-saver";
+
 const agreementTypes = [
-  "Employment Contract",
   "Contractor & Consultant Agreement",
+  "Employment Contract",
   "Non-Compete & Confidentiality Agreement",
   "Internship & Severance Agreement",
 ];
@@ -97,8 +101,8 @@ const templates = {
   },
 };
 
-export default function EmploymentAgreementsForm() {
-  const [type, setType] = useState("Employment Contract");
+export default function BusinessAgreementsForm({}) {
+  const [type, setType] = useState("Contractor & Consultant Agreement");
   const [formData, setFormData] = useState({});
   const [generatedText, setGeneratedText] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -123,10 +127,10 @@ export default function EmploymentAgreementsForm() {
     setGeneratedText(text);
     setSubmitted(true);
     setShowSuccessMessage(true);
-    window.scrollTo({ top: 0, behavior: "smooth" }); 
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleDownload = async() => {
+  const handleDownloadPDF = async () => {
     const doc = new jsPDF("p", "mm", "a4");
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 15;
@@ -146,10 +150,11 @@ export default function EmploymentAgreementsForm() {
       doc.text(line, margin, y);
       y += lineHeight;
     });
+
     const fileName = `${type.replace(/\s+/g, "_")}_${Date.now()}.pdf`;
     const pdfBlob = doc.output("blob");
 
-    const { success, downloadURL, error } = await uploadAndSavePDF(pdfBlob, fileName, type,userData);
+    const { success, error } = await uploadAndSavePDF(pdfBlob, fileName, "pdf", userData);
     if (success) {
       doc.save(fileName);
       alert("PDF downloaded and saved to your history successfully.");
@@ -159,10 +164,35 @@ export default function EmploymentAgreementsForm() {
     }
   };
 
-  return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex flex-col items-center">
+  const handleDownloadDOCX = async () => {
+    const doc = new DocxDocument({
+      sections: [
+        {
+          children: generatedText.split("\n").map(
+            (line) =>
+              new Paragraph({
+                children: [new TextRun(line)],
+              })
+          ),
+        },
+      ],
+    });
 
-     
+    const blob = await Packer.toBlob(doc);
+    const fileName = `${type.replace(/\s+/g, "_")}_${Date.now()}.docx`;
+
+    const { success, error } = await uploadAndSavePDF(blob, fileName, "docx", userData);
+    if (success) {
+      saveAs(blob, fileName);
+      alert("DOCX downloaded and saved to your history successfully.");
+      navigate("/draft-doc");
+    } else {
+      alert("Error uploading DOCX: " + error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen mt-15 p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex flex-col items-center">
       {showSuccessMessage && (
         <div className="w-full max-w-3xl mb-4 relative bg-green-500 text-white p-4 rounded-lg shadow-md text-center animate-fadeIn transition-all">
           <span>Agreement draft has been successfully generated!</span>
@@ -184,9 +214,9 @@ export default function EmploymentAgreementsForm() {
             setFormData({});
             setSubmitted(false);
             setShowSuccessMessage(false);
-            window.scrollTo({ top: 0, behavior: "smooth" }); 
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm text-lg font-medium focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400 transition duration-300 bg-white"
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm text-lg font-medium bg-white"
         >
           {agreementTypes.map((t) => (
             <option key={t} value={t}>
@@ -201,7 +231,7 @@ export default function EmploymentAgreementsForm() {
           onSubmit={handleSubmit}
           className="w-full max-w-3xl bg-white/60 backdrop-blur-md p-8 rounded-3xl shadow-2xl space-y-6 animate-fadeIn transition-all"
         >
-          <h2 className="text-3xl font-bold text-blue-700 text-center mb-4 drop-shadow">
+          <h2 className="text-3xl font-bold text-blue-600 text-center mb-4 drop-shadow">
             {type}
           </h2>
           {templates[type].fields.map((field) => (
@@ -214,38 +244,43 @@ export default function EmploymentAgreementsForm() {
                 name={field}
                 value={formData[field] || ""}
                 onChange={handleChange}
-                className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm transition duration-200"
+                className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
                 required
               />
             </div>
           ))}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white font-semibold p-3 rounded-xl border border-blue-600 hover:bg-white hover:text-blue-600 transition shadow-lg hover:scale-[1.03] transition-transform duration-300"
+            className="w-full bg-blue-600 text-white font-semibold p-3 rounded-xl border border-blue-600 hover:bg-white hover:text-blue-600 shadow-lg hover:scale-[1.03] transition duration-300"
           >
             Generate Agreement
           </button>
         </form>
       ) : (
         <div className="w-full max-w-3xl bg-white/60 backdrop-blur-md p-6 rounded-3xl shadow-2xl space-y-4 animate-fadeIn transition-all">
-          <h2 className="text-2xl font-bold text-blue-600 text-center mb-2">
-            Preview & Download
-          </h2>
+          <h2 className="text-2xl font-bold text-blue-600 text-center mb-2">Preview & Download</h2>
           <textarea
             value={generatedText}
             rows="25"
             onChange={(e) => setGeneratedText(e.target.value)}
-            className="w-full border border-gray-300 p-4 rounded-lg shadow-inner font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-200 transition"
+            className="w-full border border-gray-300 p-4 rounded-lg shadow-inner font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"
           />
-          <button
-            onClick={handleDownload}
-            className="w-full bg-blue-600 text-white font-semibold p-3 rounded-xl border border-blue-600 hover:bg-white hover:text-blue-600 transition shadow-lg hover:scale-[1.03] transition-transform duration-300"
-          >
-            Download PDF
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button
+              onClick={handleDownloadPDF}
+              className="w-full sm:w-1/2 bg-blue-600 text-white font-semibold p-3 rounded-xl border border-blue-600 hover:bg-white hover:text-blue-600 shadow-lg hover:scale-[1.03] transition duration-300"
+            >
+              Download PDF
+            </button>
+            <button
+              onClick={handleDownloadDOCX}
+              className="w-full sm:w-1/2 bg-green-600 text-white font-semibold p-3 rounded-xl border border-green-600 hover:bg-white hover:text-green-600 shadow-lg hover:scale-[1.03] transition duration-300"
+            >
+              Download DOCX
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 }
-
