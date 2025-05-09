@@ -20,6 +20,8 @@
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "docx": "^9.5.0",
+    "file-saver": "^2.0.5",
     "firebase": "^11.6.0",
     "framer-motion": "^12.10.3",
     "gsap": "^3.12.7",
