@@ -295,10 +295,10 @@ const MidSection = () => {
           <BentoGridDemo />
         </div>
 
-        <div className="group flex flex-col lg:flex-row items-start gap-10 py-16 mb-12 bg-white">
+        <div className="group flex flex-col lg:flex-row items-start gap-14 py-16 mb-12 bg-white">
           <div className="w-full lg:w-1/2 flex justify-center items-center">
             <img
-              src="https://images.pexels.com/photos/461049/pexels-photo-461049.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="/CleanImg.jpg"
               alt="Supporting community"
               className="w-full max-w-full max-h-[400px] object-cover rounded-lg opacity-90 transition-transform duration-500 hover:scale-105 mt-2"
             />
