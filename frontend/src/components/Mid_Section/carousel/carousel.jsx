@@ -44,7 +44,7 @@ const CarouselBackground = () => {
   };
 
   return (
-    <div className=" top-0 left-0 w-full h-screen sm:h-[90vh] overflow-hidden p-0 m-0">
+    <div className="mt-12 relative w-full h-screen sm:h-[90vh] overflow-hidden p-0 m-0">
       {images.map((img, index) => (
         <img
           key={index}
