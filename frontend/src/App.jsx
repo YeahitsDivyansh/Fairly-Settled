@@ -24,6 +24,8 @@ import Disclaimer from "./legal_routes/Disclaimer";
 import Lawyers from "./pages/Lawyers";
 import LawyerProfile from "./pages/LawyerProfile";
 import AppointmentForm from "./pages/AppointmentForm";
+import LawyerSignUp from "./pages/LawyerSignUp";
+import LawyerSignIn from "./pages/LawyerSignIn";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -96,16 +98,16 @@ const App = () => {
           element: <Disclaimer />,
         },
         {
-          path:"/find-lawyer",
-          element: <Lawyers/>
+          path: "/find-lawyer",
+          element: <Lawyers />,
         },
         {
-          path:"/lawyerprofile/:id",
-          element: <LawyerProfile/>
+          path: "/lawyerprofile/:id",
+          element: <LawyerProfile />,
         },
         {
-          path:"/appointment",
-          element: <AppointmentForm/>
+          path: "/appointment",
+          element: <AppointmentForm />,
         },
       ],
     },
@@ -113,6 +115,8 @@ const App = () => {
     { path: "/phonesignin", element: <PhoneSignIn /> },
     { path: "/profile", element: <ProfilePage /> },
     { path: "/chat", element: <Chatbot /> },
+    { path: "/lawyer-signup", element: <LawyerSignUp /> },
+    { path: "/lawyer-signin", element: <LawyerSignIn /> },
   ]);
 
   return <RouterProvider router={router} />;
