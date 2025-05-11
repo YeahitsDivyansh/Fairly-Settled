@@ -2,43 +2,38 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { useUserAuth } from "../context/UserAuthContext";
+import { useLawyerAuth } from "../context/LawyerAuthContext";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { SpotlightPreview2 } from "@/components/SpotLightDemo2";
-
-const PhoneSignin = () => {
+const LawyerSignIn = () => {
   const [error, setError] = useState("");
   const [number, setNumber] = useState("");
   const [flag, setFlag] = useState(false);
   const [otp, setOtp] = useState("");
   const [result, setResult] = useState("");
-  const navigate = useNavigate();
-  const { setUpRecaptha } = useUserAuth();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { setUpRecaptha } = useLawyerAuth();
 
   const getOtp = async (e) => {
     e.preventDefault();
-
     setError("");
     if (!number) return setError("Please enter a valid phone number!");
+    setLoading(true);
     try {
-      setLoading(true);
-      const q = query(collection(db, "Users"), where("phone", "==", number));
+      const q = query(collection(db, "Lawyers"), where("phone", "==", number));
       const querySnapshot = await getDocs(q);
-
       if (querySnapshot.empty) {
         setLoading(false);
         alert("Phone number not registered!");
         return;
       }
-
       const response = await setUpRecaptha(number);
       setResult(response);
       setFlag(true);
     } catch (err) {
       setError(err.message);
-      console.error(err);
     }
     setLoading(false);
   };
@@ -46,14 +41,11 @@ const PhoneSignin = () => {
   const verifyOtp = async (e) => {
     e.preventDefault();
     setError("");
-
     if (!otp) return setError("Please enter the OTP!");
-
     setLoading(true);
-
     try {
       const res = await result.confirm(otp);
-      navigate("/");
+      navigate("/lawyer-dashboard");
     } catch (err) {
       setError(err.message);
     }
@@ -64,13 +56,12 @@ const PhoneSignin = () => {
     <div className="flex justify-center items-center min-h-screen bg-black px-4">
       <div className="flex flex-col lg:flex-row items-center justify-center gap-10 w-full max-w-6xl">
         <SpotlightPreview2 />
-        {/* LEFT SIDE: Sign In Form */}
         <form
           onSubmit={flag ? verifyOtp : getOtp}
           className="bg-[#f5f9fbe6] backdrop-blur-md border border-white/50 p-8 rounded-xl shadow-xl w-full max-w-md animate-fade-in lg:w-1/2"
         >
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-            {flag ? "Verify OTP" : "Sign In"}
+            {flag ? "Verify OTP" : "Lawyer Sign In"}
           </h2>
 
           {error && (
@@ -89,7 +80,7 @@ const PhoneSignin = () => {
                 required
                 className="w-full p-2 mb-3 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              <div className="mt-3 flex justify-center overflow-hidden w-full max-w-full">
+              <div className="mt-3 flex justify-center">
                 <div
                   id="recaptcha-container"
                   className="scale-90 transform origin-center"
@@ -98,7 +89,7 @@ const PhoneSignin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                className={`w-full text-white py-2 rounded-md transition duration-200 ${
                   loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
@@ -106,10 +97,11 @@ const PhoneSignin = () => {
               >
                 {loading ? "Loading..." : "Send OTP"}
               </button>
+
               <p className="mt-2 text-md text-center text-gray-700">
-                New User?{" "}
+                New lawyer?{" "}
                 <Link
-                  to="/phonesignup"
+                  to="/lawyer-signup"
                   className="text-blue-600 hover:underline font-medium"
                 >
                   Register Here
@@ -123,14 +115,13 @@ const PhoneSignin = () => {
                   Back to Home Page
                 </Link>
               </p>
-
               <p className="mt-3 text-md text-center text-gray-700">
-                Are you a lawyer?{" "}
+                Not a lawyer?{" "}
                 <Link
-                  to="/lawyer-signin"
+                  to="/phonesignin"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  Click here to login
+                  User Login
                 </Link>
               </p>
             </>
@@ -145,7 +136,7 @@ const PhoneSignin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+                className={`w-full text-white py-2 rounded-md transition duration-200 ${
                   loading
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
@@ -161,4 +152,4 @@ const PhoneSignin = () => {
   );
 };
 
-export default PhoneSignin;
+export default LawyerSignIn;

@@ -8,16 +8,16 @@ import {
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-const userAuthContext = createContext();
+const lawyerAuthContext = createContext();
 
-export function UserAuthContextProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState(null);
+export function LawyerAuthContextProvider({ children }) {
+  const [lawyer, setLawyer] = useState(null);
+  const [lawyerData, setLawyerData] = useState(null);
   const [loading, setLoading] = useState(false);
 
   function logOut() {
-    setUser(null);
-    setUserData(null);
+    setLawyer(null);
+    setLawyerData(null);
     return signOut(auth);
   }
 
@@ -39,57 +39,55 @@ export function UserAuthContextProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      console.log("Auth state changed. User:", currentuser);
-      setUser(currentuser);
+      console.log("Lawyer auth state changed. User:", currentuser);
+      setLawyer(currentuser);
 
-      const fetchUserData = async () => {
+      const fetchLawyerData = async () => {
         setLoading(true);
         try {
           if (currentuser) {
-            const userRef = doc(db, "Users", currentuser.uid);
-            const userSnap = await getDoc(userRef);
-            console.log("User snap exists:", userSnap.exists());
+            const lawyerRef = doc(db, "Lawyers", currentuser.uid);
+            const lawyerSnap = await getDoc(lawyerRef);
+            console.log("Lawyer snap exists:", lawyerSnap.exists());
 
-            if (userSnap.exists()) {
-              setUserData(userSnap.data());
+            if (lawyerSnap.exists()) {
+              setLawyerData(lawyerSnap.data());
             } else {
-              setUserData(null);
+              setLawyerData(null);
             }
           } else {
-            setUserData(null);
+            setLawyerData(null);
           }
         } catch (error) {
-          console.log("Error fetching user data:", error);
-          setUserData(null);
+          console.log("Error fetching lawyer data:", error);
+          setLawyerData(null);
         } finally {
-          console.log("Done loading");
-          setLoading(false); // <-- this should always run
+          console.log("Done loading lawyer");
+          setLoading(false);
         }
       };
 
-      fetchUserData();
+      fetchLawyerData();
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
   return (
-    <userAuthContext.Provider
+    <lawyerAuthContext.Provider
       value={{
-        user,
-        userData,
+        lawyer,
+        lawyerData,
         loading,
         logOut,
         setUpRecaptha,
       }}
     >
       {children}
-    </userAuthContext.Provider>
+    </lawyerAuthContext.Provider>
   );
 }
 
-export function useUserAuth() {
-  return useContext(userAuthContext);
+export function useLawyerAuth() {
+  return useContext(lawyerAuthContext);
 }

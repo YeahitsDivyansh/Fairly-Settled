@@ -2,43 +2,48 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { useUserAuth } from "../context/UserAuthContext";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { SpotlightPreview2 } from "@/components/SpotLightDemo2";
+import {
+  doc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import { SpotlightPreview1 } from "@/components/SpotlightDemo1";
+import { useLawyerAuth } from "../context/LawyerAuthContext";
 
-const PhoneSignin = () => {
+const LawyerSignUp = () => {
   const [error, setError] = useState("");
   const [number, setNumber] = useState("");
   const [flag, setFlag] = useState(false);
   const [otp, setOtp] = useState("");
   const [result, setResult] = useState("");
   const navigate = useNavigate();
-  const { setUpRecaptha } = useUserAuth();
+  const { setUpRecaptha } = useLawyerAuth();
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
 
   const getOtp = async (e) => {
     e.preventDefault();
-
     setError("");
-    if (!number) return setError("Please enter a valid phone number!");
-    try {
-      setLoading(true);
-      const q = query(collection(db, "Users"), where("phone", "==", number));
-      const querySnapshot = await getDocs(q);
+    setLoading(true);
 
-      if (querySnapshot.empty) {
-        setLoading(false);
-        alert("Phone number not registered!");
-        return;
-      }
+    if (!username) return setError("Please enter a username");
+    if (!number) return setError("Please enter a valid phone number!");
+
+    try {
+      const q = query(collection(db, "Lawyers"), where("phone", "==", number));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty)
+        return setError("Phone number already registered!");
 
       const response = await setUpRecaptha(number);
       setResult(response);
       setFlag(true);
     } catch (err) {
       setError(err.message);
-      console.error(err);
     }
     setLoading(false);
   };
@@ -46,14 +51,20 @@ const PhoneSignin = () => {
   const verifyOtp = async (e) => {
     e.preventDefault();
     setError("");
-
-    if (!otp) return setError("Please enter the OTP!");
-
     setLoading(true);
 
+    if (!otp) return setError("Please enter the OTP!");
     try {
       const res = await result.confirm(otp);
-      navigate("/");
+      const user = res.user;
+
+      await setDoc(doc(db, "Lawyers", user.uid), {
+        phone: user.phoneNumber,
+        username: username,
+        id: user.uid,
+      });
+
+      navigate("/lawyer-dashboard");
     } catch (err) {
       setError(err.message);
     }
@@ -62,15 +73,14 @@ const PhoneSignin = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-black px-4">
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-10 w-full max-w-6xl">
-        <SpotlightPreview2 />
-        {/* LEFT SIDE: Sign In Form */}
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-14 w-full max-w-6xl">
+        <SpotlightPreview1 />
         <form
           onSubmit={flag ? verifyOtp : getOtp}
-          className="bg-[#f5f9fbe6] backdrop-blur-md border border-white/50 p-8 rounded-xl shadow-xl w-full max-w-md animate-fade-in lg:w-1/2"
+          className="bg-[#f5f9fbe6] mt-6 p-8 rounded-xl shadow-xl w-full max-w-md animate-fade-in lg:w-1/2"
         >
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-            {flag ? "Verify OTP" : "Sign In"}
+            {flag ? "Verify OTP" : "Lawyer Registration"}
           </h2>
 
           {error && (
@@ -81,6 +91,14 @@ const PhoneSignin = () => {
 
           {!flag ? (
             <>
+              <input
+                type="text"
+                placeholder="Enter Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full p-2 mb-3 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
               <PhoneInput
                 defaultCountry="IN"
                 value={number}
@@ -95,6 +113,7 @@ const PhoneSignin = () => {
                   className="scale-90 transform origin-center"
                 ></div>
               </div>
+
               <button
                 type="submit"
                 disabled={loading}
@@ -106,13 +125,14 @@ const PhoneSignin = () => {
               >
                 {loading ? "Loading..." : "Send OTP"}
               </button>
+
               <p className="mt-2 text-md text-center text-gray-700">
-                New User?{" "}
+                Already registered?{" "}
                 <Link
-                  to="/phonesignup"
+                  to="/lawyer-signin"
                   className="text-blue-600 hover:underline font-medium"
                 >
-                  Register Here
+                  Login Here
                 </Link>
               </p>
               <p className="mt-1 text-md text-center text-gray-600">
@@ -123,22 +143,13 @@ const PhoneSignin = () => {
                   Back to Home Page
                 </Link>
               </p>
-
-              <p className="mt-3 text-md text-center text-gray-700">
-                Are you a lawyer?{" "}
-                <Link
-                  to="/lawyer-signin"
-                  className="text-blue-600 hover:underline font-medium"
-                >
-                  Click here to login
-                </Link>
-              </p>
             </>
           ) : (
             <>
               <input
                 type="text"
                 placeholder="Enter OTP"
+                value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 className="w-full p-2 mb-3 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
@@ -161,4 +172,4 @@ const PhoneSignin = () => {
   );
 };
 
-export default PhoneSignin;
+export default LawyerSignUp;

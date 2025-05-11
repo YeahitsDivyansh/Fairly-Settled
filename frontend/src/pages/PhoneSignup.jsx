@@ -144,6 +144,16 @@ const PhoneSignup = () => {
                   Back to Home Page
                 </Link>
               </p>
+
+              <p className="mt-3 text-md text-center text-gray-600">
+                Are you a lawyer?{" "}
+                <Link
+                  to="/lawyer-signup"
+                  className="text-blue-600 hover:underline font-medium"
+                >
+                  Click here for registration
+                </Link>
+              </p>
             </>
           ) : (
             <>
