@@ -22,7 +22,7 @@ const LawyerSignIn = () => {
     if (!number) return setError("Please enter a valid phone number!");
     setLoading(true);
     try {
-      const q = query(collection(db, "Lawyers"), where("phone", "==", number));
+      const q = query(collection(db, "lawyers"), where("phone", "==", number));
       const querySnapshot = await getDocs(q);
       if (querySnapshot.empty) {
         setLoading(false);
