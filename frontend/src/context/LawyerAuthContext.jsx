@@ -77,7 +77,7 @@ export function LawyerAuthContextProvider({ children }) {
     <lawyerAuthContext.Provider
       value={{
         lawyer,
-        lawyerData,
+        lawyerData, 
         loading,
         logOut,
         setUpRecaptha,

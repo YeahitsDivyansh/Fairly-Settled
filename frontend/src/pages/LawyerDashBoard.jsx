@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useUserAuth } from "@/context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "../firebase.js";
 import {
@@ -11,11 +10,12 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { motion } from "framer-motion";
+import { useLawyerAuth } from "@/context/LawyerAuthContext.jsx";
 
 const LawyerProfile = () => {
-  const { loading, userData, logOut } = useUserAuth();
+  const {loading, lawyerData, logOut  } = useLawyerAuth();
   const [activeTab, setActiveTab] = useState("personal");
-  const [lawyerData, setLawyerData] = useState({});
+  const [lawyerProfile, setlawyerProfile] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
@@ -51,15 +51,15 @@ const LawyerProfile = () => {
   ];
 
   useEffect(() => {
-    const fetchLawyerData = async () => {
-      if (!userData) return;
+    const fetchlawyerProfile = async () => {
+      if (!lawyerData) return;
 
       try {
-        const docRef = doc(db, "lawyers", userData.id);
+        const docRef = doc(db, "lawyers", lawyerData.id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          setLawyerData(docSnap.data());
+          setlawyerProfile(docSnap.data());
           setFormData(docSnap.data());
         }
       } catch (error) {
@@ -67,8 +67,8 @@ const LawyerProfile = () => {
       }
     };
 
-    fetchLawyerData();
-  }, [userData]);
+    fetchlawyerProfile();
+  }, [lawyerData]);
 
   const handleLogout = async () => {
     await logOut();
@@ -101,7 +101,7 @@ const LawyerProfile = () => {
     try {
       const storageRef = ref(
         storage,
-        `lawyer_documents/${userData.id}/${fieldName}_${file.name}`
+        `lawyer_documents/${lawyerData.id}/${fieldName}_${file.name}`
       );
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
@@ -117,9 +117,9 @@ const LawyerProfile = () => {
 
   const handleSubmit = async () => {
     try {
-      const docRef = doc(db, "lawyers", userData.id);
+      const docRef = doc(db, "lawyers", lawyerData.id);
       await updateDoc(docRef, formData);
-      setLawyerData(formData);
+      setlawyerProfile(formData);
       setIsEditing(false);
       alert("Profile updated successfully!");
     } catch (error) {
@@ -156,11 +156,11 @@ const LawyerProfile = () => {
             className="text-2xl font-extrabold text-shadow"
             whileHover={{ scale: 1.1, color: "#FFF" }}
           >
-            {lawyerData?.fullName || userData?.username || "Lawyer"}
+            {lawyerProfile?.fullName || lawyerData?.username || "Lawyer"}
           </motion.h2>
-          <p className="text-sm">{userData?.phone}</p>
-          {lawyerData?.barCouncilEnrolment && (
-            <p className="text-sm mt-1">{lawyerData.barCouncilEnrolment}</p>
+          <p className="text-sm">{lawyerData?.phone}</p>
+          {lawyerProfile?.barCouncilEnrolment && (
+            <p className="text-sm mt-1">{lawyerProfile.barCouncilEnrolment}</p>
           )}
         </div>
         <nav className="space-y-4">
@@ -248,7 +248,7 @@ const LawyerProfile = () => {
               </motion.button>
               <motion.button
                 onClick={() => {
-                  setFormData(lawyerData);
+                  setFormData(lawyerProfile);
                   setIsEditing(false);
                 }}
                 className="bg-gray-500 text-white px-4 py-2 rounded-lg"
@@ -289,7 +289,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.fullName || "Not provided"}
+                      {lawyerProfile.fullName || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -310,7 +310,7 @@ const LawyerProfile = () => {
                     </select>
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.gender || "Not provided"}
+                      {lawyerProfile.gender || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -329,7 +329,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.dateOfBirth || "Not provided"}
+                      {lawyerProfile.dateOfBirth || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -345,9 +345,9 @@ const LawyerProfile = () => {
                       onChange={(e) => handleFileUpload(e, "profilePhoto")}
                       className="w-full"
                     />
-                  ) : lawyerData.profilePhoto ? (
+                  ) : lawyerProfile.profilePhoto ? (
                     <img
-                      src={lawyerData.profilePhoto}
+                      src={lawyerProfile.profilePhoto}
                       alt="Profile"
                       className="h-20 w-20 object-cover rounded"
                     />
@@ -370,7 +370,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.mobileNumber || "Not provided"}
+                      {lawyerProfile.mobileNumber || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -387,7 +387,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.email || "Not provided"}
+                      {lawyerProfile.email || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -406,7 +406,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.alternateContact || "Not provided"}
+                      {lawyerProfile.alternateContact || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -425,7 +425,7 @@ const LawyerProfile = () => {
                     ></textarea>
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.residentialAddress || "Not provided"}
+                      {lawyerProfile.residentialAddress || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -442,7 +442,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.city || "Not provided"}
+                      {lawyerProfile.city || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -459,7 +459,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.state || "Not provided"}
+                      {lawyerProfile.state || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -476,7 +476,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.pinCode || "Not provided"}
+                      {lawyerProfile.pinCode || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -496,7 +496,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.languagesSpoken || "Not provided"}
+                      {lawyerProfile.languagesSpoken || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -525,7 +525,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.aadhaarNumber || "Not provided"}
+                      {lawyerProfile.aadhaarNumber || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -542,7 +542,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.panNumber || "Not provided"}
+                      {lawyerProfile.panNumber || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -560,7 +560,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.aadhaarCard
+                      {lawyerProfile.aadhaarCard
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -580,7 +580,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.panCard
+                      {lawyerProfile.panCard
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -600,7 +600,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.addressProof
+                      {lawyerProfile.addressProof
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -626,7 +626,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.llbUniversity || "Not provided"}
+                      {lawyerProfile.llbUniversity || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -645,7 +645,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.graduationYear || "Not provided"}
+                      {lawyerProfile.graduationYear || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -663,7 +663,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.llbCertificate
+                      {lawyerProfile.llbCertificate
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -684,7 +684,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.pgQualification || "Not provided"}
+                      {lawyerProfile.pgQualification || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -704,7 +704,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.additionalCertificates
+                      {lawyerProfile.additionalCertificates
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -731,7 +731,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.barCouncilName || "Not provided"}
+                      {lawyerProfile.barCouncilName || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -751,7 +751,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.barCouncilEnrolment || "Not provided"}
+                      {lawyerProfile.barCouncilEnrolment || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -770,7 +770,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.enrolmentDate || "Not provided"}
+                      {lawyerProfile.enrolmentDate || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -790,7 +790,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.enrolmentCertificate
+                      {lawyerProfile.enrolmentCertificate
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -814,7 +814,7 @@ const LawyerProfile = () => {
                     </select>
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.aibePassed || "Not provided"}
+                      {lawyerProfile.aibePassed || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -833,7 +833,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.aibeCertificateNumber || "Not provided"}
+                      {lawyerProfile.aibeCertificateNumber || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -851,7 +851,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.aibeCertificate
+                      {lawyerProfile.aibeCertificate
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -882,7 +882,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.yearsOfPractice || "Not provided"}
+                      {lawyerProfile.yearsOfPractice || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -902,7 +902,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.primaryCourts || "Not provided"}
+                      {lawyerProfile.primaryCourts || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -921,7 +921,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.barAssociationMembership || "Not provided"}
+                      {lawyerProfile.barAssociationMembership || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -939,7 +939,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.courtIdProof
+                      {lawyerProfile.courtIdProof
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -967,7 +967,7 @@ const LawyerProfile = () => {
                       ) : (
                         <span
                           className={`w-5 h-5 inline-block mr-2 border rounded ${
-                            lawyerData.practiceAreas?.[area]
+                            lawyerProfile.practiceAreas?.[area]
                               ? "bg-blue-500"
                               : "bg-white"
                           }`}
@@ -994,7 +994,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.practiceLanguages || "Not provided"}
+                      {lawyerProfile.practiceLanguages || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -1014,7 +1014,7 @@ const LawyerProfile = () => {
                     ></textarea>
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.workDescription || "Not provided"}
+                      {lawyerProfile.workDescription || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -1032,7 +1032,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.resume
+                      {lawyerProfile.resume
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -1113,7 +1113,7 @@ const LawyerProfile = () => {
                         <>
                           <p
                             className={`mr-4 ${
-                              lawyerData.servicesInPerson
+                              lawyerProfile.servicesInPerson
                                 ? "text-blue-600 font-medium"
                                 : "text-gray-400"
                             }`}
@@ -1122,7 +1122,7 @@ const LawyerProfile = () => {
                           </p>
                           <p
                             className={`mr-4 ${
-                              lawyerData.servicesPhone
+                              lawyerProfile.servicesPhone
                                 ? "text-blue-600 font-medium"
                                 : "text-gray-400"
                             }`}
@@ -1131,7 +1131,7 @@ const LawyerProfile = () => {
                           </p>
                           <p
                             className={`mr-4 ${
-                              lawyerData.servicesVideo
+                              lawyerProfile.servicesVideo
                                 ? "text-blue-600 font-medium"
                                 : "text-gray-400"
                             }`}
@@ -1186,7 +1186,7 @@ const LawyerProfile = () => {
                             ) : (
                               <p
                                 className={
-                                  lawyerData[
+                                  lawyerProfile[
                                     `service_${item
                                       .replace(/\s+/g, "_")
                                       .toLowerCase()}`
@@ -1269,7 +1269,7 @@ const LawyerProfile = () => {
                               ) : (
                                 <p
                                   className={
-                                    lawyerData[
+                                    lawyerProfile[
                                       `court_${court
                                         .replace(/\s+/g, "_")
                                         .toLowerCase()}`
@@ -1297,7 +1297,7 @@ const LawyerProfile = () => {
                             />
                           ) : (
                             <p className="text-gray-800">
-                              {lawyerData.otherServiceSpecify ||
+                              {lawyerProfile.otherServiceSpecify ||
                                 "None specified"}
                             </p>
                           )}
@@ -1336,7 +1336,7 @@ const LawyerProfile = () => {
                           ) : (
                             <p
                               className={
-                                lawyerData[
+                                lawyerProfile[
                                   `service_${service
                                     .replace(/\d+\.\s+/g, "")
                                     .replace(/\s+/g, "_")
@@ -1346,7 +1346,7 @@ const LawyerProfile = () => {
                                   : "text-gray-400"
                               }
                             >
-                              {lawyerData[
+                              {lawyerProfile[
                                 `service_${service
                                   .replace(/\d+\.\s+/g, "")
                                   .replace(/\s+/g, "_")
@@ -1416,7 +1416,7 @@ const LawyerProfile = () => {
                             <p
                               key={idx}
                               className={`mr-4 ${
-                                lawyerData[
+                                lawyerProfile[
                                   `comm_${mode
                                     .replace(/\s+/g, "_")
                                     .toLowerCase()}`
@@ -1457,7 +1457,7 @@ const LawyerProfile = () => {
                     </select>
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.hasIndemnityInsurance || "Not provided"}
+                      {lawyerProfile.hasIndemnityInsurance || "Not provided"}
                     </p>
                   )}
                 </div>
@@ -1475,7 +1475,7 @@ const LawyerProfile = () => {
                     />
                   ) : (
                     <p className="text-gray-800">
-                      {lawyerData.policyDocument
+                      {lawyerProfile.policyDocument
                         ? "Document uploaded"
                         : "No document uploaded"}
                     </p>
@@ -1565,7 +1565,7 @@ const LawyerProfile = () => {
                   <>
                     <p
                       className={`text-gray-800 ${
-                        lawyerData.confirmTruth
+                        lawyerProfile.confirmTruth
                           ? "text-blue-600 font-medium"
                           : "text-gray-400"
                       }`}
@@ -1575,7 +1575,7 @@ const LawyerProfile = () => {
 
                     <p
                       className={`text-gray-800 ${
-                        lawyerData.agreeEthics
+                        lawyerProfile.agreeEthics
                           ? "text-blue-600 font-medium"
                           : "text-gray-400"
                       }`}
@@ -1586,7 +1586,7 @@ const LawyerProfile = () => {
 
                     <p
                       className={`text-gray-800 ${
-                        lawyerData.consentVisible
+                        lawyerProfile.consentVisible
                           ? "text-blue-600 font-medium"
                           : "text-gray-400"
                       }`}
@@ -1594,13 +1594,13 @@ const LawyerProfile = () => {
                       ✓ I consent to my profile being visible on the platform
                     </p>
 
-                    {lawyerData.digitalSignature && (
+                    {lawyerProfile.digitalSignature && (
                       <div className="mt-4">
                         <p className="text-gray-700 font-medium">
                           Digital Signature:
                         </p>
                         <img
-                          src={lawyerData.digitalSignature}
+                          src={lawyerProfile.digitalSignature}
                           alt="Digital Signature"
                           className="max-h-20 mt-2 border rounded p-2"
                         />
@@ -1626,47 +1626,47 @@ const LawyerProfile = () => {
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <strong>Full Name:</strong> {lawyerData.fullName}
+                      <strong>Full Name:</strong> {lawyerProfile.fullName}
                     </div>
                     <div>
-                      <strong>Gender:</strong> {lawyerData.gender}
+                      <strong>Gender:</strong> {lawyerProfile.gender}
                     </div>
                     <div>
-                      <strong>Date of Birth:</strong> {lawyerData.dateOfBirth}
+                      <strong>Date of Birth:</strong> {lawyerProfile.dateOfBirth}
                     </div>
                     <div>
-                      <strong>Mobile Number:</strong> {lawyerData.mobileNumber}
+                      <strong>Mobile Number:</strong> {lawyerProfile.mobileNumber}
                     </div>
                     <div>
-                      <strong>Email:</strong> {lawyerData.email}
+                      <strong>Email:</strong> {lawyerProfile.email}
                     </div>
                     <div>
                       <strong>Alternate Contact:</strong>{" "}
-                      {lawyerData.alternateContact}
+                      {lawyerProfile.alternateContact}
                     </div>
                     <div>
-                      <strong>City:</strong> {lawyerData.city}
+                      <strong>City:</strong> {lawyerProfile.city}
                     </div>
                     <div>
-                      <strong>State:</strong> {lawyerData.state}
+                      <strong>State:</strong> {lawyerProfile.state}
                     </div>
                     <div>
-                      <strong>PIN Code:</strong> {lawyerData.pinCode}
+                      <strong>PIN Code:</strong> {lawyerProfile.pinCode}
                     </div>
                     <div>
                       <strong>Languages Spoken:</strong>{" "}
-                      {lawyerData.languagesSpoken}
+                      {lawyerProfile.languagesSpoken}
                     </div>
                     <div className="md:col-span-2">
                       <strong>Residential Address:</strong>{" "}
-                      {lawyerData.residentialAddress}
+                      {lawyerProfile.residentialAddress}
                     </div>
                     <div>
                       <strong>Photo:</strong>
                       <br />
-                      {lawyerData.profilePhoto && (
+                      {lawyerProfile.profilePhoto && (
                         <img
-                          src={lawyerData.profilePhoto}
+                          src={lawyerProfile.profilePhoto}
                           alt="Profile"
                           className="h-20 w-20 object-cover rounded"
                         />
@@ -1683,16 +1683,16 @@ const LawyerProfile = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <strong>Aadhaar Number:</strong>{" "}
-                      {lawyerData.aadhaarNumber}
+                      {lawyerProfile.aadhaarNumber}
                     </div>
                     <div>
-                      <strong>PAN Number:</strong> {lawyerData.panNumber}
+                      <strong>PAN Number:</strong> {lawyerProfile.panNumber}
                     </div>
                     <div>
                       <strong>Aadhaar Card:</strong>{" "}
-                      {lawyerData.aadhaarCard && (
+                      {lawyerProfile.aadhaarCard && (
                         <a
-                          href={lawyerData.aadhaarCard}
+                          href={lawyerProfile.aadhaarCard}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1703,9 +1703,9 @@ const LawyerProfile = () => {
                     </div>
                     <div>
                       <strong>PAN Card:</strong>{" "}
-                      {lawyerData.panCard && (
+                      {lawyerProfile.panCard && (
                         <a
-                          href={lawyerData.panCard}
+                          href={lawyerProfile.panCard}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1716,9 +1716,9 @@ const LawyerProfile = () => {
                     </div>
                     <div>
                       <strong>Address Proof:</strong>{" "}
-                      {lawyerData.addressProof && (
+                      {lawyerProfile.addressProof && (
                         <a
-                          href={lawyerData.addressProof}
+                          href={lawyerProfile.addressProof}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1738,17 +1738,17 @@ const LawyerProfile = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <strong>LLB University:</strong>{" "}
-                      {lawyerData.llbUniversity}
+                      {lawyerProfile.llbUniversity}
                     </div>
                     <div>
                       <strong>Graduation Year:</strong>{" "}
-                      {lawyerData.graduationYear}
+                      {lawyerProfile.graduationYear}
                     </div>
                     <div>
                       <strong>LLB Certificate:</strong>{" "}
-                      {lawyerData.llbCertificate && (
+                      {lawyerProfile.llbCertificate && (
                         <a
-                          href={lawyerData.llbCertificate}
+                          href={lawyerProfile.llbCertificate}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1759,13 +1759,13 @@ const LawyerProfile = () => {
                     </div>
                     <div>
                       <strong>PG Qualification:</strong>{" "}
-                      {lawyerData.pgQualification}
+                      {lawyerProfile.pgQualification}
                     </div>
                     <div>
                       <strong>Additional Certificates:</strong>{" "}
-                      {lawyerData.additionalCertificates && (
+                      {lawyerProfile.additionalCertificates && (
                         <a
-                          href={lawyerData.additionalCertificates}
+                          href={lawyerProfile.additionalCertificates}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1785,21 +1785,21 @@ const LawyerProfile = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <strong>Bar Council Name:</strong>{" "}
-                      {lawyerData.barCouncilName}
+                      {lawyerProfile.barCouncilName}
                     </div>
                     <div>
                       <strong>Enrolment Number:</strong>{" "}
-                      {lawyerData.barCouncilEnrolment}
+                      {lawyerProfile.barCouncilEnrolment}
                     </div>
                     <div>
                       <strong>Date of Enrolment:</strong>{" "}
-                      {lawyerData.enrolmentDate}
+                      {lawyerProfile.enrolmentDate}
                     </div>
                     <div>
                       <strong>Certificate of Enrolment:</strong>{" "}
-                      {lawyerData.enrolmentCertificate && (
+                      {lawyerProfile.enrolmentCertificate && (
                         <a
-                          href={lawyerData.enrolmentCertificate}
+                          href={lawyerProfile.enrolmentCertificate}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1809,17 +1809,17 @@ const LawyerProfile = () => {
                       )}
                     </div>
                     <div>
-                      <strong>AIBE Passed:</strong> {lawyerData.aibePassed}
+                      <strong>AIBE Passed:</strong> {lawyerProfile.aibePassed}
                     </div>
                     <div>
                       <strong>AIBE Certificate Number:</strong>{" "}
-                      {lawyerData.aibeCertificateNumber}
+                      {lawyerProfile.aibeCertificateNumber}
                     </div>
                     <div>
                       <strong>AIBE Certificate:</strong>{" "}
-                      {lawyerData.aibeCertificate && (
+                      {lawyerProfile.aibeCertificate && (
                         <a
-                          href={lawyerData.aibeCertificate}
+                          href={lawyerProfile.aibeCertificate}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1839,21 +1839,21 @@ const LawyerProfile = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <strong>Years of Practice:</strong>{" "}
-                      {lawyerData.yearsOfPractice}
+                      {lawyerProfile.yearsOfPractice}
                     </div>
                     <div>
                       <strong>Primary Courts:</strong>{" "}
-                      {lawyerData.primaryCourts}
+                      {lawyerProfile.primaryCourts}
                     </div>
                     <div>
                       <strong>Bar Association Membership:</strong>{" "}
-                      {lawyerData.barAssociationMembership}
+                      {lawyerProfile.barAssociationMembership}
                     </div>
                     <div>
                       <strong>Court ID/Chamber Proof:</strong>{" "}
-                      {lawyerData.courtIdProof && (
+                      {lawyerProfile.courtIdProof && (
                         <a
-                          href={lawyerData.courtIdProof}
+                          href={lawyerProfile.courtIdProof}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1864,17 +1864,17 @@ const LawyerProfile = () => {
                     </div>
                     <div>
                       <strong>Languages Used in Practice:</strong>{" "}
-                      {lawyerData.practiceLanguages}
+                      {lawyerProfile.practiceLanguages}
                     </div>
                     <div className="md:col-span-2">
                       <strong>Work Description:</strong>{" "}
-                      {lawyerData.workDescription}
+                      {lawyerProfile.workDescription}
                     </div>
                     <div>
                       <strong>Resume/Portfolio:</strong>{" "}
-                      {lawyerData.resume && (
+                      {lawyerProfile.resume && (
                         <a
-                          href={lawyerData.resume}
+                          href={lawyerProfile.resume}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1887,8 +1887,8 @@ const LawyerProfile = () => {
                   <div className="mt-4">
                     <strong>Practice Areas:</strong>
                     <ul className="list-disc ml-6">
-                      {lawyerData.practiceAreas &&
-                        Object.entries(lawyerData.practiceAreas)
+                      {lawyerProfile.practiceAreas &&
+                        Object.entries(lawyerProfile.practiceAreas)
                           .filter(([, val]) => val)
                           .map(([area], i) => <li key={i}>{area}</li>)}
                     </ul>
@@ -1903,15 +1903,15 @@ const LawyerProfile = () => {
                   <div>
                     <strong>Consultation Modes:</strong>
                     <ul className="list-disc ml-6">
-                      {lawyerData.servicesInPerson && <li>In-person</li>}
-                      {lawyerData.servicesPhone && <li>Phone</li>}
-                      {lawyerData.servicesVideo && <li>Video</li>}
+                      {lawyerProfile.servicesInPerson && <li>In-person</li>}
+                      {lawyerProfile.servicesPhone && <li>Phone</li>}
+                      {lawyerProfile.servicesVideo && <li>Video</li>}
                     </ul>
                   </div>
                   <div>
                     <strong>Other Services:</strong>
                     <ul className="list-disc ml-6">
-                      {Object.entries(lawyerData)
+                      {Object.entries(lawyerProfile)
                         .filter(
                           ([key, val]) => key.startsWith("service_") && val
                         )
@@ -1920,18 +1920,18 @@ const LawyerProfile = () => {
                             {key.replace("service_", "").replace(/_/g, " ")}
                           </li>
                         ))}
-                      {lawyerData.otherServiceSpecify && (
-                        <li>Other: {lawyerData.otherServiceSpecify}</li>
+                      {lawyerProfile.otherServiceSpecify && (
+                        <li>Other: {lawyerProfile.otherServiceSpecify}</li>
                       )}
                     </ul>
                   </div>
                   <div>
                     <strong>Preferred Communication:</strong>
                     <ul className="list-disc ml-6">
-                      {lawyerData.comm_phone && <li>Phone</li>}
-                      {lawyerData.comm_video_call && <li>Video Call</li>}
-                      {lawyerData.comm_in_person && <li>In-Person</li>}
-                      {lawyerData.comm_messaging && <li>Messaging</li>}
+                      {lawyerProfile.comm_phone && <li>Phone</li>}
+                      {lawyerProfile.comm_video_call && <li>Video Call</li>}
+                      {lawyerProfile.comm_in_person && <li>In-Person</li>}
+                      {lawyerProfile.comm_messaging && <li>Messaging</li>}
                     </ul>
                   </div>
                 </section>
@@ -1944,13 +1944,13 @@ const LawyerProfile = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <strong>Professional Indemnity Insurance:</strong>{" "}
-                      {lawyerData.hasIndemnityInsurance}
+                      {lawyerProfile.hasIndemnityInsurance}
                     </div>
                     <div>
                       <strong>Policy Document:</strong>{" "}
-                      {lawyerData.policyDocument && (
+                      {lawyerProfile.policyDocument && (
                         <a
-                          href={lawyerData.policyDocument}
+                          href={lawyerProfile.policyDocument}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
@@ -1970,7 +1970,7 @@ const LawyerProfile = () => {
                   <ul className="list-disc ml-6">
                     <li
                       className={
-                        lawyerData.confirmTruth
+                        lawyerProfile.confirmTruth
                           ? "text-blue-600"
                           : "text-gray-400"
                       }
@@ -1979,7 +1979,7 @@ const LawyerProfile = () => {
                     </li>
                     <li
                       className={
-                        lawyerData.agreeEthics
+                        lawyerProfile.agreeEthics
                           ? "text-blue-600"
                           : "text-gray-400"
                       }
@@ -1989,7 +1989,7 @@ const LawyerProfile = () => {
                     </li>
                     <li
                       className={
-                        lawyerData.consentVisible
+                        lawyerProfile.consentVisible
                           ? "text-blue-600"
                           : "text-gray-400"
                       }
@@ -1997,12 +1997,12 @@ const LawyerProfile = () => {
                       I consent to my profile being visible on the platform
                     </li>
                   </ul>
-                  {lawyerData.digitalSignature && (
+                  {lawyerProfile.digitalSignature && (
                     <div className="mt-4">
                       <strong>Digital Signature:</strong>
                       <br />
                       <img
-                        src={lawyerData.digitalSignature}
+                        src={lawyerProfile.digitalSignature}
                         alt="Signature"
                         className="h-16"
                       />
