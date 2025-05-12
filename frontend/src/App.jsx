@@ -26,6 +26,7 @@ import LawyerProfile from "./pages/LawyerProfile";
 import AppointmentForm from "./pages/AppointmentForm";
 import LawyerSignUp from "./pages/LawyerSignUp";
 import LawyerSignIn from "./pages/LawyerSignIn";
+import LawyerDashBoard from "./pages/LawyerDashBoard";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -117,6 +118,7 @@ const App = () => {
     { path: "/chat", element: <Chatbot /> },
     { path: "/lawyer-signup", element: <LawyerSignUp /> },
     { path: "/lawyer-signin", element: <LawyerSignIn /> },
+    { path: "/lawyer-dashboard", element: <LawyerDashBoard /> },
   ]);
 
   return <RouterProvider router={router} />;
