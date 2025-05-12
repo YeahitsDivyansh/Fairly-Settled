@@ -34,7 +34,7 @@ const LawyerSignUp = () => {
     if (!number) return setError("Please enter a valid phone number!");
 
     try {
-      const q = query(collection(db, "Lawyers"), where("phone", "==", number));
+      const q = query(collection(db, "lawyers"), where("phone", "==", number));
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty)
         return setError("Phone number already registered!");
@@ -58,7 +58,7 @@ const LawyerSignUp = () => {
       const res = await result.confirm(otp);
       const user = res.user;
 
-      await setDoc(doc(db, "Lawyers", user.uid), {
+      await setDoc(doc(db, "lawyers", user.uid), {
         phone: user.phoneNumber,
         username: username,
         id: user.uid,

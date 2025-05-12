@@ -44,9 +44,9 @@ export function LawyerAuthContextProvider({ children }) {
 
       const fetchLawyerData = async () => {
         setLoading(true);
-        try {
+        try { 
           if (currentuser) {
-            const lawyerRef = doc(db, "Lawyers", currentuser.uid);
+            const lawyerRef = doc(db, "lawyers", currentuser.uid);
             const lawyerSnap = await getDoc(lawyerRef);
             console.log("Lawyer snap exists:", lawyerSnap.exists());
 
@@ -77,7 +77,7 @@ export function LawyerAuthContextProvider({ children }) {
     <lawyerAuthContext.Provider
       value={{
         lawyer,
-        lawyerData,
+        lawyerData, 
         loading,
         logOut,
         setUpRecaptha,
