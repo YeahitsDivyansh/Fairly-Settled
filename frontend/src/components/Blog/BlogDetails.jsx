@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+import CommentSection from "../Blog/CommentSection";
+import LikeButton from "../Blog/LikeButton";
 
 function BlogDetails() {
   const { id } = useParams();
@@ -65,6 +67,12 @@ function BlogDetails() {
             className="prose max-w-none text-black leading-relaxed"
             dangerouslySetInnerHTML={{ __html: blogData.content }}
           ></div>
+        </div>
+
+        {/*Comment Section */}
+        <div>
+          <CommentSection blogId={id} />
+<LikeButton blogId={id} />
         </div>
       </div>
     </section>
