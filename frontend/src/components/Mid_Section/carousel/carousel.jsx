@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-const images = ["/2.png", "/3.png"];
+const images = ["/Website Carousal.png", "/2.png", "/3.png"];
 
 const CarouselBackground = () => {
   const [current, setCurrent] = useState(0);

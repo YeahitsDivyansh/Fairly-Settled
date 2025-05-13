@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import { useLawyerAuth } from "@/context/LawyerAuthContext.jsx";
 
 const LawyerProfile = () => {
-  const {loading, lawyerData, logOut  } = useLawyerAuth();
+  const { loading, lawyerData, logOut } = useLawyerAuth();
   const [activeTab, setActiveTab] = useState("personal");
   const [lawyerProfile, setlawyerProfile] = useState({});
   const [isEditing, setIsEditing] = useState(false);
@@ -1038,6 +1038,27 @@ const LawyerProfile = () => {
                     </p>
                   )}
                 </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-gray-700 mb-2">
+                    Notable Wins & Legal Achievements (optional)
+                  </label>
+                  {isEditing ? (
+                    <textarea
+                      name="legalAchievements"
+                      value={formData.legalAchievements || ""}
+                      onChange={handleChange}
+                      className="w-full border rounded p-2"
+                      rows="5"
+                      maxLength="1000"
+                      placeholder="E.g., Landmark cases, high-profile wins, awards, recognitions..."
+                    ></textarea>
+                  ) : (
+                    <p className="text-gray-800">
+                      {lawyerProfile.legalAchievements || "Not provided"}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -1632,10 +1653,12 @@ const LawyerProfile = () => {
                       <strong>Gender:</strong> {lawyerProfile.gender}
                     </div>
                     <div>
-                      <strong>Date of Birth:</strong> {lawyerProfile.dateOfBirth}
+                      <strong>Date of Birth:</strong>{" "}
+                      {lawyerProfile.dateOfBirth}
                     </div>
                     <div>
-                      <strong>Mobile Number:</strong> {lawyerProfile.mobileNumber}
+                      <strong>Mobile Number:</strong>{" "}
+                      {lawyerProfile.mobileNumber}
                     </div>
                     <div>
                       <strong>Email:</strong> {lawyerProfile.email}
