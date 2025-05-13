@@ -146,7 +146,9 @@ const Profile = () => {
 
           {activeTab === "history" && (
             <motion.div className="transition-all duration-500 ease-in-out">
-              <h2 className="text-3xl font-bold mb-4 text-blue-700">📄 Your Download History</h2>
+              <h2 className="text-3xl font-bold mb-4 text-blue-700">
+                📄 Your Download History
+              </h2>
               {history.length === 0 ? (
                 <motion.p
                   className="text-gray-500"
@@ -166,8 +168,12 @@ const Profile = () => {
                         boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
                       }}
                     >
-                      <div className="font-semibold text-lg text-blue-600">{file.fileName}</div>
-                      <div className="text-sm text-gray-600">Type: {file.fileType}</div>
+                      <div className="font-semibold text-lg text-blue-600">
+                        {file.fileName}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Type: {file.fileType}
+                      </div>
                       <div className="mt-2 flex gap-4">
                         <motion.a
                           href={file.downloadURL}
