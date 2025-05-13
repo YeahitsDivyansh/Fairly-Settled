@@ -1,102 +1,131 @@
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { ThumbsUp, MapPin, Briefcase, Phone, Mail, MessageSquareText, X } from 'lucide-react';
+import React, { useState } from "react";
+import { Phone, Mail, X, MessageSquareText } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Lawyer = ({ lawyer }) => {
   const [showContact, setShowContact] = useState(false);
-  const contactBtnRef = useRef(null);
 
   const {
     id,
     fullName,
     image,
-    location,
-    experience,
-    rating,
-    reviews,
-    phone,
+    barCouncilEnrolment,
+    barCouncilName,
+    enrolmentDate,
+    primaryCourts,
+    yearsOfPractice,
+    practiceAreas,
+    languagesSpoken,
+    education,
+    mobileNumber,
     email,
-    whatsapp
+    servicesInPerson,
+    servicesPhone,
+    servicesVideo,
+    city,
+    state,
+    workDescription,
   } = lawyer;
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between bg-white p-6 rounded-2xl shadow-lg w-full max-w-5xl mx-auto border border-gray-400">
-      {/* Left Section */}
-      <div className="flex items-center gap-6">
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow rounded-md mb-6">
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+        {/* Profile Image */}
         <img
           src={image}
           alt={fullName}
-          className="w-36 h-36 rounded-full object-cover border-4 border-blue-300 shadow"
+          className="w-32 h-32 rounded-full object-cover border"
         />
-        <div className="flex flex-col gap-2">
-          <Link to={`/lawyerprofile/${id}`}>
-            <h2 className="text-blue-700 text-2xl font-bold hover:underline">{fullName}</h2>
-          </Link>
 
-          <div className="flex items-center gap-2 text-gray-600 text-sm">
-            <MapPin size={16} className="text-blue-500" />
-            {location}
+        <div className="flex-1">
+          {/* Name and Enrollment */}
+          <h2 className="text-2xl font-semibold text-gray-800">{fullName}</h2>
+          <p className="text-sm text-gray-500">
+            Bar Council: {barCouncilName} ({barCouncilEnrolment})<br />
+            Enrolled on: {enrolmentDate}
+          </p>
+
+          {/* Courts & Experience */}
+          <p className="mt-2 text-gray-700">
+            <strong>Primary Courts:</strong> {primaryCourts}
+          </p>
+          <p className="text-gray-700">
+            <strong>Years of Practice:</strong> {yearsOfPractice}
+          </p>
+
+          {/* Practice Areas */}
+          <div className="mt-2">
+            <strong className="text-gray-700">Practice Areas:</strong>
+            <ul className="list-disc list-inside text-gray-700">
+              {practiceAreas &&
+                Object.entries(practiceAreas)
+                  .filter(([, value]) => value)
+                  .map(([area]) => <li key={area}>{area}</li>)}
+            </ul>
           </div>
-          <div className="flex items-center gap-2 text-gray-600 text-sm">
-            <Briefcase size={16} className="text-blue-500" />
-            {experience} years experience
+
+          {/* Languages */}
+          <p className="mt-2 text-gray-700">
+            <strong>Languages:</strong> {languagesSpoken}
+          </p>
+
+          {/* Education */}
+          <p className="text-gray-700">
+            <strong>Education:</strong> {education}
+          </p>
+
+          {/* Location */}
+          <p className="text-gray-700">
+            <strong>Location:</strong> {city}, {state}
+          </p>
+
+          {/* Bio / Work Description */}
+          <p className="mt-4 text-gray-700">
+            <strong>Bio:</strong> {workDescription}
+          </p>
+
+          {/* Communication Modes */}
+          <div className="mt-4 text-gray-700">
+            <strong>Available for:</strong>
+            <ul className="list-disc list-inside">
+              {servicesInPerson && <li>In-person meetings</li>}
+              {servicesPhone && <li>Phone consultations</li>}
+              {servicesVideo && <li>Video consultations</li>}
+            </ul>
           </div>
-          <div className="flex items-center gap-2 mt-3">
-            <div className="flex items-center gap-1 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
-              <ThumbsUp size={14} />
-              <span>{rating}</span>
-            </div>
-            <Link to="#" className="text-blue-500 text-sm">
-              {reviews.length} Reviews
+
+          {/* Contact Buttons */}
+          <div className="mt-4 flex flex-wrap gap-4">
+            <button
+              onClick={() => setShowContact(!showContact)}
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            >
+              <MessageSquareText size={16} />
+              {showContact ? "Hide Contact" : "Show Contact"}
+            </button>
+
+            <Link
+              to={`/lawyerprofile/${id}`}
+              className="flex items-center gap-2 border border-gray-400 px-4 py-2 rounded hover:bg-gray-100 transition"
+            >
+              View Profile
             </Link>
           </div>
+
+          {/* Contact Info */}
+          {showContact && (
+            <div className="mt-4 bg-gray-50 p-4 rounded border text-gray-700">
+              <p className="flex items-center gap-2">
+                <Phone size={16} /> {mobileNumber}
+              </p>
+              <p className="flex items-center gap-2 mt-2">
+                <Mail size={16} /> {email}
+              </p>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Right Section */}
-      <div className="flex flex-col gap-3 mt-6 md:mt-0 items-center md:items-end relative">
-        <Link
-          to="/appointment"
-          className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white text-center text-xs font-medium rounded-full shadow transition transform hover:-translate-y-1"
-        >
-          Schedule<br /> Appointment
-        </Link>
-
-        {/* Contact Button */}
-        <button
-          ref={contactBtnRef}
-          onClick={() => setShowContact(!showContact)}
-          className="px-4 py-2 border border-blue-400 text-blue-500 hover:bg-blue-50 text-xs font-medium rounded-full shadow transition transform hover:-translate-y-1"
-        >
-          Contact Details
-        </button>
-
-        {/* Contact Popup */}
-        {showContact && (
-          <div className="absolute top-full mt-2 right-0 w-64 z-10 bg-white rounded-xl shadow-xl border border-blue-100 p-4 backdrop-blur-md">
-            <div className="flex justify-between items-center mb-2">
-              <h4 className="text-sm font-semibold text-gray-700">Contact {name}</h4>
-              <X className="h-4 w-4 text-gray-400 cursor-pointer" onClick={() => setShowContact(false)} />
-            </div>
-            <div className="flex flex-col gap-3">
-              <Link to="#" className="flex items-center gap-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <Phone size={18} className="text-blue-500" />
-                <span className="text-sm text-gray-700">{phone}</span>
-              </Link>
-              <Link to="#" className="flex items-center gap-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <Mail size={18} className="text-blue-500" />
-                <span className="text-sm text-gray-700">{email}</span>
-              </Link>
-              <Link to="#" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-green-50 p-2 rounded-md transition">
-                <MessageSquareText size={18} className="text-green-600" />
-                <span className="text-sm text-gray-700">{whatsapp}</span>
-              </Link>
-            </div>
-          </div>
-        )}
-      </div>
     </div>
-
   );
 };
 
