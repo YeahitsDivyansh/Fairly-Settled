@@ -27,6 +27,12 @@ import AppointmentForm from "./pages/AppointmentForm";
 import LawyerSignUp from "./pages/LawyerSignUp";
 import LawyerSignIn from "./pages/LawyerSignIn";
 import LawyerDashBoard from "./pages/LawyerDashBoard";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
+import PublicBlogs from "./pages/publicBlogs";
+import BlogDetails from "./components/Blog/BlogDetails";
+
 
 const App = () => {
   const router = createBrowserRouter([
@@ -110,6 +116,15 @@ const App = () => {
           path: "/appointment",
           element: <AppointmentForm />,
         },
+        {
+          path: "/blogs",
+          element: <PublicBlogs />,
+        },
+        {
+          path: "/blogs/:id",
+          element: <BlogDetails />,
+        },
+
       ],
     },
     { path: "/phonesignup", element: <PhoneSignUp /> },
@@ -119,6 +134,16 @@ const App = () => {
     { path: "/lawyer-signup", element: <LawyerSignUp /> },
     { path: "/lawyer-signin", element: <LawyerSignIn /> },
     { path: "/lawyer-dashboard", element: <LawyerDashBoard /> },
+    { path: "/admin", element: <AdminLogin /> },
+    {
+      path: "/admin/dashboard",
+      element: (
+        <ProtectedAdminRoute>
+          <AdminDashboard />
+        </ProtectedAdminRoute>
+      ),
+    },
+
   ]);
 
   return <RouterProvider router={router} />;
