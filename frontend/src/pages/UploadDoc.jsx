@@ -104,15 +104,15 @@ const UploadDoc = () => {
                   </p>
                 ),
                 blockquote: ({ children }) => (
-                  <blockquote className="relative blockquote-list bg-gray-50 border-l-4 border-blue-500 pl-6 rounded-lg shadow-sm mb-8">
-                    <ul>{children}</ul>
-                  </blockquote>
-                ),
-                li: ({ children }) => (
-                  <li className="text-2xl font-semibold leading-0 m-0 p-0">
-                    {children}
-                  </li>
-                ),
+  <blockquote className="group blockquote-list bg-gray-50 border-l-4 border-blue-500 pl-6 rounded-lg shadow-sm mb-8">
+    <ul>{children}</ul>
+  </blockquote>
+),
+li: ({ children }) => (
+  <li className="group-[.blockquote-list]:text-base group-[.blockquote-list]:font-normal group-[.blockquote-list]:leading-snug text-2xl font-semibold leading-0 m-0 p-0">
+    {children}
+  </li>
+),
                 ol: ({ children }) => (
                   <ol className="m-0 p-0 pl-3 leading-1">{children}</ol>
                 ),

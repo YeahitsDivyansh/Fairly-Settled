@@ -28,7 +28,7 @@ const Navbar = ({ language, setLanguage }) => {
     { name: "About Us", path: "/aboutus" },
     { name: "Careers", path: "/careers" },
     { name: "Find a Lawyer", path: "/find-lawyer" },
-    { name: "Blog", path: "/blog" },
+    { name: "Blog", path: "/blogs" },
   ];
 
   return (
