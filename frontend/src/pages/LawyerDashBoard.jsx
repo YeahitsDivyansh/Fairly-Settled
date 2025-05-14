@@ -166,38 +166,34 @@ const LawyerProfile = () => {
         <nav className="space-y-4">
           <motion.button
             onClick={() => setActiveTab("personal")}
-            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${
-              activeTab === "profile"
-                ? "font-bold border-l-4 border-blue-600 bg-transparent"
-                : "hover:bg-indigo-100"
-            }`}
+            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${activeTab === "profile"
+              ? "font-bold border-l-4 border-blue-600 bg-transparent"
+              : "hover:bg-indigo-100"
+              }`}
             whileHover={{ scale: 1.05, backgroundColor: "#4c6b94" }}
           >
             Personal Information
           </motion.button>
           <motion.button
             onClick={() => setActiveTab("identity")}
-            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${
-              activeTab === "identity" ? "bg-indigo-700" : "hover:bg-indigo-600"
-            }`}
+            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${activeTab === "identity" ? "bg-indigo-700" : "hover:bg-indigo-600"
+              }`}
             whileHover={{ scale: 1.05, backgroundColor: "#4c6b94" }}
           >
             Identity & Credentials
           </motion.button>
           <motion.button
             onClick={() => setActiveTab("practice")}
-            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${
-              activeTab === "practice" ? "bg-indigo-700" : "hover:bg-indigo-600"
-            }`}
+            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${activeTab === "practice" ? "bg-indigo-700" : "hover:bg-indigo-600"
+              }`}
             whileHover={{ scale: 1.05, backgroundColor: "#4c6b94" }}
           >
             Practice Details
           </motion.button>
           <motion.button
             onClick={() => setActiveTab("services")}
-            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${
-              activeTab === "services" ? "bg-indigo-700" : "hover:bg-indigo-600"
-            }`}
+            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${activeTab === "services" ? "bg-indigo-700" : "hover:bg-indigo-600"
+              }`}
             whileHover={{ scale: 1.05, backgroundColor: "#4c6b94" }}
           >
             Service Offerings
@@ -205,11 +201,10 @@ const LawyerProfile = () => {
 
           <motion.button
             onClick={() => setActiveTab("finalProfile")}
-            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${
-              activeTab === "finalProfile"
-                ? "bg-indigo-700"
-                : "hover:bg-indigo-600"
-            }`}
+            className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ease-in-out ${activeTab === "finalProfile"
+              ? "bg-indigo-700"
+              : "hover:bg-indigo-600"
+              }`}
             whileHover={{ scale: 1.05, backgroundColor: "#4c6b94" }}
           >
             Final Profile
@@ -966,11 +961,10 @@ const LawyerProfile = () => {
                         />
                       ) : (
                         <span
-                          className={`w-5 h-5 inline-block mr-2 border rounded ${
-                            lawyerProfile.practiceAreas?.[area]
-                              ? "bg-blue-500"
-                              : "bg-white"
-                          }`}
+                          className={`w-5 h-5 inline-block mr-2 border rounded ${lawyerProfile.practiceAreas?.[area]
+                            ? "bg-blue-500"
+                            : "bg-white"
+                            }`}
                         ></span>
                       )}
                       <label htmlFor={`area-${index}`}>{area}</label>
@@ -1133,29 +1127,26 @@ const LawyerProfile = () => {
                       ) : (
                         <>
                           <p
-                            className={`mr-4 ${
-                              lawyerProfile.servicesInPerson
-                                ? "text-blue-600 font-medium"
-                                : "text-gray-400"
-                            }`}
+                            className={`mr-4 ${lawyerProfile.servicesInPerson
+                              ? "text-blue-600 font-medium"
+                              : "text-gray-400"
+                              }`}
                           >
                             In-person
                           </p>
                           <p
-                            className={`mr-4 ${
-                              lawyerProfile.servicesPhone
-                                ? "text-blue-600 font-medium"
-                                : "text-gray-400"
-                            }`}
+                            className={`mr-4 ${lawyerProfile.servicesPhone
+                              ? "text-blue-600 font-medium"
+                              : "text-gray-400"
+                              }`}
                           >
                             Phone
                           </p>
                           <p
-                            className={`mr-4 ${
-                              lawyerProfile.servicesVideo
-                                ? "text-blue-600 font-medium"
-                                : "text-gray-400"
-                            }`}
+                            className={`mr-4 ${lawyerProfile.servicesVideo
+                              ? "text-blue-600 font-medium"
+                              : "text-gray-400"
+                              }`}
                           >
                             Video
                           </p>
@@ -1183,20 +1174,20 @@ const LawyerProfile = () => {
                                 <input
                                   type="checkbox"
                                   name={`service_${item
-                                    .replace(/\s+/g, "_")
+                                    .replace(/[^\w]+/g, "_")
                                     .toLowerCase()}`}
                                   checked={
                                     formData[
-                                      `service_${item
-                                        .replace(/\s+/g, "_")
-                                        .toLowerCase()}`
+                                    `service_${item
+                                      .replace(/[^\w]+/g, "_")
+                                      .toLowerCase()}`
                                     ] || false
                                   }
                                   onChange={(e) =>
                                     setFormData((prev) => ({
                                       ...prev,
                                       [`service_${item
-                                        .replace(/\s+/g, "_")
+                                        .replace(/[^\w]+/g, "_")
                                         .toLowerCase()}`]: e.target.checked,
                                     }))
                                   }
@@ -1209,7 +1200,7 @@ const LawyerProfile = () => {
                                 className={
                                   lawyerProfile[
                                     `service_${item
-                                      .replace(/\s+/g, "_")
+                                      .replace(/[^\w]+/g, "_")
                                       .toLowerCase()}`
                                   ]
                                     ? "text-blue-600 font-medium"
@@ -1266,20 +1257,20 @@ const LawyerProfile = () => {
                                   <input
                                     type="checkbox"
                                     name={`court_${court
-                                      .replace(/\s+/g, "_")
+                                      .replace(/[^\w]+/g, "_")
                                       .toLowerCase()}`}
                                     checked={
                                       formData[
-                                        `court_${court
-                                          .replace(/\s+/g, "_")
-                                          .toLowerCase()}`
+                                      `court_${court
+                                        .replace(/[^\w]+/g, "_")
+                                        .toLowerCase()}`
                                       ] || false
                                     }
                                     onChange={(e) =>
                                       setFormData((prev) => ({
                                         ...prev,
                                         [`court_${court
-                                          .replace(/\s+/g, "_")
+                                          .replace(/[^\w]+/g, "_")
                                           .toLowerCase()}`]: e.target.checked,
                                       }))
                                     }
@@ -1292,7 +1283,7 @@ const LawyerProfile = () => {
                                   className={
                                     lawyerProfile[
                                       `court_${court
-                                        .replace(/\s+/g, "_")
+                                        .replace(/[^\w]+/g, "_")
                                         .toLowerCase()}`
                                     ]
                                       ? "text-blue-600 font-medium"
@@ -1331,14 +1322,14 @@ const LawyerProfile = () => {
                                 type="checkbox"
                                 name={`service_${service
                                   .replace(/\d+\.\s+/g, "")
-                                  .replace(/\s+/g, "_")
+                                  .replace(/[^\w]+/g, "_")
                                   .toLowerCase()}`}
                                 checked={
                                   formData[
-                                    `service_${service
-                                      .replace(/\d+\.\s+/g, "")
-                                      .replace(/\s+/g, "_")
-                                      .toLowerCase()}`
+                                  `service_${service
+                                    .replace(/\d+\.\s+/g, "")
+                                    .replace(/[^\w]+/g, "_")
+                                    .toLowerCase()}`
                                   ] || false
                                 }
                                 onChange={(e) =>
@@ -1346,7 +1337,7 @@ const LawyerProfile = () => {
                                     ...prev,
                                     [`service_${service
                                       .replace(/\d+\.\s+/g, "")
-                                      .replace(/\s+/g, "_")
+                                      .replace(/[^\w]+/g, "_")
                                       .toLowerCase()}`]: e.target.checked,
                                   }))
                                 }
@@ -1360,7 +1351,7 @@ const LawyerProfile = () => {
                                 lawyerProfile[
                                   `service_${service
                                     .replace(/\d+\.\s+/g, "")
-                                    .replace(/\s+/g, "_")
+                                    .replace(/[^\w]+/g, "_")
                                     .toLowerCase()}`
                                 ]
                                   ? "text-blue-600 font-medium"
@@ -1370,7 +1361,7 @@ const LawyerProfile = () => {
                               {lawyerProfile[
                                 `service_${service
                                   .replace(/\d+\.\s+/g, "")
-                                  .replace(/\s+/g, "_")
+                                  .replace(/[^\w]+/g, "_")
                                   .toLowerCase()}`
                               ]
                                 ? "Available"
@@ -1403,20 +1394,20 @@ const LawyerProfile = () => {
                               <input
                                 type="checkbox"
                                 name={`comm_${mode
-                                  .replace(/\s+/g, "_")
+                                  .replace(/[^\w]+/g, "_")
                                   .toLowerCase()}`}
                                 checked={
                                   formData[
-                                    `comm_${mode
-                                      .replace(/\s+/g, "_")
-                                      .toLowerCase()}`
+                                  `comm_${mode
+                                    .replace(/[^\w]+/g, "_")
+                                    .toLowerCase()}`
                                   ] || false
                                 }
                                 onChange={(e) =>
                                   setFormData((prev) => ({
                                     ...prev,
                                     [`comm_${mode
-                                      .replace(/\s+/g, "_")
+                                      .replace(/[^\w]+/g, "_")
                                       .toLowerCase()}`]: e.target.checked,
                                   }))
                                 }
@@ -1436,15 +1427,14 @@ const LawyerProfile = () => {
                           ].map((mode, idx) => (
                             <p
                               key={idx}
-                              className={`mr-4 ${
-                                lawyerProfile[
-                                  `comm_${mode
-                                    .replace(/\s+/g, "_")
-                                    .toLowerCase()}`
-                                ]
-                                  ? "text-blue-600 font-medium"
-                                  : "text-gray-400"
-                              }`}
+                              className={`mr-4 ${lawyerProfile[
+                                `comm_${mode
+                                  .replace(/[^\w]+/g, "_")
+                                  .toLowerCase()}`
+                              ]
+                                ? "text-blue-600 font-medium"
+                                : "text-gray-400"
+                                }`}
                             >
                               {mode}
                             </p>
@@ -1585,32 +1575,29 @@ const LawyerProfile = () => {
                 ) : (
                   <>
                     <p
-                      className={`text-gray-800 ${
-                        lawyerProfile.confirmTruth
-                          ? "text-blue-600 font-medium"
-                          : "text-gray-400"
-                      }`}
+                      className={`text-gray-800 ${lawyerProfile.confirmTruth
+                        ? "text-blue-600 font-medium"
+                        : "text-gray-400"
+                        }`}
                     >
                       ✓ I confirm all information is true and accurate
                     </p>
 
                     <p
-                      className={`text-gray-800 ${
-                        lawyerProfile.agreeEthics
-                          ? "text-blue-600 font-medium"
-                          : "text-gray-400"
-                      }`}
+                      className={`text-gray-800 ${lawyerProfile.agreeEthics
+                        ? "text-blue-600 font-medium"
+                        : "text-gray-400"
+                        }`}
                     >
                       ✓ I agree to abide by professional ethics and platform
                       policies
                     </p>
 
                     <p
-                      className={`text-gray-800 ${
-                        lawyerProfile.consentVisible
-                          ? "text-blue-600 font-medium"
-                          : "text-gray-400"
-                      }`}
+                      className={`text-gray-800 ${lawyerProfile.consentVisible
+                        ? "text-blue-600 font-medium"
+                        : "text-gray-400"
+                        }`}
                     >
                       ✓ I consent to my profile being visible on the platform
                     </p>
