@@ -72,7 +72,7 @@ const LawyerProfile = () => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative mt-8 shadow-lg">
       <div className="bg-white px-4 py-2 mx-auto relative z-10">
         <div className="max-w-5xl mx-auto p-6 bg-white rounded-2xl shadow-md mt-10 border border-gray-200">
           {/* Header */}
