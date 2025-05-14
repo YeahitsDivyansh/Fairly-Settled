@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const AppointmentForm = () => {
   return (
-    <div className="bg-[#9db6d9bd] min-h-screen py-10 relative">
+    <div className="bg-white mt-12 min-h-screen py-10 relative">
       {/* Abstract Background Blobs */}
       {/* Blob Background */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -33,7 +33,7 @@ const AppointmentForm = () => {
 
       {/* Form Container */}
       <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl overflow-hidden ring-1 ring-gray-200">
-        <div className="text-3xl py-6 px-8 bg-gradient-to-r from-indigo-500 to-cyan-500 text-white text-center font-semibold tracking-wide shadow">
+        <div className="text-3xl py-6 px-8 bg-gradient-to-r from-black to-cyan-500 text-white text-center font-extrabold tracking-wide shadow">
           Schedule an Appointment
         </div>
 
@@ -41,7 +41,12 @@ const AppointmentForm = () => {
           {/* Name & Email */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-gray-600 font-semibold mb-2" htmlFor="name">Name</label>
+              <label
+                className="block text-gray-600 font-semibold mb-2"
+                htmlFor="name"
+              >
+                Name
+              </label>
               <input
                 id="name"
                 type="text"
@@ -51,7 +56,12 @@ const AppointmentForm = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-600 font-semibold mb-2" htmlFor="email">Email</label>
+              <label
+                className="block text-gray-600 font-semibold mb-2"
+                htmlFor="email"
+              >
+                Email
+              </label>
               <input
                 id="email"
                 type="email"
@@ -65,7 +75,12 @@ const AppointmentForm = () => {
           {/* Phone & Date */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-gray-600 font-semibold mb-2" htmlFor="phone">Phone Number</label>
+              <label
+                className="block text-gray-600 font-semibold mb-2"
+                htmlFor="phone"
+              >
+                Phone Number
+              </label>
               <input
                 id="phone"
                 type="tel"
@@ -75,7 +90,12 @@ const AppointmentForm = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-600 font-semibold mb-2" htmlFor="date">Date</label>
+              <label
+                className="block text-gray-600 font-semibold mb-2"
+                htmlFor="date"
+              >
+                Date
+              </label>
               <input
                 id="date"
                 type="date"
@@ -88,7 +108,12 @@ const AppointmentForm = () => {
           {/* Time & Service */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-gray-600 font-semibold mb-2" htmlFor="time">Time</label>
+              <label
+                className="block text-gray-600 font-semibold mb-2"
+                htmlFor="time"
+              >
+                Time
+              </label>
               <input
                 id="time"
                 type="time"
@@ -97,7 +122,12 @@ const AppointmentForm = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-600 font-semibold mb-2" htmlFor="service">Service</label>
+              <label
+                className="block text-gray-600 font-semibold mb-2"
+                htmlFor="service"
+              >
+                Service
+              </label>
               <select
                 id="service"
                 className="w-full rounded-xl px-4 py-3 border border-gray-300 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
@@ -114,7 +144,12 @@ const AppointmentForm = () => {
 
           {/* Message */}
           <div>
-            <label className="block text-gray-600 font-semibold mb-2" htmlFor="message">Message</label>
+            <label
+              className="block text-gray-600 font-semibold mb-2"
+              htmlFor="message"
+            >
+              Message
+            </label>
             <textarea
               id="message"
               rows="4"
