@@ -8,7 +8,7 @@ const Lawyer = ({ lawyer }) => {
   const {
     id,
     fullName,
-    image,
+    profilePhoto,
     barCouncilEnrolment,
     barCouncilName,
     enrolmentDate,
@@ -30,9 +30,9 @@ const Lawyer = ({ lawyer }) => {
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow rounded-md mb-6">
       <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-        {/* Profile Image */}
+        {/* Profile profilePhoto */}
         <img
-          src={image}
+          src={profilePhoto}
           alt={fullName}
           className="w-32 h-32 rounded-full object-cover border"
         />

@@ -1,43 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "../firebase";
+import { toast } from "react-hot-toast"; // <-- import toast
+import { useUserAuth } from "../context/UserAuthContext";
 
-const AppointmentForm = () => {
+const AppointmentForm = ({ lawyerName }) => {
+  const { user } = useUserAuth();
+  const { id } = useParams();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    date: "",
+    time: "",
+    service: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await addDoc(collection(db, "appointments"), {
+        ...formData,
+        lawyerId: id,
+        lawyerName: lawyerName || "Unknown Lawyer",
+        userId: user?.uid,
+        userEmail: user?.email,
+        createdAt: Timestamp.now(),
+      });
+      toast.success("Appointment booked successfully!"); // <-- use toast here
+      // Optionally reset form after success
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        date: "",
+        time: "",
+        service: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong. Please try again."); // <-- use toast here
+    }
+  };
+
   return (
     <div className="bg-white mt-12 min-h-screen py-10 relative">
-      {/* Abstract Background Blobs */}
-      {/* Blob Background */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <linearGradient
-              id="bg-gradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="100%"
-            >
-              <stop offset="0%" stopColor="#a2c4f8" />
-              <stop offset="100%" stopColor="#f0e4ff" />
-            </linearGradient>
-          </defs>
-          <g>
-            <circle r="200" cx="20%" cy="30%" fill="url(#bg-gradient)" />
-            <circle r="250" cx="80%" cy="60%" fill="url(#bg-gradient)" />
-            <circle r="180" cx="50%" cy="80%" fill="url(#bg-gradient)" />
-          </g>
-        </svg>
-      </div>
-
-      {/* Form Container */}
       <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl overflow-hidden ring-1 ring-gray-200">
         <div className="text-3xl py-6 px-8 bg-gradient-to-r from-black to-cyan-500 text-white text-center font-extrabold tracking-wide shadow">
-          Schedule an Appointment
+          Schedule an Appointment with {lawyerName || "Lawyer"}
         </div>
 
-        <form className="py-10 px-8 md:px-12 space-y-8" method="POST">
+        <form className="py-10 px-8 md:px-12 space-y-8" onSubmit={handleSubmit}>
           {/* Name & Email */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -50,8 +74,10 @@ const AppointmentForm = () => {
               <input
                 id="name"
                 type="text"
+                value={formData.name}
+                onChange={handleChange}
                 placeholder="John Doe"
-                className="w-full rounded-xl px-4 py-3 border border-gray-300 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full rounded-xl px-4 py-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 required
               />
             </div>
@@ -65,8 +91,10 @@ const AppointmentForm = () => {
               <input
                 id="email"
                 type="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="john@example.com"
-                className="w-full rounded-xl px-4 py-3 border border-gray-300 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full rounded-xl px-4 py-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 required
               />
             </div>
@@ -84,8 +112,10 @@ const AppointmentForm = () => {
               <input
                 id="phone"
                 type="tel"
+                value={formData.phone}
+                onChange={handleChange}
                 placeholder="+91 9876543210"
-                className="w-full rounded-xl px-4 py-3 border border-gray-300 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full rounded-xl px-4 py-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 required
               />
             </div>
@@ -99,7 +129,9 @@ const AppointmentForm = () => {
               <input
                 id="date"
                 type="date"
-                className="w-full rounded-xl px-4 py-3 border border-gray-300 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                value={formData.date}
+                onChange={handleChange}
+                className="w-full rounded-xl px-4 py-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 required
               />
             </div>
@@ -117,7 +149,9 @@ const AppointmentForm = () => {
               <input
                 id="time"
                 type="time"
-                className="w-full rounded-xl px-4 py-3 border border-gray-300 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                value={formData.time}
+                onChange={handleChange}
+                className="w-full rounded-xl px-4 py-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 required
               />
             </div>
@@ -130,7 +164,9 @@ const AppointmentForm = () => {
               </label>
               <select
                 id="service"
-                className="w-full rounded-xl px-4 py-3 border border-gray-300 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                value={formData.service}
+                onChange={handleChange}
+                className="w-full rounded-xl px-4 py-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 required
               >
                 <option value="">Select a service</option>
@@ -153,9 +189,11 @@ const AppointmentForm = () => {
             <textarea
               id="message"
               rows="4"
+              value={formData.message}
+              onChange={handleChange}
               placeholder="Additional notes..."
-              className="w-full rounded-xl px-4 py-3 border border-gray-300 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            ></textarea>
+              className="w-full rounded-xl px-4 py-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            />
           </div>
 
           {/* Submit */}
