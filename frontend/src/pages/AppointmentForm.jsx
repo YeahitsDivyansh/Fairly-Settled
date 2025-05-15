@@ -28,8 +28,6 @@ const AppointmentForm = ({ lawyerName }) => {
     }));
   };
 
-  let hasShownLoginToast = false; // Place this outside the component
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -37,12 +35,9 @@ const AppointmentForm = ({ lawyerName }) => {
     setIsSubmitting(true);
 
     if (!userData) {
-      if (!hasShownLoginToast) {
-        hasShownLoginToast = true;
-        toast.error("Please register & log in to book an appointment.", {
-          duration: 5000,
-        });
-      }
+      toast.error("Please register & log in to book an appointment.", {
+        duration: 5000,
+      });
       setIsSubmitting(false);
       return;
     }
