@@ -32,7 +32,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
 import PublicBlogs from "./pages/publicBlogs";
 import BlogDetails from "./components/Blog/BlogDetails";
-
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -124,7 +124,6 @@ const App = () => {
           path: "/blogs/:id",
           element: <BlogDetails />,
         },
-
       ],
     },
     { path: "/phonesignup", element: <PhoneSignUp /> },
@@ -143,10 +142,14 @@ const App = () => {
         </ProtectedAdminRoute>
       ),
     },
-
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <Toaster position="top-right" reverseOrder={false} />{" "}
+      <RouterProvider router={router} />
+    </>
+  );
 };
 
 export default App;

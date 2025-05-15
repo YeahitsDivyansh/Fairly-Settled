@@ -109,9 +109,15 @@ const Lawyers = () => {
 
         {/* Lawyer Cards */}
         <div className="flex flex-wrap justify-center gap-3 mt-7 mb-9">
-          {filteredLawyers.map((lawyer, index) => (
-            <Lawyer key={index} lawyer={lawyer} />
-          ))}
+          {filteredLawyers.length > 0 ? (
+            filteredLawyers.map((lawyer, index) => (
+              <Lawyer key={index} lawyer={lawyer} />
+            ))
+          ) : (
+            <div className="text-center text-gray-600 text-lg mt-10">
+              No lawyers found based on your selected city, state, or type.
+            </div>
+          )}
         </div>
       </div>
     </div>
