@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast"; // <-- import toast
 import { useUserAuth } from "../context/UserAuthContext";
 
 const AppointmentForm = ({ lawyerName }) => {
-  const { user } = useUserAuth();
+  const { userData } = useUserAuth();
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
@@ -33,8 +33,7 @@ const AppointmentForm = ({ lawyerName }) => {
         ...formData,
         lawyerId: id,
         lawyerName: lawyerName || "Unknown Lawyer",
-        userId: user?.uid,
-        userEmail: user?.email,
+        userId: userData?.id,
         createdAt: Timestamp.now(),
       });
       toast.success("Appointment booked successfully!"); // <-- use toast here
