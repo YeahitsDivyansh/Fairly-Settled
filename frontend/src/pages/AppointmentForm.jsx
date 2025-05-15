@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebase";
-import { toast } from "react-hot-toast"; // <-- import toast
+import { toast } from "react-hot-toast";
 import { useUserAuth } from "../context/UserAuthContext";
 
 const AppointmentForm = ({ lawyerName }) => {
@@ -19,6 +19,8 @@ const AppointmentForm = ({ lawyerName }) => {
     message: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false); // ✅ prevents double trigger
+
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -26,8 +28,25 @@ const AppointmentForm = ({ lawyerName }) => {
     }));
   };
 
+  let hasShownLoginToast = false; // Place this outside the component
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isSubmitting) return; // avoid multiple submits
+    setIsSubmitting(true);
+
+    if (!userData) {
+      if (!hasShownLoginToast) {
+        hasShownLoginToast = true;
+        toast.error("Please register & log in to book an appointment.", {
+          duration: 5000,
+        });
+      }
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       await addDoc(collection(db, "appointments"), {
         ...formData,
@@ -36,8 +55,11 @@ const AppointmentForm = ({ lawyerName }) => {
         userId: userData?.id,
         createdAt: Timestamp.now(),
       });
-      toast.success("Appointment booked successfully!"); // <-- use toast here
-      // Optionally reset form after success
+
+      toast.success("Appointment booked successfully!", {
+        duration: 5000,
+      });
+
       setFormData({
         name: "",
         email: "",
@@ -49,7 +71,11 @@ const AppointmentForm = ({ lawyerName }) => {
       });
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong. Please try again."); // <-- use toast here
+      toast.error("Something went wrong. Please try again.", {
+        duration: 5000,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -199,9 +225,10 @@ const AppointmentForm = ({ lawyerName }) => {
           <div className="flex justify-center pt-4">
             <button
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md focus:outline-none focus:ring-2 focus:ring-purple-300"
+              disabled={isSubmitting}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md focus:outline-none focus:ring-2 focus:ring-purple-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Book Appointment
+              {isSubmitting ? "Booking..." : "Book Appointment"}
             </button>
           </div>
         </form>
