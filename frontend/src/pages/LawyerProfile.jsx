@@ -67,7 +67,7 @@ const LawyerProfile = () => {
   if (!lawyer) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Spinner/>
+        <Spinner />
       </div>
     );
   }
@@ -95,7 +95,7 @@ const LawyerProfile = () => {
               </div>
             </div>
             <button
-              onClick={() => navigate("/appointment")}
+              onClick={() => navigate(`/appointment/${lawyer.id}`)}
               className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-full shadow-sm transition transform hover:-translate-y-1 w-full md:w-auto text-center mr-5"
             >
               Schedule
@@ -167,7 +167,8 @@ const LawyerProfile = () => {
               <Briefcase size={20} className="text-blue-500" />
               Practice Areas
             </h3>
-            {lawyer.practiceAreas && Object.entries(lawyer.practiceAreas).some(([, v]) => v) ? (
+            {lawyer.practiceAreas &&
+            Object.entries(lawyer.practiceAreas).some(([, v]) => v) ? (
               <div className="flex flex-wrap gap-3">
                 {Object.entries(lawyer.practiceAreas)
                   .filter(([, value]) => value)
@@ -193,7 +194,7 @@ const LawyerProfile = () => {
             </h3>
             <div className="space-y-3 text-gray-800 leading-relaxed">
               {Array.isArray(lawyer.workDescription) &&
-                lawyer.workDescription.length > 0 ? (
+              lawyer.workDescription.length > 0 ? (
                 lawyer.workDescription.map((para, idx) => (
                   <p key={idx}>{para}</p>
                 ))
