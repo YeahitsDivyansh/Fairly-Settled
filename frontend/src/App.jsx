@@ -113,7 +113,7 @@ const App = () => {
           element: <LawyerProfile />,
         },
         {
-          path: "/appointment",
+          path: "/appointment/:id",
           element: <AppointmentForm />,
         },
         {

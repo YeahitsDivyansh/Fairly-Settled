@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useUserAuth } from "@/context/UserAuthContext";
 import { useParams } from "react-router-dom";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { db } from "@/firebase";
+import { db } from "../firebase";
 import { toast } from "react-hot-toast"; // <-- import toast
+import { useUserAuth } from "../context/UserAuthContext";
 
 const AppointmentForm = ({ lawyerName }) => {
   const { user } = useUserAuth();
@@ -49,40 +49,13 @@ const AppointmentForm = ({ lawyerName }) => {
         message: "",
       });
     } catch (error) {
-      console.error("Error booking appointment:", error);
+      console.error(error);
       toast.error("Something went wrong. Please try again."); // <-- use toast here
     }
   };
 
   return (
     <div className="bg-white mt-12 min-h-screen py-10 relative">
-      {/* Background SVG */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <linearGradient
-              id="bg-gradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="100%"
-            >
-              <stop offset="0%" stopColor="#a2c4f8" />
-              <stop offset="100%" stopColor="#f0e4ff" />
-            </linearGradient>
-          </defs>
-          <g>
-            <circle r="200" cx="20%" cy="30%" fill="url(#bg-gradient)" />
-            <circle r="250" cx="80%" cy="60%" fill="url(#bg-gradient)" />
-            <circle r="180" cx="50%" cy="80%" fill="url(#bg-gradient)" />
-          </g>
-        </svg>
-      </div>
-
       <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl overflow-hidden ring-1 ring-gray-200">
         <div className="text-3xl py-6 px-8 bg-gradient-to-r from-black to-cyan-500 text-white text-center font-extrabold tracking-wide shadow">
           Schedule an Appointment with {lawyerName || "Lawyer"}
