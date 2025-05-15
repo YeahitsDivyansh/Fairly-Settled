@@ -13,7 +13,7 @@ const AdminBlogForm = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) setSelectedFile(file);
+    if (file) setSelectedFile(file); 
   };
 
   const handleSubmit = async (e) => {
