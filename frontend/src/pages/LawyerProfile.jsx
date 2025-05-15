@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import Spinner from "../components/Spinner";
 
 const ContactItem = ({ icon, value, link, bg }) => (
   <div
@@ -65,20 +66,20 @@ const LawyerProfile = () => {
 
   if (!lawyer) {
     return (
-      <div className="text-center mt-12 text-red-600 font-semibold">
-        Lawyer not found.
+      <div className="flex items-center justify-center h-screen">
+        <Spinner/>
       </div>
     );
   }
 
   return (
-    <div className="relative mt-8 shadow-lg">
+    <div className="relative">
       <div className="bg-white px-4 py-2 mx-auto relative z-10">
         <div className="max-w-5xl mx-auto p-6 bg-white rounded-2xl shadow-md mt-10 border border-gray-200">
           {/* Header */}
           <div className="flex flex-col md:flex-row items-start md:items-center">
             <img
-              src={lawyer.image}
+              src={lawyer.profilePhoto}
               alt={lawyer.fullName}
               className="w-36 h-36 rounded-full object-cover border-4 border-blue-200 shadow-sm mr-4"
             />
@@ -142,11 +143,11 @@ const LawyerProfile = () => {
           <div className="flex flex-row gap-6 justify-evenly text-gray-700 font-medium">
             <ProfileDetail
               icon={<MapPin size={18} className="text-blue-500" />}
-              label={lawyer.location}
+              label={`${lawyer.city}, ${lawyer.state}`}
             />
             <ProfileDetail
               icon={<Briefcase size={18} className="text-blue-500" />}
-              label={`${lawyer.experience} years experience`}
+              label={`${lawyer.yearsOfPractice} years experience`}
             />
             <ProfileDetail
               icon={<Languages size={18} className="text-blue-500" />}
@@ -166,17 +167,18 @@ const LawyerProfile = () => {
               <Briefcase size={20} className="text-blue-500" />
               Practice Areas
             </h3>
-            {Array.isArray(lawyer.primaryCourts) &&
-            lawyer.primaryCourts.length > 0 ? (
+            {lawyer.practiceAreas && Object.entries(lawyer.practiceAreas).some(([, v]) => v) ? (
               <div className="flex flex-wrap gap-3">
-                {lawyer.primaryCourts.map((area, index) => (
-                  <span
-                    key={index}
-                    className="bg-blue-50 text-blue-700 px-4 py-1 rounded-full text-sm font-medium shadow-sm hover:bg-blue-100 transition"
-                  >
-                    {area}
-                  </span>
-                ))}
+                {Object.entries(lawyer.practiceAreas)
+                  .filter(([, value]) => value)
+                  .map(([area], index) => (
+                    <span
+                      key={index}
+                      className="bg-blue-50 text-blue-700 px-4 py-1 rounded-full text-sm font-medium shadow-sm hover:bg-blue-100 transition"
+                    >
+                      {area}
+                    </span>
+                  ))}
               </div>
             ) : (
               <p className="text-gray-500">No practice areas listed.</p>
@@ -191,7 +193,7 @@ const LawyerProfile = () => {
             </h3>
             <div className="space-y-3 text-gray-800 leading-relaxed">
               {Array.isArray(lawyer.workDescription) &&
-              lawyer.workDescription.length > 0 ? (
+                lawyer.workDescription.length > 0 ? (
                 lawyer.workDescription.map((para, idx) => (
                   <p key={idx}>{para}</p>
                 ))
