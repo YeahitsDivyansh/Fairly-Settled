@@ -23,6 +23,20 @@ export function AnimatedTestimonialsDemo() {
       designation: "",
       src: "./Sumit Kumar Yadav.jpeg",
     },
+    {
+      quote:
+        "Vice- Chancellor, NUSRL, Ranchi. Chair Professor, Chair of Consumer Law and Practice, NLSIU.",
+      name: "Prof. (Dr.) Ashok R. Patil",
+      designation: "",
+      src: "./Prof_Ashok_R_Patil.jpg",
+    },
+    {
+      quote:
+        "Chief Information Security Officer at Nykaa. Cyber Security Transformation Evangelist at Indian Navy. Former Group CISO at Zee Entertainment Enterprises Ltd.",
+      name: "Cdr Praveen Kumar",
+      designation: "",
+      src: "./Cdr_Praveen_kumar.jpg",
+    },
   ];
   return <AnimatedTestimonials testimonials={testimonials}  />;
 }
