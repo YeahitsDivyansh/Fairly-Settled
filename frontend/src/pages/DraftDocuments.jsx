@@ -55,9 +55,8 @@ const DraftDocument = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen mt-20 px-10 py-10 bg-white">
-      {/* Blob Background */}
-      <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 place-items-center">
+    <div className="min-h-screen mt-20 px-4 sm:px-6 md:px-10 py-10 bg-white">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-4 sm:gap-x-6 gap-y-12 place-items-center">
         {cardData.map((doc, index) => (
           <motion.div
             key={index}
@@ -70,52 +69,52 @@ const DraftDocument = () => {
             className="w-full max-w-[360px]"
           >
             <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.02} transitionSpeed={2500}>
-            <Card className="relative bg-white/30 backdrop-blur-xl border border-white/40 shadow-[10px_10px_30px_rgba(0,0,0,0.7)] rounded-3xl overflow-hidden hover:shadow-[15px_15px_50px_rgba(0,0,0,1)] transition-all duration-300">
-              {/* glowing gradient border */}
-              <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-300 to-gray-500 opacity-30 blur-xl animate-pulse"></div>
+              <Card className="relative bg-white/30 backdrop-blur-xl border border-white/40 shadow-[10px_10px_30px_rgba(0,0,0,0.7)] rounded-3xl overflow-hidden hover:shadow-[15px_15px_50px_rgba(0,0,0,1)] transition-all duration-300">
+                {/* glowing gradient border */}
+                <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-300 to-gray-500 opacity-30 blur-xl animate-pulse"></div>
 
-              {/* Card content */}
-              <div className="relative z-10 p-4">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-xl font-bold text-gray-900">
-                    {doc.title}
-                  </CardTitle>
-                  <CardDescription className="text-sm text-gray-800">
-                    {doc.desc}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="w-full h-[180px] rounded-xl overflow-hidden shadow-md perspective-[1000px]">
-                    <motion.img
-                      src={doc.img}
-                      alt={doc.title}
-                      className="w-full h-full object-cover rounded-xl"
-                      whileHover={{
-                        scale: 1.15,
-                        rotateX: -5,
-                        rotateY: 5,
-                        z: 60,
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 18,
-                      }}
-                      style={{ transformStyle: "preserve-3d" }}
-                    />
-                  </div>
-                </CardContent>
+                {/* Card content */}
+                <div className="relative z-10 p-4">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-xl font-bold text-gray-900">
+                      {doc.title}
+                    </CardTitle>
+                    <CardDescription className="text-sm text-gray-800">
+                      {doc.desc}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="w-full h-[180px] rounded-xl overflow-hidden shadow-md perspective-[1000px]">
+                      <motion.img
+                        src={doc.img}
+                        alt={doc.title}
+                        className="w-full h-full object-cover rounded-xl"
+                        whileHover={{
+                          scale: 1.15,
+                          rotateX: -5,
+                          rotateY: 5,
+                          z: 60,
+                        }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 18,
+                        }}
+                        style={{ transformStyle: "preserve-3d" }}
+                      />
+                    </div>
+                  </CardContent>
 
-                <CardFooter className="pt-4 flex justify-center">
-                  <Button
-                    className="bg-gradient-to-r from-gray-800 to-gray-600 text-white shadow-lg px-6 rounded-full transition-transform transform hover:scale-110  hover:shadow-xl"
-                    onClick={() => navigate(doc.route)}
-                  >
-                    Generate
-                  </Button>
-                </CardFooter>
-              </div>
-            </Card>
+                  <CardFooter className="pt-4 flex justify-center">
+                    <Button
+                      className="bg-gradient-to-r from-gray-800 to-gray-600 text-white shadow-lg px-6 rounded-full transition-transform transform hover:scale-110 hover:shadow-xl"
+                      onClick={() => navigate(doc.route)}
+                    >
+                      Generate
+                    </Button>
+                  </CardFooter>
+                </div>
+              </Card>
             </Tilt>
           </motion.div>
         ))}
