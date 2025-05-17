@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import JoditEditor from "jodit-react";
 import { db, storage } from "../../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
 const AdminBlogForm = () => {
+  const editor = useRef(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,7 +15,7 @@ const AdminBlogForm = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) setSelectedFile(file); 
+    if (file) setSelectedFile(file);
   };
 
   const handleSubmit = async (e) => {
@@ -61,17 +63,19 @@ const AdminBlogForm = () => {
           onChange={(e) => setTitle(e.target.value)}
           required
         />
-        <textarea
-          placeholder="Content"
-          className="w-full p-2 border rounded h-40"
+
+        <JoditEditor
+          ref={editor}
           value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
+          tabIndex={1}
+          onBlur={(newContent) => setContent(newContent)}
         />
+
         <label className="inline-block px-4 py-2 bg-gray-500 text-white font-semibold rounded cursor-pointer hover:bg-gray-700 mr-4">
           Browse Files
           <input type="file" className="hidden" onChange={handleFileChange} />
         </label>
+
         {selectedFile && (
           <p className="text-black mt-2 font-medium">
             Selected File: {selectedFile.name}

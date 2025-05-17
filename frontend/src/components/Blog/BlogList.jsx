@@ -128,15 +128,15 @@ const BlogList = () => {
                       )}
                     </>
                   )}
-                    <div>
-                        <button onClick={handleUpdate} className="bg-green-600 text-white px-4 py-1 mr-2 rounded">
-                    Save
-                  </button>
-                  <button onClick={() => setEditingId(null)} className="bg-gray-500 text-white px-4 py-1 rounded">
-                    Cancel
-                  </button>
-                    </div>
-                  
+                  <div>
+                    <button onClick={handleUpdate} className="bg-green-600 text-white px-4 py-1 mr-2 rounded">
+                      Save
+                    </button>
+                    <button onClick={() => setEditingId(null)} className="bg-gray-500 text-white px-4 py-1 rounded">
+                      Cancel
+                    </button>
+                  </div>
+
                 </div>
               ) : (
                 <div>
@@ -144,7 +144,10 @@ const BlogList = () => {
                   <p className="text-sm text-gray-600 mb-2">
                     {blog.createdAt?.toDate().toLocaleString()}
                   </p>
-                  <p>{blog.content.slice(0, 100)}...</p>
+                  <div
+                    className="leading-relaxed mb-3 text-slate-800 line-clamp-3"
+                    dangerouslySetInnerHTML={{ __html: blog.content }}
+                  ></div>
                   <div className="flex gap-2 mt-2">
                     <button
                       onClick={() => startEditing(blog)}
