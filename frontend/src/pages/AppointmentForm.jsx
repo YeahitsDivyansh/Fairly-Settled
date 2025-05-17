@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import { toast } from "react-hot-toast";
 import { useUserAuth } from "../context/UserAuthContext";
-import emailjs from '@emailjs/browser';
+// import emailjs from '@emailjs/browser';
 import { addDoc, collection, getDoc, doc, Timestamp } from "firebase/firestore";
+import axios from "axios";
+
 
 const AppointmentForm = () => {
   const { userData } = useUserAuth();
@@ -25,6 +27,7 @@ const AppointmentForm = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false); // ✅ prevents double trigger
+  
 
   useEffect(() => {
     // Fetch lawyer info when component mounts or id changes
@@ -54,7 +57,25 @@ const AppointmentForm = () => {
     }));
   };
 
-  let hasShownLoginToast = false; // Place this outside the component
+
+  const sendLawyerMail = async (formData) => {
+  try {
+    await axios.post("https://send-mails-sftt.onrender.com/send-appointment-mails", {
+      lawyer_email: lawyerEmail,
+      lawyer_name:lawyerName,
+      customer_name: formData.name,
+      customer_email: formData.email,
+      customer_phone: formData.phone,
+      date: formData.date,
+      time: formData.time,
+      service: formData.service,
+      message: formData.message,
+    });
+    console.log("Mail sent successfully");
+  } catch (error) {
+    console.error("Error sending mail:", error);
+  }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,10 +94,10 @@ const AppointmentForm = () => {
       return;
     }
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const lawyerTemplateId = import.meta.env.VITE_EMAILJS_LAWYER_TEMPLATE_ID;
-    const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    // const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    // const lawyerTemplateId = import.meta.env.VITE_EMAILJS_LAWYER_TEMPLATE_ID;
+    // const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
+    // const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
     try {
       // 1. Fetch lawyer data first
@@ -92,7 +113,9 @@ const AppointmentForm = () => {
         throw new Error("Lawyer email not found.");
       }
 
-      // 2. Save appointment to Firestore
+      await sendLawyerMail(formData);
+
+      // Save appointment to Firestore
       await addDoc(collection(db, "appointments"), {
         ...formData,
         lawyerId: id,
@@ -102,21 +125,22 @@ const AppointmentForm = () => {
       });
 
       // 3. Send email to the lawyer
-      await emailjs.send(
-        serviceId,
-        lawyerTemplateId,
-        {
-          lawyer_email: lawyerEmail,
-          customer_name: formData.name,
-          customer_email: formData.email,
-          customer_phone: formData.phone,
-          date: formData.date,
-          time: formData.time,
-          service: formData.service,
-          message: formData.message,
-        },
-        publicKey
-      );
+      
+      // await emailjs.send(
+      //   serviceId,
+      //   lawyerTemplateId,
+      //   {
+      //     lawyer_email: lawyerEmail,
+      //     customer_name: formData.name,
+      //     customer_email: formData.email,
+      //     customer_phone: formData.phone,
+      //     date: formData.date,
+      //     time: formData.time,
+      //     service: formData.service,
+      //     message: formData.message,
+      //   },
+      //   publicKey
+      // );
 
       // 4. Send auto-reply email to the client
       // await emailjs.send(
@@ -132,8 +156,7 @@ const AppointmentForm = () => {
       //   },
       //   publicKey
       // );
-
-      // 5. Notify user and reset form
+       // 5. Notify user and reset form
       toast.success("Appointment booked successfully!", {
         duration: 5000,
       });
@@ -147,6 +170,8 @@ const AppointmentForm = () => {
         service: "",
         message: "",
       });
+
+      
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong. Please try again.", {
@@ -156,6 +181,7 @@ const AppointmentForm = () => {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <div className="bg-white mt-12 min-h-screen py-10 relative">
