@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Phone, Mail, X, MessageSquareText } from "lucide-react";
+import { Phone, Mail, MessageSquareText } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Lawyer = ({ lawyer }) => {
@@ -28,102 +28,100 @@ const Lawyer = ({ lawyer }) => {
   } = lawyer;
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow rounded-md mb-6">
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-        {/* Profile profilePhoto */}
-        <img
-          src={profilePhoto}
-          alt={fullName}
-          className="w-32 h-32 rounded-full object-cover border"
-        />
-
-        <div className="flex-1">
-          {/* Name and Enrollment */}
-          <h2 className="text-2xl font-semibold text-gray-800">{fullName}</h2>
-          <p className="text-sm text-gray-500">
-            Bar Council: {barCouncilName} ({barCouncilEnrolment})<br />
-            Enrolled on: {enrolmentDate}
-          </p>
-
-          {/* Courts & Experience */}
-          <p className="mt-2 text-gray-700">
-            <strong>Primary Courts:</strong> {primaryCourts}
-          </p>
-          <p className="text-gray-700">
-            <strong>Years of Practice:</strong> {yearsOfPractice}
-          </p>
-
-          {/* Practice Areas */}
-          <div className="mt-2">
-            <strong className="text-gray-700">Practice Areas:</strong>
-            <ul className="list-disc list-inside text-gray-700">
-              {practiceAreas &&
-                Object.entries(practiceAreas)
-                  .filter(([, value]) => value)
-                  .map(([area]) => <li key={area}>{area}</li>)}
-            </ul>
+    <div className="w-[320px] h-[500px] bg-white shadow-lg rounded-md p-4 flex flex-col justify-between overflow-hidden">
+      {/* Top Scrollable Content */}
+      <div className="overflow-y-auto mb-4 pr-1">
+        {/* Profile Picture and Name */}
+        <div className="flex items-center gap-4 mb-4">
+          <img
+            src={profilePhoto}
+            alt={fullName}
+            className="w-16 h-16 rounded-full object-cover border"
+          />
+          <div>
+            <h2 className="text-xl font-semibold text-gray-800">{fullName}</h2>
+            <p className="text-sm text-gray-500">
+              {barCouncilName} ({barCouncilEnrolment})
+            </p>
+            <p className="text-sm text-gray-500">Enrolled: {enrolmentDate}</p>
           </div>
-
-          {/* Languages */}
-          <p className="mt-2 text-gray-700">
-            <strong>Languages:</strong> {languagesSpoken}
-          </p>
-
-          {/* Education */}
-          <p className="text-gray-700">
-            <strong>Education:</strong> {education}
-          </p>
-
-          {/* Location */}
-          <p className="text-gray-700">
-            <strong>Location:</strong> {city}, {state}
-          </p>
-
-          {/* Bio / Work Description */}
-          <p className="mt-4 text-gray-700">
-            <strong>Bio:</strong> {workDescription}
-          </p>
-
-          {/* Communication Modes */}
-          <div className="mt-4 text-gray-700">
-            <strong>Available for:</strong>
-            <ul className="list-disc list-inside">
-              {servicesInPerson && <li>In-person meetings</li>}
-              {servicesPhone && <li>Phone consultations</li>}
-              {servicesVideo && <li>Video consultations</li>}
-            </ul>
-          </div>
-
-          {/* Contact Buttons */}
-          <div className="mt-4 flex flex-wrap gap-4">
-            <button
-              onClick={() => setShowContact(!showContact)}
-              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-            >
-              <MessageSquareText size={16} />
-              {showContact ? "Hide Contact" : "Show Contact"}
-            </button>
-
-            <Link
-              to={`/lawyerprofile/${id}`}
-              className="flex items-center gap-2 border border-gray-400 px-4 py-2 rounded hover:bg-gray-100 transition"
-            >
-              View Profile
-            </Link>
-          </div>
-
-          {/* Contact Info */}
-          {showContact && (
-            <div className="mt-4 bg-gray-50 p-4 rounded border text-gray-700">
-              <p className="flex items-center gap-2">
-                <Phone size={16} /> {mobileNumber}
-              </p>
-              <p className="flex items-center gap-2 mt-2">
-                <Mail size={16} /> {email}
-              </p>
-            </div>
-          )}
         </div>
+
+        {/* Details */}
+        <p className="text-gray-700 text-sm mb-1">
+          <strong>Primary Courts:</strong> {primaryCourts}
+        </p>
+        <p className="text-gray-700 text-sm mb-1">
+          <strong>Years of Practice:</strong> {yearsOfPractice}
+        </p>
+
+        {/* Practice Areas */}
+        <div className="mb-1">
+          <strong className="text-gray-700 text-sm">Practice Areas:</strong>
+          <ul className="list-disc list-inside text-gray-700 text-sm max-h-[60px] overflow-y-auto">
+            {practiceAreas &&
+              Object.entries(practiceAreas)
+                .filter(([, value]) => value)
+                .map(([area]) => <li key={area}>{area}</li>)}
+          </ul>
+        </div>
+
+        <p className="text-gray-700 text-sm mb-1">
+          <strong>Languages:</strong> {languagesSpoken}
+        </p>
+        <p className="text-gray-700 text-sm mb-1">
+          <strong>Education:</strong> {education}
+        </p>
+        <p className="text-gray-700 text-sm mb-1">
+          <strong>Location:</strong> {city}, {state}
+        </p>
+
+        {/* Bio */}
+        <p className="text-gray-700 text-sm mb-1 line-clamp-3">
+          <strong>Bio:</strong> {workDescription}
+        </p>
+
+        {/* Services */}
+        <div className="text-gray-700 text-sm mt-2">
+          <strong>Available for:</strong>
+          <ul className="list-disc list-inside">
+            {servicesInPerson && <li>In-person meetings</li>}
+            {servicesPhone && <li>Phone consultations</li>}
+            {servicesVideo && <li>Video consultations</li>}
+          </ul>
+        </div>
+      </div>
+
+      {/* Action Buttons + Contact */}
+      <div>
+        <div className="flex flex-col gap-2">
+          <button
+            onClick={() => setShowContact(!showContact)}
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white text-sm px-3 py-2 rounded hover:bg-blue-700 transition"
+          >
+            <MessageSquareText size={16} />
+            {showContact ? "Hide Contact" : "Show Contact"}
+          </button>
+
+          <Link
+            to={`/lawyerprofile/${id}`}
+            className="text-center border border-gray-400 text-sm px-3 py-2 rounded hover:bg-gray-100 transition"
+          >
+            View Profile
+          </Link>
+        </div>
+
+        {/* Contact Info */}
+        {showContact && (
+          <div className="mt-3 bg-gray-50 p-2 rounded border text-gray-700 text-sm">
+            <p className="flex items-center gap-2">
+              <Phone size={14} /> {mobileNumber}
+            </p>
+            <p className="flex items-center gap-2 mt-1">
+              <Mail size={14} /> {email}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

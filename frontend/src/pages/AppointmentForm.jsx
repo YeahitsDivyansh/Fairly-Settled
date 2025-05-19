@@ -7,14 +7,12 @@ import { useUserAuth } from "../context/UserAuthContext";
 import { addDoc, collection, getDoc, doc, Timestamp } from "firebase/firestore";
 import axios from "axios";
 
-
 const AppointmentForm = () => {
   const { userData } = useUserAuth();
   const { id } = useParams();
   // State to hold lawyer info
   const [lawyerName, setLawyerName] = useState(null);
   const [lawyerEmail, setLawyerEmail] = useState(null);
-
 
   const [formData, setFormData] = useState({
     name: "",
@@ -27,7 +25,6 @@ const AppointmentForm = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false); // ✅ prevents double trigger
-  
 
   useEffect(() => {
     // Fetch lawyer info when component mounts or id changes
@@ -57,25 +54,27 @@ const AppointmentForm = () => {
     }));
   };
 
-
   const sendLawyerMail = async (formData) => {
-  try {
-    await axios.post("https://send-mails-sftt.onrender.com/send-appointment-mails", {
-      lawyer_email: lawyerEmail,
-      lawyer_name:lawyerName,
-      customer_name: formData.name,
-      customer_email: formData.email,
-      customer_phone: formData.phone,
-      date: formData.date,
-      time: formData.time,
-      service: formData.service,
-      message: formData.message,
-    });
-    console.log("Mail sent successfully");
-  } catch (error) {
-    console.error("Error sending mail:", error);
-  }
-};
+    try {
+      await axios.post(
+        "https://send-mails-sftt.onrender.com/send-appointment-mails",
+        {
+          lawyer_email: lawyerEmail,
+          lawyer_name: lawyerName,
+          customer_name: formData.name,
+          customer_email: formData.email,
+          customer_phone: formData.phone,
+          date: formData.date,
+          time: formData.time,
+          service: formData.service,
+          message: formData.message,
+        }
+      );
+      console.log("Mail sent successfully");
+    } catch (error) {
+      console.error("Error sending mail:", error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -125,7 +124,7 @@ const AppointmentForm = () => {
       });
 
       // 3. Send email to the lawyer
-      
+
       // await emailjs.send(
       //   serviceId,
       //   lawyerTemplateId,
@@ -156,7 +155,7 @@ const AppointmentForm = () => {
       //   },
       //   publicKey
       // );
-       // 5. Notify user and reset form
+      // 5. Notify user and reset form
       toast.success("Appointment booked successfully!", {
         duration: 5000,
       });
@@ -170,8 +169,6 @@ const AppointmentForm = () => {
         service: "",
         message: "",
       });
-
-      
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong. Please try again.", {
@@ -182,12 +179,16 @@ const AppointmentForm = () => {
     }
   };
 
-
   return (
     <div className="bg-white mt-12 min-h-screen py-10 relative">
-      <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl overflow-hidden ring-1 ring-gray-200">
-        <div className="text-3xl py-6 px-8 bg-gradient-to-r from-black to-cyan-500 text-white text-center font-extrabold tracking-wide shadow">
-          Schedule an Appointment with {lawyerName || "Lawyer"}
+      <div className="max-w-5xl mx-auto bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl overflow-hidden ring-1 ring-gray-200">
+        <div className="text-center mt-8">
+          <span className="block text-3xl md:text-4xl font-extrabold text-[#1F2937]">
+            Schedule an Appointment with
+          </span>
+          <span className="block text-3xl md:text-4xl font-extrabold mt-2 bg-gradient-to-r from-blue-500 to-blue-900 bg-clip-text text-transparent leading-normal">
+            {lawyerName || "Lawyer"}
+          </span>
         </div>
 
         <form className="py-10 px-8 md:px-12 space-y-8" onSubmit={handleSubmit}>

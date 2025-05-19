@@ -108,7 +108,7 @@ const Lawyers = () => {
         </div>
 
         {/* Lawyer Cards */}
-        <div className="flex flex-wrap justify-center gap-3 mt-7 mb-9">
+        <div className="flex flex-wrap justify-center gap-10 mt-7 mb-9">
           {filteredLawyers.length > 0 ? (
             filteredLawyers.map((lawyer, index) => (
               <Lawyer key={index} lawyer={lawyer} />
