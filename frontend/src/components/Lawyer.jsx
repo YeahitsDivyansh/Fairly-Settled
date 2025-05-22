@@ -17,7 +17,6 @@ const Lawyer = ({ lawyer }) => {
     practiceAreas,
     languagesSpoken,
     education,
-    mobileNumber,
     email,
     servicesInPerson,
     servicesPhone,
@@ -114,9 +113,6 @@ const Lawyer = ({ lawyer }) => {
         {/* Contact Info */}
         {showContact && (
           <div className="mt-3 bg-gray-50 p-2 rounded border text-gray-700 text-sm">
-            <p className="flex items-center gap-2">
-              <Phone size={14} /> {mobileNumber}
-            </p>
             <p className="flex items-center gap-2 mt-1">
               <Mail size={14} /> {email}
             </p>
