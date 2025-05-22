@@ -106,39 +106,25 @@ const LawyerProfile = () => {
         <hr className="my-5" />
 
         {/* Contact Info */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 min-w-0">
-          <ContactItem
-            icon={<Phone className="text-black" />}
-            value={
-              <span className="block w-full truncate">{lawyer.phone}</span>
-            }
-            bg="bg-blue-50"
-          />
-          <ContactItem
-            icon={<Mail className="text-red-600" />}
-            value={
-              <span className="block w-full break-all">{lawyer.email}</span>
-            }
-            link={`mailto:${lawyer.email}`}
-            bg="bg-red-50"
-          />
-          {lawyer.mobileNumber && (
+        <div className="w-full mb-6 flex">
+          <div className="max-w-xl w-full">
             <ContactItem
-              icon={
-                <svg
-                  className="text-green-600 w-6 h-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  fill="currentColor"
-                >
-                  <path d="..." />
-                </svg>
+              icon={<Mail className="text-red-600" />}
+              value={
+                <div>
+                  <span className="block w-full break-all">
+                    chhavichoudhary187@gmail.com
+                  </span>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Feel free to reach out for consultations or queries —
+                    usually responds within 24 hours.
+                  </p>
+                </div>
               }
-              value={<span className="block w-full">WhatsApp</span>}
-              link={`https://wa.me/${lawyer.mobileNumber.replace(/\D/g, "")}`}
-              bg="bg-green-50"
+              link="mailto:chhavichoudhary187@gmail.com"
+              bg="bg-red-50"
             />
-          )}
+          </div>
         </div>
 
         {/* Basic Details */}
