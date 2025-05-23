@@ -13,18 +13,15 @@ jobs:
   backup:
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/setup-gcloud@v2
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v1
         with:
-          credentials: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Set project
-        run: gcloud config set project $PROJECT_ID
-
-      - name: Set active account
-        run: |
-          ACCOUNT_EMAIL=$(gcloud auth list --filter=status:ACTIVE --format="value(account)")
-          gcloud config set account $ACCOUNT_EMAIL
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
 
       - name: Firestore export
         run: gcloud firestore export $BUCKET
