@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_ID: fairly-settled-e2466
-  BUCKET: gs://backup-restoration-01
+  BUCKET: gs://backup-restoration-02 # Updated bucket name
 
 jobs:
   backup:
@@ -30,4 +30,4 @@ jobs:
         run: gcloud config set project $PROJECT_ID
 
       - name: Firestore export
-        run: gcloud firestore export $BUCKET
+        run: gcloud firestore export --database=fairlysettled $BUCKET
