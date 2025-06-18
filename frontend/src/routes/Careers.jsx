@@ -127,19 +127,21 @@ const Careers = () => {
         </span>
       </h1>
 
-      <p className="text-gray-700 mx-auto text-lg md:text-xl mt-6 max-w-4xl">
-        We're reimagining the legal system for speed, accessibility, and impact.
-        Our work centers on eliminating the bottlenecks that slow down justice —
-        from tedious paperwork to outdated processes. Enter{" "}
-        <strong>Agility AI</strong>: an intelligent platform that automates case
-        filing, document generation, and real-time tracking. But it’s more than
-        just automation — it’s a shift in how legal institutions function. By
-        embedding precision, transparency, and speed into every layer,{" "}
-        <strong>Agility AI</strong> empowers legal professionals to focus on
-        strategy and advocacy rather than administrative grind. Our team spans
-        law, technology, public policy, and the sciences — united by a mission
-        to build smarter systems that serve both people and principle. We
-        believe the future of law should be fast, fair, and fundamentally human.
+      <p className="text-gray-700 mx-auto text-lg md:text-xl leading-8 mt-10 max-w-4xl text-center px-4">
+        We&apos;re reimagining the legal system for speed, accessibility, and
+        impact. Our work centers on eliminating the bottlenecks that slow down
+        justice — from tedious paperwork to outdated processes. Enter{" "}
+        <strong className="font-semibold text-gray-900">Agility AI</strong>: an
+        intelligent platform that automates case filing, document generation,
+        and real-time tracking. But it’s more than just automation — it’s a
+        shift in how legal institutions function. By embedding precision,
+        transparency, and speed into every layer,{" "}
+        <strong className="font-semibold text-gray-900">Agility AI</strong>{" "}
+        empowers legal professionals to focus on strategy and advocacy rather
+        than administrative grind. Our team spans law, technology, public
+        policy, and the sciences — united by a mission to build smarter systems
+        that serve both people and principle. We believe the future of law
+        should be fast, fair, and fundamentally human.
       </p>
 
       <Button
