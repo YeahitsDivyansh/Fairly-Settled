@@ -9,7 +9,6 @@ import CarouselBackground from "./carousel/carousel";
 import { BackgroundBeams } from "@/animations/BackgroundBeams";
 import { BentoGridDemo } from "../BentoGridDemo";
 import { SVGMaskEffectDemo } from "../mask-demo";
-import { WavyBackgroundDemo } from "../wavyBackgroundDemo";
 
 const features = [
   {
@@ -326,9 +325,43 @@ const MidSection = () => {
           </div>
         </div>
 
-        <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
-          <WavyBackgroundDemo />
-        </div>
+        <section className="relative left-1/2 right-1/2 -mx-[50vw] w-screen bg-gradient-to-b from-[#e0f2fe] via-[#f0fdfa] to-[#ecfdf5] py-24 flex items-center justify-center">
+          <div className="w-full max-w-4xl px-6">
+            <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-10 md:p-14 text-center transform transition-transform duration-300 hover:scale-95">
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-8 text-gray-800">
+                Your Initial Consultation
+              </h2>
+
+              <p className="text-lg mb-6 text-gray-700">
+                You are our family and we will help you like we help our own
+                family members. This means having your best long-term interests
+                in mind as we negotiate, compromise, settle or resolve your
+                matter in Court if need be. Separation is emotionally and
+                financially exhausting...
+              </p>
+
+              <p className="text-lg font-semibold mb-6 text-gray-800">
+                We do not ask you to choose us. We ask you to choose the right
+                lawyer. Whether that is us or someone else is irrelevant.
+              </p>
+
+              <p className="text-lg mb-6 text-gray-700">
+                We invite you to consult with a couple of family lawyers prior
+                to choosing who you better connect with. We charge for our
+                initial consultation because we want serious clients who know of
+                us and trust us before they come in...
+              </p>
+
+              <p className="text-lg text-gray-700">
+                <strong className="text-gray-900">Fairly Settled</strong> is
+                committed to providing you with strategic advice for all of your
+                family law needs. Our award-winning legal team, powered by{" "}
+                <strong className="text-gray-900">Agility AI</strong>, is here
+                to support your journey to fair and informed resolutions.
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
