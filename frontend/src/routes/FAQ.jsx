@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Card, CardContent } from "@/components/ui/card";
+  MessageCircle,
+  Mail,
+  Phone,
+  ChevronDown,
+  Stars,
+  ArrowDown,
+} from "lucide-react";
 
 const faqData = [
   {
@@ -25,41 +27,130 @@ Whether you're reviewing contracts, drafting petitions, or preparing case summar
 ];
 
 const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
   return (
-    <div className="bg-white py-8 px-8 md:px-6 mx-auto">
-      <h1 className="text-5xl font-extrabold text-center mb-4">
-        Frequently Asked Questions
-      </h1>
-      <p className="text-xl text-center text-gray-700 mb-10">
-        Ask & you shall receive
-      </p>
-
-      <Accordion type="single" collapsible className="space-y-6">
-        {faqData.map((faq, index) => (
-          <AccordionItem
-            value={`item-${index}`}
-            key={index}
-            className="border-0" // ✅ removes the line under AccordionItem
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50/30 px-6 py-16 relative overflow-hidden">
+      <div className="text-center max-w-3xl mx-auto mt-5">
+        {/* Badge: icon spins, text stays */}
+        <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white shadow-lg border border-slate-200 mb-6">
+          <motion.div
+            initial={{ rotate: 0 }}
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+            className="w-6 h-6 flex items-center justify-center"
           >
-            <Card className="relative bg-white/70 shadow-md backdrop-blur-md rounded-3xl overflow-hidden transition-transform duration-300 hover:scale-102 hover:-translate-y-1">
-              {/* ✅ Internal glow/blur effect */}
-              <div className="absolute -inset-[1px] z-0 rounded-3xl bg-gradient-to-tr from-white-500 via-black-600 to-gray-700 opacity-30 blur-xl animate-pulse"></div>
+            {/* Use Lucide icon */}
+            <Stars className="text-blue-600" />
 
-              {/* Foreground content */}
-              <div className="relative z-10">
-                <AccordionTrigger className="text-[#1F2937] px-6 py-4 text-left text-xl font-semibold">
+            {/* OR your PNG */}
+            {/* <Image src="/rotating-icon.png" alt="icon" width={24} height={24} /> */}
+          </motion.div>
+
+          <span className="text-blue-600 font-semibold text-sm md:text-base">
+            Got Questions? We've Got Expert Answers
+          </span>
+        </div>
+
+        <motion.h1
+          className="text-5xl font-bold text-slate-900"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Frequently Asked <span className="text-indigo-600">Questions</span>
+        </motion.h1>
+      </div>
+      {/* FAQ List */}
+      <div className="max-w-4xl mx-auto space-y-8">
+        <AnimatePresence>
+          {faqData.map((faq, index) => {
+            const isOpen = openIndex === index;
+
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={`rounded-3xl mt-8 shadow-xl border border-slate-200 bg-white/80 backdrop-blur-md transition-all ${
+                  isOpen ? "ring-2 ring-blue-500/20" : ""
+                }`}
+              >
+                <button
+                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  className="w-full flex justify-between items-center p-6 text-left text-xl font-semibold text-slate-900 hover:bg-slate-100 rounded-3xl"
+                >
                   {faq.question}
-                </AccordionTrigger>
-                <AccordionContent>
-                  <CardContent className="text-gray-800 text-lg whitespace-pre-line px-6 pb-6">
-                    {faq.answer}
-                  </CardContent>
-                </AccordionContent>
-              </div>
-            </Card>
-          </AccordionItem>
-        ))}
-      </Accordion>
+                  <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-10 h-10 flex items-center justify-center bg-slate-100 rounded-full"
+                  >
+                    <ChevronDown size={20} />
+                  </motion.div>
+                </button>
+
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="overflow-hidden px-6 pb-6 text-slate-700 text-lg"
+                    >
+                      <div className="pt-4 border-t border-slate-200">
+                        {faq.answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+      </div>
+
+      {/* Contact Section */}
+
+      <div className="mt-20 flex justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="w-full max-w-md bg-blue-600 rounded-3xl shadow-xl p-6 space-y-6 text-white"
+        >
+          {/* Top CTA */}
+          <div className="inline-flex items-center justify-center w-full gap-3 px-6 py-4 rounded-2xl font-bold text-lg shadow hover:shadow-2xl cursor-pointer bg-blue-700">
+            <MessageCircle size={24} />
+            Still have questions? Chat with us
+            <ChevronDown size={20} />
+          </div>
+
+          {/* Email & Phone */}
+          <div className="space-y-3 text-center">
+            <div className="flex items-center justify-center gap-2">
+              <Mail size={18} className="text-white" />
+              <span>Email:</span>
+              <a
+                href="mailto:service@agilityai.in"
+                className="underline text-white"
+              >
+                service@agilityai.in
+              </a>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <Phone size={18} className="text-white" />
+              <span>Phone:</span>
+              <a href="tel:+917042149608" className="underline text-white">
+                +91 70421 49608
+              </a>
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 };
