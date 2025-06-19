@@ -127,10 +127,10 @@ const Careers = () => {
         </span>
       </h1>
 
-      <p className="text-gray-700 mx-auto text-lg md:text-xl leading-8 mt-10 max-w-4xl text-center px-4">
-        We&apos;re reimagining the legal system for speed, accessibility, and
-        impact. Our work centers on eliminating the bottlenecks that slow down
-        justice — from tedious paperwork to outdated processes. Enter{" "}
+      <p className="text-gray-700 mx-auto text-lg md:text-xl leading-8 mt-10 max-w-4xl text-justify px-4">
+        We're reimagining the legal system for speed, accessibility, and impact.
+        Our work centers on eliminating the bottlenecks that slow down justice —
+        from tedious paperwork to outdated processes. Enter{" "}
         <strong className="font-semibold text-gray-900">Agility AI</strong>: an
         intelligent platform that automates case filing, document generation,
         and real-time tracking. But it’s more than just automation — it’s a
