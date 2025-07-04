@@ -27,11 +27,11 @@ const StaticChat = () => {
 
     try {
       const res = await axios.post(
-        "https://qnachatbot-992692416004.us-central1.run.app/text-chat",
-        { input_text: prompt },
+        "https://legalchatbot-server-992692416004.us-central1.run.app/chat",
+        { query: prompt },
         { headers: { "Content-Type": "application/json" } }
       );
-      const aiMsg = { sender: "ai", text: res.data.response_text, time: new Date() };
+      const aiMsg = { sender: "ai", text: res.data.response, time: new Date() };
       setMessages((prev) => [...prev, aiMsg]);
     } catch (err) {
       console.error(err);
