@@ -60,12 +60,12 @@ export const ChatProvider = ({ children }) => {
 
             // Get AI response
             const res = await axios.post(
-                "https://qnachatbot-992692416004.us-central1.run.app/text-chat",
-                { input_text: prompt },
+                "https://legalchatbot-server-992692416004.us-central1.run.app/chat",
+                { query: prompt },
                 { headers: { "Content-Type": "application/json" } }
             );
 
-            aiMsg.text = res.data.response_text;
+            aiMsg.text = res.data.response;
             await addDoc(msgRef, aiMsg);
 
 
