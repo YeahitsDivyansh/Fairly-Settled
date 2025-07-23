@@ -57,7 +57,7 @@ const AppointmentForm = () => {
   const sendLawyerMail = async (formData) => {
     try {
       await axios.post(
-        "https://send-mails-sftt.onrender.com/send-appointment-mails",
+        "https://fairlysettled-mails-sender.onrender.com/send-appointment-mails",
         {
           lawyer_email: lawyerEmail,
           lawyer_name: lawyerName,
