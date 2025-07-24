@@ -365,6 +365,7 @@ export default function BusinessAgreements() {
                 }
                 .highlight {
                   font-weight: 500;
+                  text-bold;
                 }
                 .agreement-list {
                   padding-left: 20px;

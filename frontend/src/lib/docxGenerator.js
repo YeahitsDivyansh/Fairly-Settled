@@ -51,10 +51,10 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
     // Helper function for consistent spacing
     const getSpacingProps = (size = 'normal') => {
       const spacingMap = {
-        'small': { before: 120, after: 120, line: 300 }, // Increased spacing
-        'normal': { before: 140, after: 140, line: 320 }, // Increased spacing  
-        'heading': { before: 200, after: 120, line: 340 }, // Increased spacing
-        'title': { before: 200, after: 200, line: 360 } // Increased spacing
+        'small': { before: 30, after: 30, line: 300 }, // Reduced spacing
+        'normal': { before: 40, after: 40, line: 320 }, // Reduced spacing
+        'heading': { before: 60, after: 20, line: 340 }, // Reduced spacing
+        'title': { before: 80, after: 80, line: 360 } // Reduced spacing
       };
       return spacingMap[size] || spacingMap.normal;
     };
@@ -62,25 +62,25 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
     // Create styles for headings, paragraphs, etc.
     const textStyles = {
       title: {
-        size: 24, // Reduced from 32 to match PDF better
+        size: 32, // Increased for better visibility
         bold: true,
         color: "000000",
-        font: "Times New Roman", // Changed to Times New Roman for better compatibility
+        font: "Times New Roman",
       },
       heading1: {
-        size: 20, // Reduced from 28
+        size: 28, // Increased for better visibility
         bold: true,
         color: "000000",
         font: "Times New Roman"
       },
       heading2: {
-        size: 16, // Reduced from 20
+        size: 24, // Increased for better visibility
         bold: true,
         color: "000000",
         font: "Times New Roman"
       },
       heading3: {
-        size: 14, // Reduced from 16
+        size: 18, // Increased for better visibility
         bold: true,
         color: "000000",
         font: "Times New Roman"
@@ -132,7 +132,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
               docElements.push(
                 new Paragraph({
                   children: [new TextRun({ text: "" })],
-                  spacing: { before: 240, after: 0 }
+                  spacing: { before: 80, after: 0 }
                 })
               );
             }
@@ -157,7 +157,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
             docElements.push(
               new Paragraph({
                 children: [new TextRun({ text: "" })],
-                spacing: { before: 0, after: 120 },
+                spacing: { before: 0, after: 20 },
                 border: {
                   bottom: {
                     color: "000000", // Black color
@@ -173,7 +173,8 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
             // Add space before the heading
             docElements.push(
               new Paragraph({
-                children: [new TextRun({ text: "", break: 1 })]
+                children: [new TextRun({ text: "", break: 1 })],
+                spacing: { before: 10, after: 0 }
               })
             );
             
@@ -198,7 +199,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
                     bold: true,
                     size: textStyles.heading2.size,
                     color: textStyles.heading2.color,
-                    font: textStyles.heading2.font
+                    // font: textStyles.heading2.font
                   }),
                   new TextRun({
                     text: displayText.toUpperCase(),
@@ -213,7 +214,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
             docElements.push(
               new Paragraph({
                 children: [new TextRun({ text: "" })],
-                spacing: { before: 10, after: 40 },
+                spacing: { before: 0, after: 10 },
                 border: {
                   bottom: {
                     color: "000000", // Black color for professional look
@@ -830,10 +831,10 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
           properties: {
             page: {
               margin: {
-                top: 1440, // 1 inch in twips (reduced from 1.25 inches)
-                right: 1440,
-                bottom: 1440,
-                left: 1440
+                top: 480, // 0.33 inch in twips
+                right: 480,
+                bottom: 480,
+                left: 480
               }
             }
           },

@@ -1,61 +1,52 @@
 export const settlementAgreementFields = [
-  "party1Name",
-  "party1Address",
-  "party2Name",
-  "party2Address",
-  "disputeDescription",
+  "executionDate",
+  "releasorName",
+  "releaseeName",
   "settlementAmount",
-  "paymentTerms",
-  "releaseTerms",
-  "confidentialityClause",
-  "signingDate"
 ];
 
 export const generateSettlementAgreement = (data) => `<div class="agreement-template">
   <h1 class="agreement-title">SETTLEMENT AGREEMENT</h1>
 
   <div class="agreement-body">
-    <p>This Settlement Agreement (the "Agreement") is entered into on <span class="highlight">${data.signingDate}</span>, between:</p>
+    <p>This Settlement Agreement shall become effective on <span class="highlight">${data.executionDate}</span> (the "Execution Date") and is subject to the terms and conditions stated below by and between <span>${data.releasorName}</span>, authorized Director (the "Releasor") and <span>${data.releaseeName}</span> (the "Releasee"), collectively referred to as the "Parties".</p>
 
-    <p><strong>PARTY 1:</strong> <span class="highlight">${data.party1Name}</span>, located at <span class="highlight">${data.party1Address}</span></p>
+    <p><strong>IN CONSIDERATION </strong>of the obligations and covenants contained in this Agreement, the Parties agree as follows:</p>
 
-    <p><strong>PARTY 2:</strong> <span class="highlight">${data.party2Name}</span>, located at <span class="highlight">${data.party2Address}</span></p>
+    <p><strong>BUYER:</strong> <span class="highlight">${data.buyerName}</span>, having registration number <span class="highlight">${data.buyerRegNumber}</span> and represented by <span class="highlight">${data.buyerDirectorName}</span>, authorized Director (the "Buyer")</p>
 
-    <h2>1. DISPUTE</h2>
-    <p>1.1 The parties have been involved in a dispute regarding: <span class="highlight">${data.disputeDescription}</span></p>
+    <h2>1. SETTLEMENT.</h2>
+    <p>In consideration of the sum of INR <span class="highlight">${data.settlementAmount}</span> (Indian Rupees), the Releasor releases and forever discharges the Releasee and related persons from all manner of actions, causes of action, debts, accounts, bonds, contracts, claims, and demands for or by reason of any damage, loss or injury to person and property which has been or may be sustained as a consequence of the dispute detailed below.</p>
 
-    <h2>2. SETTLEMENT TERMS</h2>
-    <p>2.1 Settlement Amount: <span class="highlight">${data.settlementAmount}</span></p>
+    <p>
+    The Parties to this Agreement further agree not to make a claim or take proceedings against any other person or corporation which might claim contribution or indemnity under the provisions of any statute or otherwise.
+    </p>
 
-    <p>2.2 Payment Terms: <span class="highlight">${data.paymentTerms}</span></p>
+    <h2>2. RELEASE OF LIABILITY.</h2>
+    <p>The Releasor hereby releases and discharges the Releasee and any affiliate persons of all claims, causes, actions, liabilities, disputes, demands, damages, obligations, debts, and/or any request related to the incident.</p>
 
-    <h2>3. RELEASE</h2>
-    <p>3.1 Release Terms: <span class="highlight">${data.releaseTerms}</span></p>
+    <h2>3. CONFIDENTIALITY</h2>
+    <p>The Parties shall not disclose this Agreement, the facts and circumstances giving rise to this Agreement, or the existence of any claim that the Releasor has, or may have, subject to the Release of claims contained in this Agreement, to any third party.</p>
 
-    <p>3.2 Each party hereby releases the other from all claims arising from the dispute described above.</p>
+    <h2>4. GOVERNING LAW</h2>
+    <p>This Agreement shall be governed by and construed in accordance with the laws of India. This Agreement is drawn up in two (2) identical copies, one for each Party. Both Parties have read and fully understood this Agreement. This Agreement shall become effective and legally binding upon signature by each of the Parties.</p>
 
-    <h2>4. CONFIDENTIALITY</h2>
-    <p>4.1 Confidentiality: <span class="highlight">${data.confidentialityClause}</span></p>
-
-    <h2>5. NO ADMISSION</h2>
-    <p>5.1 This settlement does not constitute an admission of liability by either party.</p>
-
+    <h2>SIGNED BY-</h2>
     <div class="signatures">
-      <h2>IN WITNESS WHEREOF, the parties have executed this Agreement.</h2>
-      
-      <div class="signature-block">
-        <p>_________________________</p>
-        <p>PARTY 1</p>
-        <p>Name: <span class="highlight">${data.party1Name}</span></p>
-        <p>Date: <span class="highlight">${data.signingDate}</span></p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>The Releasor</p>
+        <p>The Relesee</p>
       </div>
-
-      <div class="signature-block">
-        <p>_________________________</p>
-        <p>PARTY 2</p>
-        <p>Name: <span class="highlight">${data.party2Name}</span></p>
-        <p>Date: <span class="highlight">${data.signingDate}</span></p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>The Witness</p>
+        <p>The Witness</p>
       </div>
     </div>
-  </div>
 </div>`;
+
+
+
+
+
+
+
