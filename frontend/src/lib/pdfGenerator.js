@@ -386,7 +386,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
           // Handle signature blocks
           else if (child.classList && child.classList.contains('signatures')) {
             // Check if signatures would go beyond page boundary - ensure signatures stay together
-            const estimatedSignatureHeight = 180; // Increased height for two rows
+            const estimatedSignatureHeight = 200; // Increased height to accommodate flexible rows
             if (y + estimatedSignatureHeight > pageHeight + topMargin - 60) {
               pdf.addPage();
               y = topMargin + 20;
@@ -394,58 +394,53 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
               y += 30;
             }
 
-            // Draw a horizontal line with proper spacing
-            y += 10;
-            pdf.setDrawColor(0, 0, 0);
-            pdf.setLineWidth(0.5);
-            pdf.line(x, y, x + effectiveWidth, y);
-            y += 30;  
-
-            // Add "SIGNED BY:" header instead of repeating for each signature
-            pdf.setFont("helvetica", "bold");
-            pdf.setFontSize(bodyFontSize + 1);
-            pdf.setTextColor(0, 0, 0);
-            pdf.text("SIGNED BY:", x, y);
-            y += 45; 
-
-            // Get all signature blocks
-            const allSignatureBlocks = Array.from(child.querySelectorAll('.signature-block'));
-            const blocksPerRow = 2;
-            const rowCount = Math.ceil(allSignatureBlocks.length / blocksPerRow);
-
-            for (let row = 0; row < rowCount; row++) {
-              if (row > 0) {
-                y += 40; // Margin top between rows
+            // Process signature rows - each signature-block is a row
+            const signatureRows = Array.from(child.querySelectorAll('.signature-block'));
+            
+            signatureRows.forEach((row, rowIndex) => {
+              if (rowIndex > 0) {
+                y += 40; // Margin between rows
               }
-              const blocksInThisRow = allSignatureBlocks.slice(row * blocksPerRow, (row + 1) * blocksPerRow);
-              const signatureWidth = effectiveWidth / blocksPerRow;
+              
+              // Get all signature items in this row
+              const signaturesInRow = Array.from(row.querySelectorAll('p'))
+                .map(p => p.textContent.trim())
+                .filter(text => text.length > 0);
+              
+              if (signaturesInRow.length === 0) return;
+              
+              const itemsPerRow = signaturesInRow.length;
+              const signatureWidth = effectiveWidth / itemsPerRow;
               const startY = y;
 
-              blocksInThisRow.forEach((block, idx) => {
+              signaturesInRow.forEach((signatureText, idx) => {
                 const signatureX = x + (idx * signatureWidth);
-                const signatureLines = Array.from(block.childNodes)
-                  .filter(node => node.nodeType === Node.ELEMENT_NODE)
-                  .map(node => node.textContent.trim())
-                  .filter(text => text.length > 0);
-
+                
                 // Draw signature line
                 pdf.setDrawColor(0, 0, 0);
                 pdf.setLineWidth(0.5);
                 const lineWidth = Math.min(120, signatureWidth - 20);
                 pdf.line(signatureX, y, signatureX + lineWidth, y);
+                
+                // Add signature text below the line
+                pdf.setFont("helvetica", "bold");
+                pdf.setFontSize(bodyFontSize - 1);
+                pdf.setTextColor(0, 0, 0);
+                
+                // Handle multi-line signature text (split by <br/> or newlines)
+                const signatureLines = signatureText.split(/\s*<br\/?>\s*|\n/).filter(line => line.trim());
                 let sigY = y + 20;
-
-                // Add signature details (without "SIGNED BY:" since it's in header)
-                signatureLines.forEach((line, i) => {
-                  pdf.setFont(i === 0 ? "helvetica" : "helvetica", i === 0 ? "bold" : "normal");
-                  pdf.setFontSize(bodyFontSize - 1);
-                  pdf.setTextColor(0, 0, 0);
-                  pdf.text(line, signatureX, sigY);
+                
+                signatureLines.forEach((line, lineIndex) => {
+                  pdf.setFont("helvetica", lineIndex === 0 ? "bold" : "normal");
+                  pdf.text(line.trim(), signatureX, sigY);
                   sigY += (bodyFontSize - 1) * 1.3;
                 });
               });
-              y = startY + 60; // Move Y for next row
-            }
+              
+              y = startY + 70; // Move Y for next row (increased space to accommodate multi-line signatures)
+            });
+            
             y += 20; // Space after all signatures
           }
           // Handle signature blocks (skip, handled above)

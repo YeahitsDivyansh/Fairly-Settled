@@ -434,17 +434,33 @@ export default function BusinessAgreements() {
                 }
                 .signatures {
                   margin-top: 40px;
-                  border-top: 1px solid #e5e7eb;
+                  {/* border-top: 1px solid #e5e7eb; */}
                   padding-top: 20px;
                 }
                 .signature-block {
-                  margin: 15px 0;
-                  display: inline-block;
-                  width: 45%;
-                  vertical-align: top;
+                  margin: 30px 0;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: flex-start;
+                  gap: 40px;
                 }
                 .signature-block p {
                   margin: 5px 0;
+                  position: relative;
+                  flex: 1;
+                  text-align: left;
+                  padding-top: 10px;
+                  font-weight: bold;
+                }
+                .signature-block p::before {
+                  content: '';
+                  position: absolute;
+                  top: -5px;
+                  left: 0;
+                  right: 0;
+                  height: 1px;
+                  background-color: #000;
+                  border-top: 1px solid #000;
                 }
                 .agreement-table {
                   margin: 20px 0;

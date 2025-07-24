@@ -147,10 +147,6 @@ export const generateDistributionAgreement = (data) => `<div class="agreement-te
     </p>
 
     <h2>6. INVENTORY MANAGEMENT</h2>
-     policy, if applicable, and the Distributor shall comply with any reasonable return procedures specified by the Supplier. The Distributor shall bear the costs of returning non-conforming goods, unless the non-conformity is due to the Supplier's fault or negligence.
-    </p>
-
-    <h2>6. INVENTORY MANAGEMENT</h2>
     
     <p>
      The Distributor shall maintain an adequate inventory of the products or materials necessary for the performance of its distribution obligations under this Agreement. The Distributor shall regularly review its inventory levels, taking into account market demand, sales forecasts, and any inventory management guidelines provided by the Supplier.
@@ -251,21 +247,13 @@ export const generateDistributionAgreement = (data) => `<div class="agreement-te
 
     <h2>SIGNED BY:</h2>
     <div class="signatures">
-      <div class="signature-block">
-        <p>______________________</p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
         <p>The Supplier</p>
+        <p>The Distributor</p>
       </div>
-      <div class="signature-block">
-        <p>______________________</p>
-        <p>The Distributer</p>
-      </div>
-      <div class="signature-block">
-        <p>______________________</p>
-        <p>The Witness</p>
-      </div>
-      <div class="signature-block">
-        <p>______________________</p>
-        <p>The Witness</p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>Witness</p>
+        <p>Witness</p>
       </div>
     </div>
   </div>

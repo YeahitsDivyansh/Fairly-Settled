@@ -51,10 +51,10 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
     // Helper function for consistent spacing
     const getSpacingProps = (size = 'normal') => {
       const spacingMap = {
-        'small': { before: 60, after: 60, line: 240 },
-        'normal': { before: 80, after: 80, line: 260 },
-        'heading': { before: 120, after: 60, line: 276 },
-        'title': { before: 120, after: 120, line: 300 }
+        'small': { before: 120, after: 120, line: 300 }, // Increased spacing
+        'normal': { before: 140, after: 140, line: 320 }, // Increased spacing  
+        'heading': { before: 200, after: 120, line: 340 }, // Increased spacing
+        'title': { before: 200, after: 200, line: 360 } // Increased spacing
       };
       return spacingMap[size] || spacingMap.normal;
     };
@@ -62,45 +62,44 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
     // Create styles for headings, paragraphs, etc.
     const textStyles = {
       title: {
-        size: 32,
+        size: 24, // Reduced from 32 to match PDF better
         bold: true,
-        color: "000000", // Dark black
-        font: "Arial",
+        color: "000000",
+        font: "Times New Roman", // Changed to Times New Roman for better compatibility
       },
       heading1: {
-        size: 28,
+        size: 20, // Reduced from 28
         bold: true,
-        color: "000000", // Dark black
-        font: "Arial"
+        color: "000000",
+        font: "Times New Roman"
       },
       heading2: {
-        size: 20,
+        size: 16, // Reduced from 20
         bold: true,
-        color: "000000", // Dark black for section headings
-        font: "Arial"
+        color: "000000",
+        font: "Times New Roman"
       },
       heading3: {
-        size: 16,
+        size: 14, // Reduced from 16
         bold: true,
-        color: "000000", // Dark black
-        font: "Arial"
+        color: "000000",
+        font: "Times New Roman"
       },
       normal: {
-        size: 12,
-        color: "000000", // Dark black
-        font: "Arial"
+        size: 22, // Increased from 12 to 22 (11pt in Word)
+        color: "000000",
+        font: "Times New Roman"
       },
       highlight: {
-        size: 12,
+        size: 22, // Increased from 12 to 22 to match normal text
         bold: true,
-        color: "000000", // Dark black
-        font: "Arial"
+        color: "000000",
+        font: "Times New Roman"
       },
       signatureText: {
-        size: 12,
-        color: "000000", // Dark black
-        font: "Arial",
-        italics: true
+        size: 22, // Increased from 12 to 22
+        color: "000000",
+        font: "Times New Roman"
       }
     };
     
@@ -335,7 +334,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
               new Paragraph({
                 children: runs,
                 spacing: getSpacingProps(),
-                alignment: child.style?.textAlign === 'center' ? AlignmentType.CENTER : AlignmentType.LEFT
+                alignment: child.style?.textAlign === 'center' ? AlignmentType.CENTER : AlignmentType.JUSTIFIED
               })
             );
           } 
@@ -401,9 +400,10 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
                   children: runs,
                   spacing: getSpacingProps('small'),
                   indent: {
-                    left: 400, // Consistent indentation
-                    hanging: 300 // Space for bullet/number
-                  }
+                    left: 600, // Increased indentation for better alignment
+                    hanging: 400 // Increased space for bullet/number
+                  },
+                  alignment: AlignmentType.JUSTIFIED
                 })
               );
             });
@@ -437,7 +437,8 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
                               font: textStyles.normal.font
                             })
                           ],
-                          spacing: { before: 100, after: 100 }
+                          spacing: { before: 60, after: 60 }, // Reduced spacing in tables
+                          alignment: AlignmentType.LEFT
                         })
                       ],
                       width: {
@@ -540,7 +541,8 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
                             font: textStyles.normal.font
                           })
                         ],
-                        spacing: { before: 100, after: 100 }
+                        spacing: { before: 60, after: 60 }, // Reduced spacing in tables
+                        alignment: AlignmentType.LEFT
                       })
                     ],
                     width: {
@@ -614,223 +616,144 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
           }
           // Handle signature blocks
           else if (child.classList && child.classList.contains('signatures')) {
-            // Add some space before signatures
+            // Add space before signatures
             docElements.push(
               new Paragraph({
-                children: [
-                  new TextRun({ text: "", break: 2 })
-                ]
+                children: [new TextRun({ text: "", break: 2 })],
+                spacing: { before: 240, after: 120 }
               })
             );
             
-            // Add a divider before signatures with reduced spacing
-            docElements.push(
-              new Paragraph({
-                children: [new TextRun({ text: "" })],
-                spacing: { before: 40, after: 40 },
-                border: {
-                  bottom: {
-                    color: "000000",
-                    space: 1,
-                    style: "single",
-                    size: 1
-                  }
-                }
-              })
-            );
+            // Process signature rows - each signature-block is a row
+            const signatureRows = Array.from(child.querySelectorAll('.signature-block'));
             
-            // Add "SIGNED BY:" header with some space above
-            docElements.push(
-              new Paragraph({
-                children: [
-                  new TextRun({ text: "", break: 1 }),
-                  new TextRun({
-                    text: "SIGNED BY:",
-                    bold: true,
-                    size: textStyles.heading3.size,
-                    color: textStyles.heading3.color,
-                    font: textStyles.heading3.font
+            signatureRows.forEach((row, rowIndex) => {
+              if (rowIndex > 0) {
+                // Add space between signature rows
+                docElements.push(
+                  new Paragraph({
+                    children: [new TextRun({ text: "", break: 2 })],
+                    spacing: { before: 300, after: 0 }
                   })
-                ],
-                spacing: getSpacingProps('heading')
-              })
-            );
-            
-            // Process each signature block
-            const signatureBlocks = child.querySelectorAll('.signature-block');
-            
-            // Create a table for signature blocks if there are multiple
-            if (signatureBlocks.length > 1) {
-              const rows = [];
-              const blocksPerRow = 2;
-              
-              // Create rows of signature blocks (2 per row)
-              for (let i = 0; i < signatureBlocks.length; i += blocksPerRow) {
-                const cells = [];
-                
-                // Process up to blocksPerRow signature blocks
-                for (let j = 0; j < blocksPerRow && (i + j) < signatureBlocks.length; j++) {
-                  const block = signatureBlocks[i + j];
-                  const signatureElements = [];
-                  
-                  // Add signature line
-                  signatureElements.push(
-                    new Paragraph({
-                      children: [new TextRun({ text: "_________________________" })],
-                      spacing: { before: 200, after: 80, line: 240 }
-                    })
-                  );
-                  
-                  // Process each signature line
-                  Array.from(block.childNodes)
-                    .filter(node => node.nodeType === Node.ELEMENT_NODE)
-                    .forEach((node, idx) => {
-                      const text = node.textContent.trim();
-                      if (text) {
-                        signatureElements.push(
-                          new Paragraph({
-                            children: [
-                              new TextRun({
-                                text,
-                                bold: idx === 0, // Make first line bold
-                                size: textStyles.normal.size,
-                                color: textStyles.normal.color,
-                                font: textStyles.normal.font
-                              })
-                            ],
-                            spacing: { before: 40, after: 40, line: 240 }
-                          })
-                        );
-                      }
-                    });
-                  
-                  // Add this signature block as a cell
-                  cells.push(
-                    new TableCell({
-                      children: signatureElements,
-                      width: {
-                        size: 50,
-                        type: WidthType.PERCENTAGE
-                      },
-                      margins: {
-                        top: 200,
-                        bottom: 200,
-                        left: 300,
-                        right: 300
-                      }
-                    })
-                  );
-                }
-                
-                // Add empty cells to fill the row if needed
-                while (cells.length < blocksPerRow) {
-                  cells.push(
-                    new TableCell({
-                      children: [new Paragraph("")],
-                      width: {
-                        size: 50,
-                        type: WidthType.PERCENTAGE
-                      },
-                      margins: {
-                        top: 200,
-                        bottom: 200,
-                        left: 300,
-                        right: 300
-                      }
-                    })
-                  );
-                }
-                
-                // Add this row to the table
-                rows.push(new TableRow({ children: cells }));
+                );
               }
               
-              // Add the table to the document with visible borders
+              // Get all signature items in this row
+              const signaturesInRow = Array.from(row.querySelectorAll('p'))
+                .map(p => p.textContent.trim())
+                .filter(text => text.length > 0);
+              
+              if (signaturesInRow.length === 0) return;
+              
+              // Create individual signature lines in a table for proper alignment
+              const signatureTableRows = [];
+              
+              // First row: signature lines
+              const signatureLineCells = signaturesInRow.map(() => 
+                new TableCell({
+                  children: [
+                    new Paragraph({
+                      children: [
+                        new TextRun({
+                          text: Array(Math.floor(100/signaturesInRow.length)).fill("_").join(""),
+                          ...textStyles.normal
+                        })
+                      ],
+                      spacing: { before: 0, after: 60 },
+                      alignment: AlignmentType.CENTER
+                    })
+                  ],
+                  width: { size: 100/signaturesInRow.length, type: WidthType.PERCENTAGE },
+                  borders: {
+                    top: { style: BorderStyle.NONE },
+                    bottom: { style: BorderStyle.NONE },
+                    left: { style: BorderStyle.NONE },
+                    right: { style: BorderStyle.NONE }
+                  },
+                  margins: {
+                    top: 0,
+                    bottom: 0,
+                    left: 100,
+                    right: 100
+                  }
+                })
+              );
+              
+              signatureTableRows.push(
+                new TableRow({
+                  children: signatureLineCells
+                })
+              );
+              
+              // Second row: signature labels
+              const signatureLabelCells = signaturesInRow.map(signatureText => {
+                // Handle multi-line signature text (split by <br/> or newlines)
+                const signatureLines = signatureText.split(/\s*<br\/?>\s*|\n/).filter(line => line.trim());
+                const mainLabel = signatureLines[0] || signatureText;
+                
+                return new TableCell({
+                  children: [
+                    new Paragraph({
+                      children: [
+                        new TextRun({
+                          text: mainLabel,
+                          bold: true,
+                          ...textStyles.normal
+                        })
+                      ],
+                      spacing: { before: 60, after: 0 },
+                      alignment: AlignmentType.CENTER
+                    })
+                  ],
+                  width: { size: 100/signaturesInRow.length, type: WidthType.PERCENTAGE },
+                  borders: {
+                    top: { style: BorderStyle.NONE },
+                    bottom: { style: BorderStyle.NONE },
+                    left: { style: BorderStyle.NONE },
+                    right: { style: BorderStyle.NONE }
+                  },
+                  margins: {
+                    top: 0,
+                    bottom: 0,
+                    left: 100,
+                    right: 100
+                  }
+                });
+              });
+              
+              signatureTableRows.push(
+                new TableRow({
+                  children: signatureLabelCells
+                })
+              );
+              
+              // Add the signature table
               docElements.push(
                 new Table({
-                  rows,
+                  rows: signatureTableRows,
                   width: {
                     size: 100,
                     type: WidthType.PERCENTAGE
                   },
                   borders: {
-                    insideHorizontal: {
-                      style: BorderStyle.SINGLE,
-                      size: 1,
-                      color: "000000"
-                    },
-                    insideVertical: {
-                      style: BorderStyle.SINGLE,
-                      size: 1,
-                      color: "000000"
-                    },
-                    top: {
-                      style: BorderStyle.SINGLE,
-                      size: 2,
-                      color: "000000"
-                    },
-                    bottom: {
-                      style: BorderStyle.SINGLE,
-                      size: 2,
-                      color: "000000"
-                    },
-                    left: {
-                      style: BorderStyle.SINGLE,
-                      size: 2,
-                      color: "000000"
-                    },
-                    right: {
-                      style: BorderStyle.SINGLE,
-                      size: 2,
-                      color: "000000"
-                    }
-                  },
-                  margins: {
-                    top: 200,
-                    bottom: 200,
-                    left: 200,
-                    right: 200
+                    insideHorizontal: { style: BorderStyle.NONE },
+                    insideVertical: { style: BorderStyle.NONE },
+                    top: { style: BorderStyle.NONE },
+                    bottom: { style: BorderStyle.NONE },
+                    left: { style: BorderStyle.NONE },
+                    right: { style: BorderStyle.NONE }
                   }
                 })
               );
-            } else {
-              // If only one signature block, add it directly
-              Array.from(signatureBlocks).forEach(block => {
-                // Add signature line with space above
-                docElements.push(
-                  new Paragraph({
-                    children: [
-                      new TextRun({ text: "", break: 1 }),
-                      new TextRun({ text: "_________________________" })
-                    ],
-                    spacing: { before: 200, after: 100, line: 260 }
-                  })
-                );
-                
-                // Process each signature line
-                Array.from(block.childNodes)
-                  .filter(node => node.nodeType === Node.ELEMENT_NODE)
-                  .forEach((node, i) => {
-                    const text = node.textContent.trim();
-                    if (text) {
-                      docElements.push(
-                        new Paragraph({
-                          children: [
-                            new TextRun({
-                              text,
-                              bold: i === 0, // Make first line bold
-                              size: textStyles.normal.size,
-                              color: textStyles.normal.color,
-                              font: textStyles.normal.font
-                            })
-                          ],
-                          spacing: { before: 80, after: 80, line: 240 }
-                        })
-                      );
-                    }
-                  });
-              });
-            }
+            });
+            
+            // Add space after all signatures
+            docElements.push(
+              new Paragraph({
+                children: [new TextRun({ text: "" })],
+                spacing: { before: 120, after: 240 }
+              })
+            );
           }
           // Skip individual signature-blocks - they're handled within the signatures section
           else if (child.classList && child.classList.contains('signature-block')) {
@@ -907,10 +830,10 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
           properties: {
             page: {
               margin: {
-                top: 1800, // 1.25 inches in twips
-                right: 1800,
-                bottom: 1800,
-                left: 1800
+                top: 1440, // 1 inch in twips (reduced from 1.25 inches)
+                right: 1440,
+                bottom: 1440,
+                left: 1440
               }
             }
           },

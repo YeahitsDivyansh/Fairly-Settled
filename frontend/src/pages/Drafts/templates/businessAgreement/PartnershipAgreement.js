@@ -100,22 +100,15 @@ export const generatePartnershipAgreement = (data) => `<div class="agreement-tem
 
     <p>This Agreement is drawn up in two (2) identical copies, one for each Party. Both Parties have read and fully understood this Agreement. This Agreement shall become effective and legally binding upon signature by each of the Parties.</p>
 
+    <h2>SIGNED BY:</h2>
     <div class="signatures">
-      <h2>SIGNED BY:</h2>
-      
-      <div class="signature-block">
-        <p>The First Party</p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>The Supplier</p>
+        <p>The Distributor</p>
       </div>
-      <div class="signature-block">
-        <p>The Second Party</p>
-      </div>
-
-      <div class="signature-block">
-        <p>The Witness</p>
-      </div>
-
-      <div class="signature-block">
-        <p>The Witness</p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>Witness</p>
+        <p>Witness</p>
       </div>
     </div>
   </div>

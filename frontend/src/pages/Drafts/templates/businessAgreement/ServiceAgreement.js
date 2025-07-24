@@ -163,21 +163,13 @@ export const generateServiceAgreement = (data) => `<div class="agreement-templat
 
     <h2>SIGNED BY:</h2>
     <div class="signatures">
-      <div class="signature-block">
-        <p>_________________________</p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
         <p>The Service Provider</p>
-      </div>
-      <div class="signature-block">
-        <p>_________________________</p>
         <p>The Client</p>
       </div>
-      <div class="signature-block">
-        <p>_________________________</p>
-        <p>The Witness</p>
-      </div>
-      <div class="signature-block">
-        <p>_________________________</p>
-        <p>The Witness</p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>Witness</p>
+        <p>Witness</p>
       </div>
     </div>
   </div>

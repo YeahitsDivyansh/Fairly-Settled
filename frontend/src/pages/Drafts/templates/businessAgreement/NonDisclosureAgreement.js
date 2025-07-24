@@ -39,28 +39,17 @@ export const generateNonDisclosureAgreement = (data) => `<div class="agreement-t
 
     <h2>6. GOVERNING LAW</h2>
     <p>This Agreement shall be governed by and construed in accordance with the laws of <span class="highlight"> ${data.jurisdiction} </span>, without regard to its conflicts of law principles. Any disputes arising out of or in connection with this Agreement shall be subject to the exclusive jurisdiction of the courts located in <span class="highlight"> ${data.jurisdiction} </span>.</p>
-
+    <p>IN WITNESS WHEREOF, the Parties have executed this Non-Disclosure Agreement as of the Effective Date.</p>
+    
+    <h2>SIGNED BY:</h2>
     <div class="signatures">
-      <h2>IN WITNESS WHEREOF, the Parties have executed this Non-Disclosure Agreement as of the Effective Date.</h2>
-      
-      <div class="signature-block">
-        <p>The Disclosing Party: ________________</p>     
-        <p>Date: <span class="highlight"> ${data.disclosingSignatureDate} </span></p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>The Disclosing Party</p>
+        <p>The Receiving Party</p>
       </div>
-
-      <div class="signature-block">
-        <p>The Receiving Party: ________________</p>
-        <p>Date: <span class="highlight"> ${data.receivingSignatureDate} </span></p>
-      </div>
-
-      <div class="signature-block">
-        <p>The Witness: ________________</p>              
-        <p>Date: <span class="highlight"> ${data.witness1SignatureDate} </span></p>
-      </div>
-
-      <div class="signature-block">
-        <p>The Witness: ________________</p>
-        <p>Date: <span class="highlight"> ${data.witness2SignatureDate} </span></p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>Witness</p>
+        <p>Witness</p>
       </div>
     </div>
   </div>

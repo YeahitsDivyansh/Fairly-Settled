@@ -1,19 +1,18 @@
 export const sharePurchaseAgreementFields = [
+  "effectivedate",
   "sellerName",
-  "sellerAddress",
   "buyerName",
-  "buyerAddress",
-  "companyName",
-  "companyRegistration",
   "numberOfShares",
   "shareNumberFrom",
   "shareNumberTo",
+  "companyName",
+  "companyRegistration",
   "pricePerShare",
+  "totalShares",
   "totalPurchasePrice",
   "depositAmount",
   "depositDate",
   "balanceAmount",
-  "transferDeadlineDays",
 ];
 
 export const generateSharePurchaseAgreement = (data) => `<div class="agreement-template">
@@ -21,7 +20,7 @@ export const generateSharePurchaseAgreement = (data) => `<div class="agreement-t
 
   <div class="agreement-body">
     <p>
-      This Share Purchase Agreement shall become effective on <span class="highlight">${data.signingDate ?? 'undefined'}</span> (the "Execution Date") and is subject to the terms and conditions stated below between <span class="highlight">${data.sellerName ?? 'undefined'}</span> (the "Seller") and <span class="highlight">${data.buyerName ?? 'undefined'}</span> (the "Buyer"), collectively referred to as the "Parties".
+      This Share Purchase Agreement shall become effective on <span class="highlight">${data.effectivedate ?? 'undefined'}</span> (the "Execution Date") and is subject to the terms and conditions stated below between <span class="highlight">${data.sellerName ?? 'undefined'}</span> (the "Seller") and <span class="highlight">${data.buyerName ?? 'undefined'}</span> (the "Buyer"), collectively referred to as the "Parties".
     </p>
 
     <h2>1. SHARE TO BE PURCHASED.</h2>
@@ -48,28 +47,17 @@ export const generateSharePurchaseAgreement = (data) => `<div class="agreement-t
 
     <p>This Agreement is drawn up in two (2) identical copies, one for each party. Both Parties have read and fully understood this Agreement. This Agreement shall become effective and legally binding upon signature by each of the Parties.</p>
 
+     <h2>SIGNED BY-</h2>
     <div class="signatures">
-      <h2>SIGNED BY-</h2>
-      
-      <div class="signature-block">
-        <p>_________________________</p>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
         <p>The Seller</p>
-       </div>
-
-      <div class="signature-block">
-        <p>_________________________</p>
         <p>The Buyer</p>
-        </div>
-
-      <div class="signature-block">
-        <p>_________________________</p>
-        <p>The Witness</p>
-       </div>
-
-      <div class="signature-block">
-        <p>_________________________</p>
-        <p>The Witness</p>
-        </div>
+      </div>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>Witness</p>
+        <p>Witness</p>
+      </div>
     </div>
   </div>
 </div>`;
+
