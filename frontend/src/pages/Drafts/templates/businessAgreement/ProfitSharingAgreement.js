@@ -46,7 +46,7 @@ export const generateProfitSharingAgreement = (data) => `<div class="agreement-t
     <p>The Parties acknowledge that certain costs and expenses may be necessary for the operation of the business and the generation of profits. Such costs and expenses shall be incurred by the parties individually and shall not be considered as part of the net profits subject to sharing, but may be eligible for reimbursement under the following conditions:</p>
 
     <ul>
-      <li>strong>Pre-approved costs:</strong> Any costs and expenses that are pre-approved in writing by all parties shall be eligible for reimbursement. Prior written approval must be obtained for each specific cost or expense, indicating the nature, estimated amount, and purpose of the expenditure.</li>
+      <li><strong>Pre-approved costs:</strong> Any costs and expenses that are pre-approved in writing by all parties shall be eligible for reimbursement. Prior written approval must be obtained for each specific cost or expense, indicating the nature, estimated amount, and purpose of the expenditure.</li>
       <li>Reasonable and necessary costs: Reimbursable costs must be reasonable and necessary for the proper functioning of the business. They should be directly related to the operations, marketing, production, distribution, or any other activities agreed upon by the parties.</li>
       <li>Documentation and submission: Any party seeking reimbursement for costs and expenses must maintain accurate and detailed records, invoices, receipts, or other supporting documents. These documents shall be submitted to the other parties within seven (7) days after the end of each accounting period, accompanied by a written reimbursement request.</li>
     </ul>
