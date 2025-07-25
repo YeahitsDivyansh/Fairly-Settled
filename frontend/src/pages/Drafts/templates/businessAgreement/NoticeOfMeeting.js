@@ -1,12 +1,11 @@
 export const noticeOfMeetingFields = [
-  "organizationName",
+  "companyName",
+  "meetingNumber",
   "meetingType",
   "meetingDate",
   "meetingTime",
   "meetingLocation",
-  "agenda",
-  "contactPerson",
-  "rsvpDetails",
+  "meetingAgendas",
   "noticeDate"
 ];
 
@@ -14,33 +13,25 @@ export const generateNoticeOfMeeting = (data) => `<div class="agreement-template
   <h1 class="agreement-title">NOTICE OF MEETING</h1>
 
   <div class="agreement-body">
-    <p>Date of Notice: <span class="highlight">${data.noticeDate}</span></p>
+    <p><span class="highlight">${data.noticeDate}</span></p>
+    
+    <p><strong>Re:</strong> Invitation letter to ${data.meetingType} Shareholders' Meeting No. <span class="highlight">${data.meetingNumber}</span></p>
+    
+    <p><strong>To:</strong> All shareholders of <span class="highlight">${data.companyName}</span>.</p>
+    
+    <p>Whereas the Board of Directors of <span class="highlight">${data.companyName}</span> (the "Company") has resolved to convene the ${data.meetingType} General Meeting of shareholder No. <span class="highlight">${data.meetingNumber}</span> on <span class="highlight">${data.meetingDate}</span> at <span class="highlight">${data.meetingTime}</span> at <span class="highlight">${data.meetingLocation}</span>, India (the "Meeting"), the shareholders of the Company are hereby invited to attend this Meeting to deliberate on the following agenda and proposed resolutions:</p>
+    
+    <div class="meeting-agendas">
+      <span class="highlight">${data.meetingAgendas}</span>
+    </div>
+    
+    <p>Therefore, the Board of Directors of <span class="highlight">${data.companyName}</span> would like to invite you as a shareholder to attend the Meeting according to the day, time, and place as mentioned above.</p>
 
-    <p><strong>Organization:</strong> <span class="highlight">${data.organizationName}</span></p>
-
-    <h2>NOTICE IS HEREBY GIVEN</h2>
-    <p>A <span class="highlight">${data.meetingType}</span> meeting will be held:</p>
-
-    <p><strong>Date:</strong> <span class="highlight">${data.meetingDate}</span></p>
-    <p><strong>Time:</strong> <span class="highlight">${data.meetingTime}</span></p>
-    <p><strong>Location:</strong> <span class="highlight">${data.meetingLocation}</span></p>
-
-    <h2>AGENDA</h2>
-    <p><span class="highlight">${data.agenda}</span></p>
-
-    <h2>CONTACT INFORMATION</h2>
-    <p>For more information, contact: <span class="highlight">${data.contactPerson}</span></p>
-
-    <h2>RSVP</h2>
-    <p><span class="highlight">${data.rsvpDetails}</span></p>
-
-    <p>By order of the organization.</p>
-
+    <p>Sincerely,</p>
     <div class="signatures">
       <div class="signature-block">
         <p>_________________________</p>
-        <p>Secretary/Organizer</p>
-        <p>Date: <span class="highlight">${data.noticeDate}</span></p>
+        <p>The Director</p>
       </div>
     </div>
   </div>
