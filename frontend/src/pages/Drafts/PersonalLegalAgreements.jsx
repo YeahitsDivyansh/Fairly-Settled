@@ -35,7 +35,7 @@ const templates = {
   }
 };
 
-export default function BusinessAgreements() {
+export default function PersonalLegalAgreements() {
   const { userData } = useUserAuth();
   const navigate = useNavigate();
   const [type, setType] = useState(agreementTypes[0]);
