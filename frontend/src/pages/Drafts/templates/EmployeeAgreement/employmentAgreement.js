@@ -100,17 +100,15 @@ export const generateEmploymentAgreement = (data) => `<div class="agreement-temp
     <p>This Employment Agreement shall be governed by and construed in accordance with the laws of India.</p>
     <p>This Agreement is drawn up in two (2) identical copies, one for each party.</p>
 
-    <h2>SIGNED BY:</h2>
+    <h2>SIGNED BY-</h2>
     <div class="signatures">
-      <div class="signature-block" style="display: flex; justify-content: space-between; margin-top: 40px;">
-        <div>
-          <p>The Employer</p>
-          <p>The Employee</p>
-        </div>
-        <div>
-          <p>The Witness</p>
-          <p>The Witness</p>
-        </div>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>The Employer</p>
+        <p>The Employee</p>
+      </div>
+      <div class="signature-block" style="display: flex; justify-content: space-between;">
+        <p>The Witness</p>
+        <p>The Witness</p>
       </div>
     </div>
   </div>

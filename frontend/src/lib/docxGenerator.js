@@ -51,10 +51,10 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
     // Helper function for consistent spacing
     const getSpacingProps = (size = 'normal') => {
       const spacingMap = {
-        'small': { before: 30, after: 30, line: 300 }, // Reduced spacing
-        'normal': { before: 40, after: 40, line: 320 }, // Reduced spacing
-        'heading': { before: 60, after: 20, line: 340 }, // Reduced spacing
-        'title': { before: 80, after: 80, line: 360 } // Reduced spacing
+        'small': { before: 10, after: 10, line: 240 }, // Reduced spacing
+        'normal': { before: 15, after: 15, line: 260 }, // Reduced spacing
+        'heading': { before: 25, after: 10, line: 280 }, // Reduced spacing
+        'title': { before: 30, after: 30, line: 300 } // Reduced spacing
       };
       return spacingMap[size] || spacingMap.normal;
     };
@@ -127,12 +127,12 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
           // Process different element types
           if (child.tagName === 'H1' || child.classList?.contains('agreement-title')) {
             // Title with center alignment
-            // Add minimal space at the top
+            // Add minimal space at the top only if this is the first element
             if (docElements.length === 0) {
               docElements.push(
                 new Paragraph({
                   children: [new TextRun({ text: "" })],
-                  spacing: { before: 80, after: 0 }
+                  spacing: { before: 20, after: 0 }
                 })
               );
             }
@@ -148,24 +148,8 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
                     ...textStyles.title
                   })
                 ],
-                spacing: { before: 120, after: 20 },
+                spacing: { before: 5, after: 20 },
                 alignment: AlignmentType.CENTER
-              })
-            );
-            
-            // Add a black underline to match professional styling
-            docElements.push(
-              new Paragraph({
-                children: [new TextRun({ text: "" })],
-                spacing: { before: 0, after: 20 },
-                border: {
-                  bottom: {
-                    color: "000000", // Black color
-                    space: 1,
-                    style: "single",
-                    size: 10
-                  }
-                }
               })
             );
           } 
@@ -174,7 +158,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
             docElements.push(
               new Paragraph({
                 children: [new TextRun({ text: "", break: 1 })],
-                spacing: { before: 10, after: 0 }
+                spacing: { before: 5, after: 0 }
               })
             );
             
@@ -207,22 +191,6 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
                   })
                 ],
                 spacing: getSpacingProps('heading')
-              })
-            );
-            
-            // Add a full-width horizontal line under the heading
-            docElements.push(
-              new Paragraph({
-                children: [new TextRun({ text: "" })],
-                spacing: { before: 0, after: 10 },
-                border: {
-                  bottom: {
-                    color: "000000", // Black color for professional look
-                    space: 1,
-                    style: "single",
-                    size: 8
-                  }
-                }
               })
             );
           } 
@@ -267,9 +235,9 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
             // Process paragraph with special handling for highlighted and bold text
             const runs = [];
             
-            // Insert space before paragraph if needed
+            // Insert minimal space before paragraph if needed (only if not the first element)
             if (docElements.length > 0) {
-              runs.push(new TextRun({ text: "", break: 1 }));
+              runs.push(new TextRun({ text: "" }));
             }
             
             // Check if this paragraph contains a label and a highlighted value (e.g., "Name: John")
@@ -334,7 +302,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
             docElements.push(
               new Paragraph({
                 children: runs,
-                spacing: getSpacingProps(),
+                spacing: { before: 10, after: 10, line: 260 },
                 alignment: child.style?.textAlign === 'center' ? AlignmentType.CENTER : AlignmentType.JUSTIFIED
               })
             );
@@ -656,7 +624,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
                     new Paragraph({
                       children: [
                         new TextRun({
-                          text: Array(Math.floor(100/signaturesInRow.length)).fill("_").join(""),
+                          text: Array(25).fill("_").join(""),
                           ...textStyles.normal
                         })
                       ],
@@ -664,7 +632,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
                       alignment: AlignmentType.CENTER
                     })
                   ],
-                  width: { size: 100/signaturesInRow.length, type: WidthType.PERCENTAGE },
+                  width: { size: 100/signaturesInRow.length-5, type: WidthType.PERCENTAGE },
                   borders: {
                     top: { style: BorderStyle.NONE },
                     bottom: { style: BorderStyle.NONE },
@@ -733,7 +701,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
                 new Table({
                   rows: signatureTableRows,
                   width: {
-                    size: 100,
+                    size: 90,
                     type: WidthType.PERCENTAGE
                   },
                   borders: {
@@ -788,7 +756,7 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
       const titleElements = [
         new Paragraph({
           children: [new TextRun({ text: "" })],
-          spacing: { before: 240, after: 0 }
+          spacing: { before: 60, after: 0 }
         }),
         new Paragraph({
           children: [
@@ -797,20 +765,8 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
               ...textStyles.title
             })
           ],
-          spacing: { before: 120, after: 20 },
+          spacing: { before: 5, after: 20 },
           alignment: AlignmentType.CENTER
-        }),
-        new Paragraph({
-          children: [new TextRun({ text: "" })],
-          spacing: { before: 0, after: 120 },
-          border: {
-            bottom: {
-              color: "000000", // Black color
-              space: 1,
-              style: "single",
-              size: 10
-            }
-          }
         })
       ];
       

@@ -22,7 +22,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
     // Create a temporary div to parse the HTML content
     const tempDiv = document.createElement('div');
     
-    // Apply text spacing fixes for better PDF formatting
+    // Apply text spacing fixes for PDF formatting
     let processedText = htmlContent;
     
     // Add space before highlighted text if there isn't one
@@ -45,14 +45,14 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
     
     tempDiv.innerHTML = processedText;
     
-    // Constants for styling - optimized margins for better page usage
-    const topMargin = 50;  // Reduced top margin
-    const bottomMargin = 15; // Reduced bottom margin
+    // Constants for styling
+    const topMargin = 50;
+    const bottomMargin = 15;
     const sideMargin = 40;
     const titleFontSize = 18;
     const headingFontSize = 14;
     const bodyFontSize = 11;
-    const lineHeight = 1.4; // Slightly reduced line height for better spacing
+    const lineHeight = 1.4;
     const pageHeight = pdf.internal.pageSize.height - topMargin - bottomMargin;
     const pageWidth = pdf.internal.pageSize.width - 2 * sideMargin;
     
@@ -80,11 +80,6 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
         y += titleFontSize * 1.2;
       });
       
-      // Add underline
-      pdf.setDrawColor(0, 0, 0);
-      pdf.setLineWidth(1);
-      const underlineY = y + 5;
-      pdf.line(sideMargin, underlineY, pageWidth + sideMargin, underlineY);
       y += 20; // Space after title
     }
     
@@ -112,7 +107,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
               });
               position += text.length;
             }
-          } else if (node.nodeType === Node.ELEMENT_NODE) {
+          } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName) {
             if (node.tagName === 'SPAN' && node.classList.contains('highlight')) {
               const text = node.textContent.trim();
               if (text) {
@@ -123,7 +118,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
                   highlight: true,
                   position
                 });
-                position += text.length + 2; // Add 2 for the added space
+                position += text.length + 2; // Account for added spaces
               }
             } else if (node.tagName === 'STRONG') {
               const text = node.textContent.trim();
@@ -162,7 +157,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
         return textY - y; // Return the height of the rendered text
       }
       
-      // Handle styled text - simplified approach to avoid overlapping
+      // Handle styled text
       pdf.setFont("helvetica", "normal");
       pdf.setTextColor(0, 0, 0);
       const lines = getWrappedText(currentText, fontSize, maxWidth);
@@ -182,7 +177,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
           }
         }
         
-        // If line has bold text, make the whole line bold for simplicity
+        // Apply bold formatting to lines containing bold text
         if (hasBoldText) {
           pdf.setFont("helvetica", "bold");
         }
@@ -198,28 +193,29 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
     const processNode = (node, level = 0) => {
       if (!node) return;
       
-      const indent = level * 20; // Indentation for nested elements
-      const x = sideMargin + indent;
-      const effectiveWidth = pageWidth - indent;
-      
-      // Handle different node types
-      Array.from(node.childNodes).forEach(child => {
-        // Skip the title as we already processed it
-        if (child === titleElement) return;
+      try {
+        const indent = level * 20; // Indentation for nested elements
+        const x = sideMargin + indent;
+        const effectiveWidth = pageWidth - indent;
         
-        // Check if we need a new page - reduced buffer for better page utilization
-        if (y > pageHeight + topMargin - 50) {
-          pdf.addPage();
-          y = topMargin;
-        }
-        
-        if (child.nodeType === Node.ELEMENT_NODE) {
-          // Handle headings with better spacing
-          if (child.tagName.match(/^H[1-6]$/)) {
-            // Add extra space before headings to avoid tight spacing with previous content
-            y += 15;
+        // Handle different node types
+        Array.from(node.childNodes).forEach(child => {
+          // Skip the title as we already processed it
+          if (child === titleElement) return;
+          
+          // Check if we need a new page
+          if (y > pageHeight + topMargin - 50) {
+            pdf.addPage();
+            y = topMargin;
+          }
+          
+          if (child.nodeType === Node.ELEMENT_NODE && child.tagName) {
+          // Handle headings
+          if (child.tagName && child.tagName.match(/^H[1-6]$/)) {
+            // Add space before headings
+            y += 10;
             
-            // Check pagination before adding heading to avoid orphaned headings
+            // Check pagination before adding heading
             if (y > pageHeight + topMargin - 60) {
               pdf.addPage();
               y = topMargin;
@@ -240,26 +236,16 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
               y += headingSize * 1.2;
             });
             
-            // Add underline for headings with proper spacing
-            if (headingLevel === 2) {
-              y += 1; // Add some space before the underline
-              pdf.setDrawColor(0, 0, 0); // Black for h2 underline
-              pdf.setLineWidth(0.5);
-              pdf.line(x, y, x + effectiveWidth, y);
-              y += 5; // Add space after the underline
-            }
-            
-            y += 8; // Increased space after heading
+            y += 6; // Space after heading
           }
-          // Handle paragraphs with improved pagination
+          // Handle paragraphs
           else if (child.tagName === 'P') {
             // Calculate approximate height needed for this paragraph
             const paragraphText = child.textContent.trim();
             const lines = getWrappedText(paragraphText, bodyFontSize, effectiveWidth);
             const estimatedHeight = lines.length * bodyFontSize * lineHeight + 10;
             
-            // Check if paragraph would go too close to bottom of page
-            // Reduced threshold for better page utilization
+            // Check if paragraph would go beyond page boundary
             if (y + estimatedHeight > pageHeight + topMargin - 30) {
               pdf.addPage();
               y = topMargin;
@@ -274,11 +260,11 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
           }
           // Handle lists
           else if (child.tagName === 'UL' || child.tagName === 'OL') {
-            y += 5; // Space before list
+            y += 4; // Space before list
             processNode(child, level + 1);
-            y += 5; // Space after list
+            y += 4; // Space after list
           }
-          // Handle list items with improved pagination
+          // Handle list items
           else if (child.tagName === 'LI') {
             // Calculate approximate height needed for this list item
             const listItemText = child.textContent.trim();
@@ -297,7 +283,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
             
             // Bullet or number
             const isOrderedList = child.parentElement && child.parentElement.tagName === 'OL';
-            const listIndex = Array.from(child.parentElement.children).indexOf(child) + 1;
+            const listIndex = Array.from(child.parentElement?.children || []).indexOf(child) + 1;
             const bulletText = isOrderedList ? `${listIndex}. ` : '• ';
             
             pdf.text(bulletText, x - 15, y);
@@ -309,19 +295,19 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
                 pdf.addPage();
                 y = topMargin;
                 
-                // Repeat the bullet/number on the new page for continuation
+                // Add continuation marker on new page
                 pdf.text(isOrderedList ? "(cont.) " : "→ ", x - 15, y);
               }
               
-              pdf.text(line, x + 5, y); // Extra indent for wrapped lines
+              pdf.text(line, x + 5, y); // Indent for wrapped lines
               y += bodyFontSize * lineHeight;
             });
             
-            y += 5; // Extra space between list items
+            y += 2; // Space between list items
           }
           // Handle tables
           else if (child.tagName === 'TABLE') {
-            y += 10; // Space before table
+            y += 8; // Space before table
             
             const rows = child.querySelectorAll('tr');
             const columnCount = Math.max(...Array.from(rows).map(row => row.querySelectorAll('td, th').length));
@@ -332,11 +318,10 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
             // Draw table
             rows.forEach((row, rowIndex) => {
               const cells = row.querySelectorAll('td, th');
-              const isHeader = rowIndex === 0 || cells[0].tagName === 'TH';
-              // Store current y position
+              const isHeader = rowIndex === 0 || (cells[0] && cells[0].tagName === 'TH');
               let maxCellHeight = cellHeight;
               
-              // First pass to calculate row height based on content
+              // Calculate row height based on content
               cells.forEach((cell) => {
                 const cellText = cell.textContent.trim();
                 const cellLines = getWrappedText(cellText, bodyFontSize, columnWidth - 2 * cellPadding);
@@ -344,7 +329,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
                 maxCellHeight = Math.max(maxCellHeight, cellContentHeight);
               });
               
-              // Check if table row would go beyond page boundary - consistent buffer
+              // Check if table row would go beyond page boundary
               if (y + maxCellHeight > pageHeight + topMargin - 50) {
                 pdf.addPage();
                 y = topMargin;
@@ -381,25 +366,25 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
               y += maxCellHeight;
             });
             
-            y += 20; // Space after table
+            y += 17; // Space after table
           }
           // Handle signature blocks
           else if (child.classList && child.classList.contains('signatures')) {
-            // Check if signatures would go beyond page boundary - ensure signatures stay together
-            const estimatedSignatureHeight = 200; // Increased height to accommodate flexible rows
-            if (y + estimatedSignatureHeight > pageHeight + topMargin - 60) {
-              pdf.addPage();
-              y = topMargin + 20;
-            } else {
-              y += 30;
-            }
+            // Check if signatures would go beyond page boundary
+            // const estimatedSignatureHeight = 200;
+            // if (y + estimatedSignatureHeight > pageHeight + topMargin - 60) {
+            //   pdf.addPage();
+            //   y = topMargin + 20;
+            // } else {
+            //   y += 30;
+            // }
 
             // Process signature rows - each signature-block is a row
             const signatureRows = Array.from(child.querySelectorAll('.signature-block'));
             
             signatureRows.forEach((row, rowIndex) => {
               if (rowIndex > 0) {
-                y += 40; // Margin between rows
+                y += 15; // Margin between rows
               }
               
               // Get all signature items in this row
@@ -420,7 +405,8 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
                 pdf.setDrawColor(0, 0, 0);
                 pdf.setLineWidth(0.5);
                 const lineWidth = Math.min(120, signatureWidth - 20);
-                pdf.line(signatureX, y, signatureX + lineWidth, y);
+                const marginTop = 15;
+                pdf.line(signatureX, y + marginTop, signatureX + lineWidth, y + marginTop);
                 
                 // Add signature text below the line
                 pdf.setFont("helvetica", "bold");
@@ -429,7 +415,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
                 
                 // Handle multi-line signature text (split by <br/> or newlines)
                 const signatureLines = signatureText.split(/\s*<br\/?>\s*|\n/).filter(line => line.trim());
-                let sigY = y + 20;
+                let sigY = y + marginTop + 20;
                 
                 signatureLines.forEach((line, lineIndex) => {
                   pdf.setFont("helvetica", lineIndex === 0 ? "bold" : "normal");
@@ -438,21 +424,20 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
                 });
               });
               
-              y = startY + 70; // Move Y for next row (increased space to accommodate multi-line signatures)
+              y = startY + 70; // Move Y for next row
             });
             
-            y += 20; // Space after all signatures
-          }
-          // Handle signature blocks (skip, handled above)
-          else if (child.classList && child.classList.contains('signature-block')) {
-            // Skip individual signature-blocks here, handled in signatures above
+            y += 10; // Space after all signatures
           }
           // Process div and other container elements recursively
           else if (child.childNodes && child.childNodes.length > 0) {
             processNode(child, level);
           }
         }
-      });
+        });
+      } catch (nodeError) {
+        console.warn('Error processing node:', nodeError);
+      }
     };
     
     // Process the body content
