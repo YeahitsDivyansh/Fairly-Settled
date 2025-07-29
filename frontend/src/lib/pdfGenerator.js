@@ -368,7 +368,7 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
             
             y += 17; // Space after table
           }
-          // Handle signature blocks
+          // Handle signature blocks (original format)
           else if (child.classList && child.classList.contains('signatures')) {
             // Check if signatures would go beyond page boundary
             // const estimatedSignatureHeight = 200;
@@ -428,6 +428,61 @@ export const generatePDF = async (htmlContent, fileName, userData, documentType 
             });
             
             y += 10; // Space after all signatures
+          }
+          // Handle editable signature blocks (new format)
+          else if (child.classList && child.classList.contains('signature-block-editable')) {
+            y += 20; // Space before signatures
+            
+            // Check if signatures would go beyond page boundary
+            if (y + 80 > pageHeight + topMargin - 30) {
+              pdf.addPage();
+              y = topMargin;
+            }
+            
+            // Get all signature lines
+            const signatureLines = Array.from(child.querySelectorAll('.signature-line'));
+            
+            signatureLines.forEach((line, lineIndex) => {
+              if (lineIndex > 0) {
+                y += 25; // Space between signature lines
+              }
+              
+              const label = line.querySelector('.signature-label')?.textContent || '';
+              const underlineSpan = line.querySelector('.signature-underline');
+              let underlineText = underlineSpan?.textContent || '_______________________';
+              
+              // Clean up the underline text - if it's just underscores, draw a line instead
+              const isUnderscoresOnly = /^_+$/.test(underlineText.trim());
+              
+              pdf.setFont("helvetica", "bold");
+              pdf.setFontSize(bodyFontSize);
+              pdf.setTextColor(0, 0, 0);
+              
+              // Draw the label
+              pdf.text(label, x, y);
+              const labelWidth = pdf.getTextWidth(label);
+              
+              if (isUnderscoresOnly) {
+                // Draw a line for empty signature fields
+                pdf.setDrawColor(0, 0, 0);
+                pdf.setLineWidth(0.5);
+                const lineStartX = x + labelWidth + 5;
+                const lineEndX = lineStartX + 150;
+                pdf.line(lineStartX, y - 2, lineEndX, y - 2);
+              } else {
+                // Draw the actual text content
+                pdf.setFont("helvetica", "normal");
+                pdf.text(underlineText, x + labelWidth + 5, y);
+                
+                // Draw underline beneath the text
+                const textWidth = pdf.getTextWidth(underlineText);
+                pdf.setDrawColor(0, 0, 0);
+                pdf.setLineWidth(0.5);
+                pdf.line(x + labelWidth + 5, y + 2, x + labelWidth + 5 + textWidth, y + 2);
+              }
+            });
+            
+            y += 30; // Space after signature block
           }
           // Process div and other container elements recursively
           else if (child.childNodes && child.childNodes.length > 0) {

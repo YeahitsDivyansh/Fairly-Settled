@@ -724,6 +724,66 @@ export const generateDOCX = async (htmlContent, fileName, userData, documentType
               })
             );
           }
+          // Handle editable signature blocks (new format)
+          else if (child.classList && child.classList.contains('signature-block-editable')) {
+            // Add space before signatures
+            docElements.push(
+              new Paragraph({
+                children: [new TextRun({ text: "", break: 2 })],
+                spacing: { before: 240, after: 120 }
+              })
+            );
+            
+            // Get all signature lines
+            const signatureLines = Array.from(child.querySelectorAll('.signature-line'));
+            
+            signatureLines.forEach((line, lineIndex) => {
+              if (lineIndex > 0) {
+                // Add space between signature lines
+                docElements.push(
+                  new Paragraph({
+                    children: [new TextRun({ text: "" })],
+                    spacing: { before: 120, after: 0 }
+                  })
+                );
+              }
+              
+              const label = line.querySelector('.signature-label')?.textContent || '';
+              const underlineSpan = line.querySelector('.signature-underline');
+              let underlineText = underlineSpan?.textContent || '_______________________';
+              
+              // Clean up the underline text - if it's just underscores, use standard underline
+              const isUnderscoresOnly = /^_+$/.test(underlineText.trim());
+              const displayText = isUnderscoresOnly ? Array(25).fill("_").join("") : underlineText;
+              
+              // Create a paragraph with the signature line
+              docElements.push(
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: label,
+                      ...textStyles.signatureText,
+                      bold: true
+                    }),
+                    new TextRun({
+                      text: displayText,
+                      ...textStyles.signatureText,
+                      bold: false
+                    })
+                  ],
+                  spacing: getSpacingProps('normal')
+                })
+              );
+            });
+            
+            // Add space after signature block
+            docElements.push(
+              new Paragraph({
+                children: [new TextRun({ text: "" })],
+                spacing: { before: 120, after: 240 }
+              })
+            );
+          }
           // Skip individual signature-blocks - they're handled within the signatures section
           else if (child.classList && child.classList.contains('signature-block')) {
             // Skip - handled above

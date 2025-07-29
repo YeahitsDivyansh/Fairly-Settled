@@ -34,25 +34,25 @@ export const generatEmployeeTerminationletter = (
 
     <p>In accordance with your employment agreement, the Company will pay you the following amount as compensation:</p>
 
-    <table>
+    <table class="agreement-table" style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #000;">
         <thead>
-            <tr>
-                <th>Description</th>
-                <th>Amount</th>
+            <tr style="background-color: #f5f5f5;">
+                <th style="border: 1px solid #000; padding: 8px; text-align: left;" contenteditable="true">Description</th>
+                <th style="border: 1px solid #000; padding: 8px; text-align: left;" contenteditable="true">Amount (INR)</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Last month's salary:</td>
-                <td>INR <span class="highlight">${data.employeeSalary}</span> (Indian Rupees)</td>
+                <td style="border: 1px solid #000; padding: 8px;" contenteditable="true">Last month's salary:</td>
+                <td style="border: 1px solid #000; padding: 8px;" contenteditable="true">INR <span class="highlight">${data.employeeSalary}</span></td>
             </tr>
             <tr>
-                <td>Severance pays:</td>
-                <td>INR <span class="highlight">${data.severancePays}</span> (Indian Rupees)</td>
+                <td style="border: 1px solid #000; padding: 8px;" contenteditable="true">Severance pays:</td>
+                <td style="border: 1px solid #000; padding: 8px;" contenteditable="true">INR <span class="highlight">${data.severancePays}</span></td>
             </tr>
             <tr>
-                <td>Unused annual leave:</td>
-                <td>INR <span class="highlight">${data.unusedAnnualLeave}</span> (Indian Rupees)</td>
+                <td style="border: 1px solid #000; padding: 8px;" contenteditable="true">Unused annual leave:</td>
+                <td style="border: 1px solid #000; padding: 8px;" contenteditable="true">INR <span class="highlight">${data.unusedAnnualLeave}</span></td>
             </tr>
         </tbody>
     </table>

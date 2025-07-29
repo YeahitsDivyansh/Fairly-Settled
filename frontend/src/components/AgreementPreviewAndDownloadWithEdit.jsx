@@ -245,27 +245,6 @@ const AgreementPreviewAndDownload = ({
               border-top: 1px solid #000;
               font-weight: bold;
             }
-            .signature-block-editable {
-              margin: 30px 0;
-              display: flex;
-              flex-direction: column;
-              gap: 20px;
-            }
-            .signature-line {
-              display: flex;
-              align-items: center;
-              gap: 10px;
-            }
-            .signature-label {
-              font-weight: bold;
-              min-width: 80px;
-            }
-            .signature-underline {
-              border-bottom: 1px solid #000;
-              min-width: 200px;
-              padding: 2px 5px;
-              display: inline-block;
-            }
             .agreement-table {
               margin: 20px 0;
             }
