@@ -1,4 +1,4 @@
-export const childTravelAgreementFields = [
+export const privacyPolicyFields = [
   "executionDate",
   "parentFullName",
   "childFullName",
@@ -25,7 +25,7 @@ export const childTravelAgreementFields = [
   "designatedAdultPhone"
 ];
 
-export const generateChildTravelAgreement = (data) => `<div class="agreement-template">
+export const generatePrivacyPolicy = (data) => `<div class="agreement-template">
   <h1 class="agreement-title">Child Travel Consent Letter</h1>
 
   <style>
