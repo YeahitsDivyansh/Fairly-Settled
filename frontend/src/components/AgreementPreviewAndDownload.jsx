@@ -67,9 +67,7 @@ const AgreementPreviewAndDownload = ({
 
   return (
 <div className="w-full max-w-3xl bg-white/60 backdrop-blur-md p-6 rounded-3xl shadow-2xl space-y-4 animate-fadeIn transition-all">
-          <h2 className="text-2xl font-bold text-blue-600 text-center mb-2">Preview & Download</h2>
-          
-          {/* HTML Preview Mode */}
+          <h2 className="text-2xl font-bold text-blue-600 text-center mb-5">Preview & Download</h2>
           <div 
             className="w-full border border-gray-300 p-6 rounded-lg shadow-inner bg-white overflow-auto h-[600px]"
             style={{
@@ -87,23 +85,20 @@ const AgreementPreviewAndDownload = ({
                   font-size: 24px;
                   font-weight: bold;
                   text-align: center;
-                  margin: 20px 0;
                   border-bottom: 2px solid #2563eb;
-                  padding-bottom: 10px;
                 }
                 .agreement-body {
-                  padding: 10px 20px;
+                  padding: 5px 5px;
                   line-height: 1.6;
                 }
                 .agreement-body h2 {
                   font-size: 18px;
                   font-weight: bold;
-                  margin: 20px 0 12px;
                   border-bottom: 1px solid #e5e7eb;
-                  padding-bottom: 5px;
+                  padding-bottom: 1px;
                 }
                 .agreement-body p {
-                  margin: 10px 0;
+                  margin: 8px 0;
                   text-align: justify;
                 }
                 .highlight {
@@ -177,9 +172,7 @@ const AgreementPreviewAndDownload = ({
                   font-size: 16px;
                 }
                 .signatures {
-                  margin-top: 40px;
-                  {/* border-top: 1px solid #e5e7eb; */}
-                  padding-top: 20px;
+                  padding-top: 10px;
                 }
                 .signature-block {
                   margin: 30px 0;
@@ -205,6 +198,7 @@ const AgreementPreviewAndDownload = ({
                   height: 1px;
                   background-color: #000;
                   border-top: 1px solid #000;
+                  font-weight: bold;
                 }
                 .agreement-table {
                   margin: 20px 0;
