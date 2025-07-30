@@ -1,12 +1,6 @@
-import { useState, useEffect } from "react";
-import jsPDF from "jspdf";
-import { useNavigate } from "react-router-dom";
-import { uploadAndSavePDF } from "@/context/uploadAndSavePDF";
+import { useState } from "react";
 import { useUserAuth } from "@/context/UserAuthContext";
-
-// NEW DOCX IMPORTS
-import { Document as DocxDocument, Packer, Paragraph, TextRun } from "docx";
-import { saveAs } from "file-saver";
+import AgreementPreviewAndDownload from "@/components/AgreementPreviewAndDownload";
 
 const agreementTypes = [
   "Promissory Note",
@@ -292,21 +286,13 @@ Guarantor 2: ${data.guarantor2Name}`,
   },
 };
 
-export default function BusinessAgreementsForm({}) {
+export default function FinancialAgreements() {
   const [type, setType] = useState("Promissory Note");
   const [formData, setFormData] = useState({});
   const [generatedText, setGeneratedText] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const navigate = useNavigate();
   const { userData } = useUserAuth();
-
-  useEffect(() => {
-    if (showSuccessMessage) {
-      const timeout = setTimeout(() => setShowSuccessMessage(false), 5000);
-      return () => clearTimeout(timeout);
-    }
-  }, [showSuccessMessage]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -319,67 +305,9 @@ export default function BusinessAgreementsForm({}) {
     setSubmitted(true);
     setShowSuccessMessage(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleDownloadPDF = async () => {
-    const doc = new jsPDF("p", "mm", "a4");
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const margin = 15;
-    const lineHeight = 7;
-    const maxLineWidth = 180;
-    let y = margin;
-
-    doc.setFont("Times", "");
-    doc.setFontSize(12);
-
-    const lines = doc.splitTextToSize(generatedText, maxLineWidth);
-    lines.forEach((line) => {
-      if (y + lineHeight > pageHeight - margin) {
-        doc.addPage();
-        y = margin;
-      }
-      doc.text(line, margin, y);
-      y += lineHeight;
-    });
-
-    const fileName = `${type.replace(/\s+/g, "_")}_${Date.now()}.pdf`;
-    const pdfBlob = doc.output("blob");
-
-    const { success, error } = await uploadAndSavePDF(pdfBlob, fileName, "pdf", userData);
-    if (success) {
-      doc.save(fileName);
-      alert("PDF downloaded and saved to your history successfully.");
-      navigate("/draft-doc");
-    } else {
-      alert("Error uploading PDF: " + error);
-    }
-  };
-
-  const handleDownloadDOCX = async () => {
-    const doc = new DocxDocument({
-      sections: [
-        {
-          children: generatedText.split("\n").map(
-            (line) =>
-              new Paragraph({
-                children: [new TextRun(line)],
-              })
-          ),
-        },
-      ],
-    });
-
-    const blob = await Packer.toBlob(doc);
-    const fileName = `${type.replace(/\s+/g, "_")}_${Date.now()}.docx`;
-
-    const { success, error } = await uploadAndSavePDF(blob, fileName, "docx", userData);
-    if (success) {
-      saveAs(blob, fileName);
-      alert("DOCX downloaded and saved to your history successfully.");
-      navigate("/draft-doc");
-    } else {
-      alert("Error uploading DOCX: " + error);
-    }
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+    }, 5000);
   };
 
   return (
@@ -448,29 +376,11 @@ export default function BusinessAgreementsForm({}) {
           </button>
         </form>
       ) : (
-        <div className="w-full max-w-3xl bg-white/60 backdrop-blur-md p-6 rounded-3xl shadow-2xl space-y-4 animate-fadeIn transition-all">
-          <h2 className="text-2xl font-bold text-blue-600 text-center mb-2">Preview & Download</h2>
-          <textarea
-            value={generatedText}
-            rows="25"
-            onChange={(e) => setGeneratedText(e.target.value)}
-            className="w-full border border-gray-300 p-4 rounded-lg shadow-inner font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"
-          />
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button
-              onClick={handleDownloadPDF}
-              className="w-full sm:w-1/2 bg-blue-600 text-white font-semibold p-3 rounded-xl border border-blue-600 hover:bg-white hover:text-blue-600 shadow-lg hover:scale-[1.03] transition duration-300"
-            >
-              Download PDF
-            </button>
-            <button
-              onClick={handleDownloadDOCX}
-              className="w-full sm:w-1/2 bg-green-600 text-white font-semibold p-3 rounded-xl border border-green-600 hover:bg-white hover:text-green-600 shadow-lg hover:scale-[1.03] transition duration-300"
-            >
-              Download DOCX
-            </button>
-          </div>
-        </div>
+        <AgreementPreviewAndDownload 
+          generatedText={Array.isArray(generatedText) ? generatedText.join('\n\n') : generatedText}
+          type={type}
+          userData={userData}
+        />
       )}
     </div>
   );

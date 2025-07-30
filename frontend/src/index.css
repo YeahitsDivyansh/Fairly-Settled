@@ -14,3 +14,21 @@
     transform: translate(-50%, -40%) scale(1);
   }
 }
+
+/* Remove underlines from headings in document preview */
+.agreement-title,
+h1, h2, h3, h4, h5, h6 {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+/* Ensure headings in agreement preview don't have underlines */
+.agreement-body h1,
+.agreement-body h2,
+.agreement-body h3,
+.agreement-body h4,
+.agreement-body h5,
+.agreement-body h6 {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
