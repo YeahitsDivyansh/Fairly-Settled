@@ -7,7 +7,9 @@ on:
 
 env:
   PROJECT_ID: fairly-settled-e2466
-  BUCKET: gs://backup-restoration-02 # Updated bucket name
+  BUCKET: gs://backup-restoration-02
+  DATABASE: fairlysettled
+  RETENTION_DAYS: 7
 
 jobs:
   backup:
@@ -29,5 +31,136 @@ jobs:
       - name: Set gcloud project
         run: gcloud config set project $PROJECT_ID
 
-      - name: Firestore export
-        run: gcloud firestore export --database=fairlysettled $BUCKET
+      - name: Generate backup folder name
+        id: backup_info
+        run: |
+          BACKUP_FOLDER="firestore-backup-$(date +%Y-%m-%d_%H-%M-%S)"
+          BACKUP_PATH="${BUCKET}/${BACKUP_FOLDER}"
+          echo "backup_folder=${BACKUP_FOLDER}" >> $GITHUB_OUTPUT
+          echo "backup_path=${BACKUP_PATH}" >> $GITHUB_OUTPUT
+          echo "Backup will be stored at: ${BACKUP_PATH}"
+
+      - name: Create Firestore backup
+        id: create_backup
+        run: |
+          echo "Starting Firestore export..."
+          if gcloud firestore export --database=${{ env.DATABASE }} ${{ steps.backup_info.outputs.backup_path }}; then
+            echo "✅ Backup created successfully at ${{ steps.backup_info.outputs.backup_path }}"
+            echo "backup_success=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Backup creation failed"
+            echo "backup_success=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      - name: Verify backup integrity
+        if: steps.create_backup.outputs.backup_success == 'true'
+        run: |
+          echo "Verifying backup integrity..."
+          # Check if backup files exist and are not empty
+          gsutil ls -la ${{ steps.backup_info.outputs.backup_path }}/
+
+          # Verify that essential backup files are present
+          if gsutil ls ${{ steps.backup_info.outputs.backup_path }}/**.overall_export_metadata > /dev/null 2>&1; then
+            echo "✅ Backup integrity verified - metadata file found"
+          else
+            echo "❌ Backup integrity check failed - metadata file not found"
+            exit 1
+          fi
+
+      - name: List existing backups for cleanup
+        if: steps.create_backup.outputs.backup_success == 'true'
+        id: list_backups
+        run: |
+          echo "Listing existing backups..."
+          # List all firestore backup folders, sorted by creation time (oldest first)
+          BACKUP_FOLDERS=$(gsutil ls -d ${BUCKET}/firestore-backup-*/ 2>/dev/null | sort || echo "")
+
+          if [ -z "$BACKUP_FOLDERS" ]; then
+            echo "No existing backup folders found"
+            echo "cleanup_needed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Found backup folders:"
+            echo "$BACKUP_FOLDERS"
+            
+            # Count backups
+            BACKUP_COUNT=$(echo "$BACKUP_FOLDERS" | wc -l)
+            echo "Total backups: $BACKUP_COUNT"
+            
+            # Check if cleanup is needed (more than RETENTION_DAYS backups)
+            if [ "$BACKUP_COUNT" -gt "${{ env.RETENTION_DAYS }}" ]; then
+              echo "cleanup_needed=true" >> $GITHUB_OUTPUT
+              
+              # Calculate how many backups to delete
+              DELETE_COUNT=$((BACKUP_COUNT - ${{ env.RETENTION_DAYS }}))
+              echo "delete_count=$DELETE_COUNT" >> $GITHUB_OUTPUT
+              
+              # Get the oldest backups to delete
+              OLD_BACKUPS=$(echo "$BACKUP_FOLDERS" | head -n $DELETE_COUNT)
+              echo "old_backups<<EOF" >> $GITHUB_OUTPUT
+              echo "$OLD_BACKUPS" >> $GITHUB_OUTPUT
+              echo "EOF" >> $GITHUB_OUTPUT
+              
+              echo "Backups to delete (oldest $DELETE_COUNT):"
+              echo "$OLD_BACKUPS"
+            else
+              echo "cleanup_needed=false" >> $GITHUB_OUTPUT
+              echo "✅ No cleanup needed - within retention limit"
+            fi
+          fi
+
+      - name: Clean up old backups
+        if: steps.create_backup.outputs.backup_success == 'true' && steps.list_backups.outputs.cleanup_needed == 'true'
+        run: |
+          echo "🗑️ Cleaning up old backups (transactional - only after successful backup creation)..."
+
+          # Delete old backups one by one with verification
+          while IFS= read -r backup_path; do
+            if [ -n "$backup_path" ]; then
+              echo "Deleting old backup: $backup_path"
+              if gsutil -m rm -r "$backup_path"; then
+                echo "✅ Successfully deleted: $backup_path"
+              else
+                echo "⚠️ Failed to delete: $backup_path"
+              fi
+            fi
+          done <<< "${{ steps.list_backups.outputs.old_backups }}"
+
+          echo "🧹 Cleanup completed"
+
+      - name: Backup summary
+        if: always()
+        run: |
+          echo "=== BACKUP SUMMARY ==="
+          echo "📅 Date: $(date)"
+          echo "🏷️ New Backup: ${{ steps.backup_info.outputs.backup_folder }}"
+          echo "📍 Location: ${{ steps.backup_info.outputs.backup_path }}"
+          echo "✅ Success: ${{ steps.create_backup.outputs.backup_success }}"
+          echo "🗑️ Cleanup performed: ${{ steps.list_backups.outputs.cleanup_needed }}"
+
+          if [ "${{ steps.create_backup.outputs.backup_success }}" = "true" ]; then
+            echo "💾 Current backup size:"
+            gsutil du -sh ${{ steps.backup_info.outputs.backup_path }}/
+            
+            echo "📊 Total backups in bucket:"
+            gsutil ls -d ${BUCKET}/firestore-backup-*/ 2>/dev/null | wc -l || echo "0"
+          fi
+
+          echo "======================="
+
+  # Optional: Health check job that runs after backup
+  health-check:
+    needs: backup
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Backup status notification
+        run: |
+          if [ "${{ needs.backup.result }}" = "success" ]; then
+            echo "✅ Firestore backup completed successfully"
+            # Add notification logic here (Slack, email, etc.) if needed
+          else
+            echo "❌ Firestore backup failed"
+            # Add alert logic here if needed
+            exit 1
+          fi
