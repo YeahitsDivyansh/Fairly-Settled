@@ -28,6 +28,45 @@ jobs:
         with:
           project_id: ${{ env.PROJECT_ID }}
 
+      - name: Verify authentication and permissions
+        run: |
+          echo "🔍 Verifying GCP authentication..."
+
+          # Check if authenticated
+          if gcloud auth list --filter=status:ACTIVE --format="value(account)" | head -1; then
+            echo "✅ Successfully authenticated with GCP"
+          else
+            echo "❌ GCP authentication failed"
+            exit 1
+          fi
+
+          # Verify project access
+          echo "🔍 Verifying project access..."
+          if gcloud projects describe $PROJECT_ID; then
+            echo "✅ Project access verified"
+          else
+            echo "❌ Cannot access project $PROJECT_ID"
+            exit 1
+          fi
+
+          # Verify Firestore access
+          echo "🔍 Verifying Firestore access..."
+          if gcloud firestore databases describe --database=${{ env.DATABASE }}; then
+            echo "✅ Firestore database access verified"
+          else
+            echo "❌ Cannot access Firestore database ${{ env.DATABASE }}"
+            exit 1
+          fi
+
+          # Verify Storage bucket access
+          echo "🔍 Verifying Storage bucket access..."
+          if gsutil ls ${{ env.BUCKET }}; then
+            echo "✅ Storage bucket access verified"
+          else
+            echo "❌ Cannot access storage bucket ${{ env.BUCKET }}"
+            exit 1
+          fi
+
       - name: Set gcloud project
         run: gcloud config set project $PROJECT_ID
 
